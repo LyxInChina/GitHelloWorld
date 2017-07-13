@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptTool", "EncryptTool\EncryptTool.csproj", "{A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47}.Debug|x86.ActiveCfg = Debug|x86
+		{A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47}.Debug|x86.Build.0 = Debug|x86
+		{A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47}.Release|x86.ActiveCfg = Release|x86
+		{A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

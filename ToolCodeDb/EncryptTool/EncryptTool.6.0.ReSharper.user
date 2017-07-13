@@ -1,0 +1,74 @@
+<Configuration>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:Form1.Designer.cs" caret="673" fromTop="0" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:Program.cs" caret="0" fromTop="0" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:Base64Form.Designer.cs" caret="544" fromTop="3" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:BASE64.cs" caret="964" fromTop="35" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:DES3.cs" caret="959" fromTop="24" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:Form1.cs" caret="346" fromTop="11" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.Designer.cs" caret="0" fromTop="0" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:MD5.cs" caret="576" fromTop="19" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:AESForm.Designer.cs" caret="0" fromTop="0" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:DES.cs" caret="2067" fromTop="38" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="1381" fromTop="8" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="357" fromTop="11" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:SHA1Form.cs" caret="292" fromTop="12" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:MD5Form.cs" caret="559" fromTop="7" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:Base64Form.cs" caret="1312" fromTop="51" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DES3Form.cs" caret="606" fromTop="25" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:RHA-1.cs" caret="246" fromTop="11" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:AESForm.cs" caret="1025" fromTop="23" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="1631" fromTop="15" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="1631" fromTop="10" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="1631" fromTop="19" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="602" fromTop="15" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="1631" fromTop="24" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="876" fromTop="24" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="1125" fromTop="18" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:DESForm.cs" caret="1381" fromTop="14" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:MD5Form.cs" caret="827" fromTop="14" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:MD5Form.cs" caret="827" fromTop="8" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:MD5Form.cs" caret="828" fromTop="17" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:MD5Form.cs" caret="577" fromTop="8" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:SHA1Form.cs" caret="831" fromTop="17" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:SHA1Form.cs" caret="831" fromTop="11" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:SHA1Form.cs" caret="832" fromTop="20" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:SHA1Form.cs" caret="579" fromTop="11" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:SHA1Form.cs" caret="1114" fromTop="10" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:AESForm.cs" caret="1723" fromTop="14" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="550" fromTop="13" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="2092" fromTop="6" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="2706" fromTop="8" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="2862" fromTop="24" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="1254" fromTop="14" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="1757" fromTop="22" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="3368" fromTop="11" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/d:EncryptType/f:AES.cs" caret="3039" fromTop="13" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:AESForm.cs" caret="2090" fromTop="15" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:AESForm.cs" caret="578" fromTop="17" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:AESForm.cs" caret="987" fromTop="28" />
+      <File id="A8C6C5DA-3518-44CD-98E1-EC1FAEF29F47/f:AESForm.cs" caret="810" fromTop="22" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+</Configuration>

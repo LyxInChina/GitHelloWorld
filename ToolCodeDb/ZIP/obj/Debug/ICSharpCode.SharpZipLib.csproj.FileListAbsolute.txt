@@ -1,0 +1,2 @@
+D:\Zhanglizhong\Demons\AutoZip\ZIP\obj\Debug\ICSharpCode.SharpZipLib.csprojResolveAssemblyReference.cache
+F:\ZhangLiZhong\Demons\AutoZip\ZIP\obj\Debug\ICSharpCode.SharpZipLib.csprojResolveAssemblyReference.cache
