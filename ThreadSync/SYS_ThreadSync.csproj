@@ -48,7 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BankerAligorithmcs.cs" />
-    <Compile Include="FileSystem.cs" />
+    <Compile Include="FileSystem.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="PhilosopherEatingProblem.cs" />
     <Compile Include="ProcessCommunication.cs" />
     <Compile Include="Program.cs" />
