@@ -33,5 +33,13 @@ namespace ThreadSync
         引导控制块 boot control block  - 系统从该卷引导操作系统所需的信息 UFS 称为引导快 NTFS 称为 分区引导扇区
         卷控制块 volume control block - 卷或分区的详细信息 ：分区块数 块大小 空闲块和FCB的数量和指针等 UFS - 超级块 NTFS - 存储在主控文件表中 Master File Table
 
+    分区与安装
+        分区： 
+        生分区 raw 没有文件系统
+        熟分区 cooked 有文件系统
+        引导信息 通常为一组有序块，并作为镜像文件读入内存，该镜像文件按照预先指定的位置开始执行
+        根分区 root partition 包括操作系统内核或其他系统文件，在引导时装入内存
+    虚拟文件系统
+        
      */
 }
