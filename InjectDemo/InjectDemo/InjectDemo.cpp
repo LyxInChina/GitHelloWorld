@@ -13,7 +13,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	void *pNativeDllRemote;
 	FARPROC pLoadLibrary;
 	//TCHAR szNativeDllPath[_MAX_PATH]=_T("D:\\Code\\InjectDemo\\Debug\\NativeDll.dll");
-	TCHAR szNativeDllPath[_MAX_PATH] = _T("F:\\ZhangLiZhong\\Demons\\CSharp\\InjectDemo\\Debug\\NativeDll.dll");
+	TCHAR szNativeDllPath[_MAX_PATH] = _T("D:\\NativeDll.dll");
 
 	//F:\ZhangLiZhong\Demons\CSharp\InjectDemo\Debug
 	cout<<"input the process id to inject"<<endl;
