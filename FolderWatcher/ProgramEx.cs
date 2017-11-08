@@ -3,14 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Runtime.Caching;
 using System.Text;
 using System.Threading;
-using System.Web;
-using Test;
 
-namespace AppendContentToCosole
+namespace Test
 {
     public class QContent{
         public string FileName { get; set; }
@@ -19,7 +15,7 @@ namespace AppendContentToCosole
     /// <summary>
     /// 追加内容监控程序
     /// </summary>
-    class Program
+    class ProgramEx
     {
         private static Dictionary<string, long> fileDic = new Dictionary<string, long>();
         private static ConcurrentQueue<QContent> logQueue = new ConcurrentQueue<QContent>();

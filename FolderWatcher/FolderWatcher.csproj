@@ -44,7 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IOHelper.cs" />
+    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rsr.Designer.cs">
       <AutoGen>True</AutoGen>
