@@ -38,8 +38,11 @@
 /FolderWatcher/obj
 /HelloWorld/bin
 /HelloWorld/obj
-/InjectDemo/Debug
-/InjectDemo/Release
+/InjectDemo/InjectDemo/Debug
+/InjectDemo/InjectDemo/Release
+/InjectDemo/ManagedDll/obj
+/InjectDemo/NativeDll/Debug
+/InjectDemo/NativeDll/Release
 /InvokerHelperDemo/bin
 /InvokerHelperDemo/obj
 /LogHelper/obj
