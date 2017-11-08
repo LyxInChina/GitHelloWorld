@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ThreadSync.ProgramEx</StartupObject>
+    <StartupObject>ThreadSync.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -48,9 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BankerAligorithmcs.cs" />
-    <Compile Include="FileSystem.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
+    <Compile Include="FileSystem.cs" />
     <Compile Include="PhilosopherEatingProblem.cs" />
     <Compile Include="ProcessCommunication.cs" />
     <Compile Include="Program.cs" />

@@ -84,12 +84,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LogHelper\LogHelper.csproj">
-      <Project>{4688d026-2b8e-42dd-90c4-106b900f9cfb}</Project>
-      <Name>LogHelper</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resource1.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>

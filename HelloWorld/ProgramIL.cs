@@ -9,6 +9,52 @@ namespace HelloWorld
     {
         static void Main()
         {
+            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
+            var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            var v1 = System.Reflection.Assembly.GetExecutingAssembly().GetName().VersionCompatibility;
+            var v2 = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributesData();
+            //Run();
+            //RunRegex();
+            IntropJS.RunJS_V8();
+            IntropJS.RunJS_MS("");
+            RunJS();
+            Console.ReadLine();
+        }
+
+        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var ass = args.Name;
+            var sa = args.RequestingAssembly;
+            throw new NotImplementedException();
+        }
+
+        private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        {
+            //throw new NotImplementedException();
+            var ass = args.LoadedAssembly;
+        }
+
+        public static void RunJS()
+        {
+            var file = @"test.js";
+            if(IntropJS.ImportJSFile(file))
+            {
+                
+            }    
+        }
+
+        public static void RunRegex()
+        {
+            RegexTest.HasStr();
+            RegexTest.IsHtml();
+        }
+
+        public static void Run()
+        {
+            var methodName = new StackTrace().GetFrame(1).GetMethod().Name;
+            Console.WriteLine(methodName);
             int a = 10;
             int b = 20;
             var c = 30;
@@ -17,13 +63,13 @@ namespace HelloWorld
             string s2 = "20";
             var s3 = "30";
             var s4 = s3;
-            Console.WriteLine("a is "+a);
+            Console.WriteLine("a is " + a);
             Console.WriteLine("c is " + c);
             Console.WriteLine("a+b=" + (a + b));
             Console.WriteLine("Fun(a,b) is " + d);
-            Console.WriteLine("s1 is "+s1);
+            Console.WriteLine("s1 is " + s1);
             Console.WriteLine("s1 + s2 is " + s1 + s2);
-            Console.WriteLine("s3 + s4 is "+ s3+ s4);
+            Console.WriteLine("s3 + s4 is " + s3 + s4);
             Fun1();
             Console.WriteLine("a is " + a);
             ClSA cl = new ClSA() { Name = "012345", Address = "Ads0123", Number = 123 };
@@ -116,7 +162,6 @@ namespace HelloWorld
 
     public static class DeepClone
     {
-
         //public static T DeepClone<T>(this T obj) where T : class
         //{
         //    return obj != null ? obj.ToJson().FromJson<T>() : null;

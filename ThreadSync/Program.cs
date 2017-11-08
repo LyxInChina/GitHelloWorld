@@ -41,10 +41,10 @@ namespace ThreadSync
 
         static void Main(string[] args)
         {
-            //Thread th1 = new Thread(C.EntryMethod);
-            //th1.Start(0);
-            //Thread th2 = new Thread(C.EntryMethod);
-            //th2.Start(1);
+            Thread th1 = new Thread(C.EntryMethod);
+            th1.Start(0);
+            Thread th2 = new Thread(C.EntryMethod);
+            th2.Start(1);
 
             //int a = 3;
             //C.InitEx(a);
@@ -64,10 +64,10 @@ namespace ThreadSync
             //    }
             //}
 
-            var process = new ProcessStartInfo();
-            process.FileName = "F://Test//FileAssociation.exe";
-            process.Verb = "runas";
-            Process.Start(process);
+            //var process = new ProcessStartInfo();
+            //process.FileName = "F://Test//FileAssociation.exe";
+            //process.Verb = "runas";
+            //Process.Start(process);
             Console.WriteLine("wait exit...");
             do
             {
