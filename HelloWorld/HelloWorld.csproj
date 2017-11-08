@@ -70,7 +70,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>HelloWorld_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
@@ -110,11 +111,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="HelloWorld.manifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="HelloWorld_TemporaryKey.pfx" />
     <None Include="Licenses\ClearScript.main.license" />
     <None Include="Licenses\v8.main.license" />
     <None Include="Licenses\v8.strongtalk.license" />

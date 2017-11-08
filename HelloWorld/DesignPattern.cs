@@ -814,7 +814,120 @@ namespace HelloWorld
 
     public class FlyweightPattern
     {
-        //大量重复对象的重用 共享对象必须是细颗粒度
+        //使用共享支持大量的细颗粒度对象
+        public abstract class Flyweight
+        {
+            protected string _guid;
+            protected Flyweight()
+            {
+                _guid = Guid.NewGuid().ToString();
+            }
+            public abstract void Func();
+        }
+
+        public class ConcreteFlyweight0:Flyweight
+        {
+            public ConcreteFlyweight0():base()
+            {
+
+            }
+
+            public override void Func()
+            {
+                Console.WriteLine(_guid);
+            }
+        }
+
+        public class FlyweightFactory 
+        {
+            private IList<Tuple<string, Flyweight>> _flyWeights = new List<Tuple<string, Flyweight>>();
+
+            public Flyweight this[string key]
+            {
+                get
+                {
+                    Flyweight res = null;
+                    var temp = _flyWeights.ToList().Find(r => r.Item1 == key);
+                    if (temp != null)
+                    {
+                        res = temp.Item2;
+                    }else
+                    {
+                        Flyweight temp1 = new ConcreteFlyweight0();
+                        _flyWeights.Add(Tuple.Create(key, temp1));
+                        //Build T
+                        //Add to list
+                    }
+                    return res;
+                }
+            }
+
+        }
+
+        public static void Main()
+        {
+            var list = new List<Flyweight>();
+            var flyWeightFactory = new FlyweightFactory();
+
+            list.Add(flyWeightFactory["0"]);
+            list.Add(flyWeightFactory["0"]);
+            list.Add(flyWeightFactory["0"]);
+            list.Add(flyWeightFactory["1"]);
+            list.Add(flyWeightFactory["1"]);
+
+            list.ForEach(s => s.Func());
+
+            Console.ReadLine();
+        }
+
+    }
+
+    public class ProxyPattern
+    {
+        public abstract class Subject
+        {
+            public abstract void Func();
+        }
+
+        public class RealSubject:Subject
+        {
+            public override void Func()
+            {
+                Console.WriteLine("RealSubject::Func()");
+            }
+        }
+
+        public class SubjectProxy:Subject
+        {
+            private Subject _subject = new RealSubject();
+
+            public SubjectProxy()
+            {
+
+            }
+            public override void Func()
+            {
+                _subject.Func();
+            }
+        }
+
+        public static void Main()
+        {
+            var proxy = new SubjectProxy();
+            proxy.Func();
+
+            Console.ReadLine();
+        }
+
+    }
+
+    #endregion
+
+    #region Action Pattern
+
+    public class ChainOfResponsibility
+    {
+
 
     }
 
