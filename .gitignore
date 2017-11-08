@@ -21,6 +21,7 @@
 *.VC.opendb
 *.VC.db
 
+/.vs
 /bin
 /AppendContentToCosole/bin
 /AppendContentToCosole/obj
