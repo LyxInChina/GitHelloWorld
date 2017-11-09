@@ -3,7 +3,6 @@
 *.dll
 *.exe
 *.exe.config
-*.exe.config
 *.exp
 *.ipch
 *.metagen
