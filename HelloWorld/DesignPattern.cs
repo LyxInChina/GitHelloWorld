@@ -925,11 +925,597 @@ namespace HelloWorld
 
     #region Action Pattern
 
-    public class ChainOfResponsibility
+    public class ChainOfResponsibilityPattern
     {
+
+        public abstract class Handler
+        {
+            public Handler NextHandler { get; set; }
+            public abstract void Process(Request request);
+
+            protected void CallBack(Request request)
+            {
+                if (NextHandler != null)
+                {
+                    NextHandler.Process(request);
+                }
+            }
+        }
+
+        public class Request
+        {
+            public int Level { get; set; }
+        }
+
+        public class ConcreteHandler1 : Handler
+        {
+            public override void Process(Request request)
+            {
+                if (request.Level <= 1)
+                {
+                    Console.WriteLine("Porcess Request::ConcreteHandler1");
+                }
+                else
+                {
+                    CallBack(request);
+                }                
+            }
+        }
+
+        public class ConcreteHandler2 : Handler
+        {
+            public override void Process(Request request)
+            {
+                if (request.Level == 2)
+                {
+                    Console.WriteLine("Porcess Request::ConcreteHandler2");
+                }
+                else
+                {
+                    CallBack(request);
+                }
+            }
+        }
+        public class ConcreteHandler3 : Handler
+        {
+            public override void Process(Request request)
+            {
+                if (request.Level == 3)
+                {
+                    Console.WriteLine("Porcess Request::ConcreteHandler3");
+                }
+                else
+                {
+                    CallBack(request);
+                }
+            }
+        }
+
+        public static void Main()
+        {
+            var c1 = new ConcreteHandler1();
+            var c2 = new ConcreteHandler2();
+            var c3 = new ConcreteHandler3();
+            //设置责任链
+            c1.NextHandler = c2;
+            c2.NextHandler = c3;
+            c1.Process(new Request() { Level = 0 });
+            c1.Process(new Request() { Level = 2 });
+            c1.Process(new Request() { Level = 3 });
+
+            Console.ReadLine();
+        }
+
+    }
+
+    public class CommandPattern
+    {
+        public abstract class Command
+        {
+            public string Cmd { get; set; }
+            public Invoker Invoke { get; set; }
+            protected Command(string str)
+            {
+                Cmd = str;
+            }
+            public abstract void Process();
+            public override string ToString()
+            {
+                return Cmd;
+            }
+        }
+
+        public class ConcreteCmd1:Command
+        {
+            public ConcreteCmd1(string str):base(str)
+            {
+
+            }
+            public override void Process()
+            {
+                Invoke?.Execute(this);
+            }
+        }
+        public class ConcreteCmd2 : Command
+        {
+            public ConcreteCmd2(string str):base(str)
+            {
+
+            }
+            public override void Process()
+            {
+                Invoke?.Execute(this);
+            }
+        }
+
+        public abstract class Invoker
+        {
+            public abstract void Execute(Command cmd);
+        }
+
+        public class ConcreteInvoker1:Invoker
+        {
+            public override void Execute(Command cmd)
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + cmd.ToString());
+            }
+        }
+
+        public class ConcreteInvoker2 : Invoker
+        {
+            public override void Execute(Command cmd)
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + cmd.ToString());
+            }
+        }
+
+        public class Receiver
+        {
+            private Invoker _invoker;
+            public Receiver(Invoker invoker)
+            {
+                _invoker = invoker;
+            }
+
+            public void ReceiveCmd(Command cmd)
+            {
+                //命令绑定执行者 命令执行
+                cmd.Invoke = _invoker;
+                cmd.Process();
+                //或者 执行者执行命令
+                _invoker.Execute(cmd);
+            }
+        }
+
+        public static void Main()
+        {
+            //指定命令执行者
+            var invoker1 = new ConcreteInvoker1();
+            //指定命令接受者
+            var receiver1 = new Receiver(invoker1);
+            //创建命令
+            var cmd1 = new ConcreteCmd1("cmd1");
+            var cmd2 = new ConcreteCmd2("cmd2");
+            //发给接受者执行
+            receiver1.ReceiveCmd(cmd1);
+            receiver1.ReceiveCmd(cmd2);
+
+            Console.ReadLine();
+        }
+    }
+
+    public class InterpreterPattern
+    {
+        public abstract class Expression
+        {
+            public abstract void Interpret(Context context);
+        }
+
+        public class TerminalExpression : Expression
+        {
+            public override void Interpret(Context context)
+            {
+                var t = context.Operators.ToList().Find(s => s.Key == context.Input);
+                int result=0;
+                if (t.Value != null)
+                {
+                    result = t.Value.Invoke(context.A, context.B);
+                }
+                Console.WriteLine("Terminal Expression:"+result);
+            }
+        }
+
+        public class NoneterminalExpression : Expression
+        {
+            public override void Interpret(Context context)
+            {
+                var t = context.Operators.ToList().Find(s => s.Key == context.Input);
+                int result = 0;
+                if (t.Value != null)
+                {
+                    result = t.Value.Invoke(context.A, context.B);
+                }
+                Console.WriteLine("None Terminal Expression:"+result);
+            }
+        }
+
+        public class Context
+        {
+            public Dictionary<char, Func<int,int,int>> Operators = new Dictionary<char, Func<int, int, int>>
+            {
+                {'+',(int a,int b)=> {return a+b; } },
+                {'-',(int a,int b)=> {return a-b; } },
+                {'*',(int a,int b)=> {return a*b; } },
+                {'/',(int a,int b)=> {if(b!=0)return a/b;else return 0; } },
+                {'%',(int a,int b)=> {if(b!=0)return a%b;else return 0; } },
+                {'|',(int a,int b)=> {return a|b; } },
+                {'^',(int a,int b)=> {return a^b; } },
+            };
+
+            public int A { get; set; }
+            public int B { get; set; }
+
+            public char Input { get; set; }
+
+        }
+
+
+        public static void Main()
+        {
+            var context = new Context() {A=98,B=13, Input = '%' };
+            var exp1 = new NoneterminalExpression();
+            var exp2 = new NoneterminalExpression();
+            var exp3 = new TerminalExpression();
+            exp1.Interpret(context);
+            exp2.Interpret(context);
+            exp3.Interpret(context);
+
+            Console.ReadLine();
+        }
+    }
+
+    public class IteratorPattern
+    {
+        public interface Iterator: System.Collections.IEnumerator
+        {
+
+        }
+
+        public class ConcreteIterator1 : Iterator
+        {
+            private IList<object> _list;
+            private int _index = 0;
+
+            public object Current
+            {
+                get
+                {
+                    return _list[_index];
+                }
+            }
+
+            public bool MoveNext()
+            {
+                if(_list.Count >= _index+1)
+                {
+                    ++_index;
+                    return true;
+                }                
+                return false;
+            }
+
+            public void Reset()
+            {
+                _index = 0;
+            }
+        }
+
+        public class ConcreteIterator2 : Iterator
+        {
+            private object[] _list;
+            private int _index = 0;
+
+            public object Current
+            {
+                get
+                {
+                    return _list[_index];
+                }
+            }
+
+            public bool MoveNext()
+            {
+                if (_list.Length >= _index + 1)
+                {
+                    ++_index;
+                    return true;
+                }
+                return false;
+            }
+
+            public void Reset()
+            {
+                _index = 0;
+            }
+        }
+
+        public abstract class Aggregate
+        {
+            public abstract Iterator CreateIterator();
+        }
+
+        public class ConcreteAggregate1: Aggregate
+        {
+            public override Iterator CreateIterator()
+            {
+                return new ConcreteIterator1();
+            }
+        }
+        public class ConcreteAggregate2 : Aggregate
+        {
+            public override Iterator CreateIterator()
+            {
+                return new ConcreteIterator2();
+            }
+        }
+
+        public static void Main()
+        {
+            var agg1 = new ConcreteAggregate1();
+            var agg2 = new ConcreteAggregate2();
+            var it1 = agg1.CreateIterator();
+            var it2 = agg2.CreateIterator();
+            //TOOD:统一方法遍历it1、it2
+
+            Console.ReadLine();
+        }
 
 
     }
 
+    public class MediatorPattern
+    {
+        public abstract class Mediator
+        {
+            public IList<Colleage> colls = new List<Colleage>();
+            public abstract void Contact(Message msg, Colleage coll);
+        }
+
+        public class Message
+        {
+            public string Msg { get; set; }
+            public override string ToString()
+            {
+                return Msg;
+            }
+        }
+
+        public class ConcreteMediator1 : Mediator
+        {
+            public override void Contact(Message msg, Colleage coll)
+            {
+                //TODO:get target colleage and call receive function
+                colls.ToList().ForEach(c => { if (c != coll) { c.ReceiveMsg(msg); } });
+            }
+        }
+
+        public abstract class Colleage
+        {
+            private Mediator _med;
+            public Mediator Med { get { return _med; } set { value.colls.Add(this); _med = value; } }
+            public string ID { get; set; }
+            public abstract void ReceiveMsg(Message msg);
+            public virtual void SendMsg(Message msg)
+            {
+                Med.Contact(msg, this);
+            }
+        }
+
+        public class ConcreteColleage1 : Colleage
+        {
+            public override void ReceiveMsg(Message msg)
+            {
+                Console.WriteLine(this.GetType().ToString()+"::"+msg);
+            }
+
+            public override void SendMsg(Message msg)
+            {
+                base.SendMsg(msg);
+            }
+        }
+
+        public class ConcreteColleage2 : Colleage
+        {
+            public override void ReceiveMsg(Message msg)
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + msg);
+            }
+            public override void SendMsg(Message msg)
+            {
+                base.SendMsg(msg);
+            }
+        }
+
+        public static void Main()
+        {
+            var mediator = new ConcreteMediator1();
+            var coll1 = new ConcreteColleage1();
+            coll1.Med = mediator;
+            var coll2 = new ConcreteColleage2();
+            coll2.Med = mediator;
+            
+            coll1.SendMsg(new Message() { Msg="coll01"});
+            coll2.SendMsg(new Message() { Msg="coll02"});
+
+            Console.ReadLine();
+        }
+
+    }
+
+    public class MementoPattern
+    {
+        public class Memento
+        {
+            private string _state { get; set; }
+            public void SetState(string state)
+            {
+                _state = state;
+            }
+
+            public string GetState()
+            {
+                return _state;
+            }
+        }
+    
+        public class CareTaker
+        {
+            private Memento _memen { get; set; }
+
+            public Memento GetMemento()
+            {
+                return _memen;
+            }
+
+            public void SetMemento(Memento memento)
+            {
+                _memen = memento;
+            }
+
+        }
+        public class Originator
+        {
+            public Memento SaveMemento()
+            {
+                return new Memento();
+            }
+            public void RestoreMemento(Memento memento)
+            {
+
+            }
+        }
+
+        public static void Main()
+        {
+            var originator = new Originator();
+            var taker = new CareTaker();
+
+            taker.SetMemento(originator.SaveMemento());
+
+            originator.RestoreMemento(taker.GetMemento());
+
+            Console.ReadLine();
+        }
+
+    }
+
+    public class ObserverPattern
+    {
+        public interface IObserver
+        {
+            void Update(string msg);
+        }
+
+        public class ConcreteObserver1 : IObserver
+        {
+            public void Update(string msg)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class ConcreteObserver2 : IObserver
+        {
+            public void Update(string msg)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public interface ISubject
+        {
+            IList<IObserver> Observers { get; set; }
+            void Add(IObserver ser);
+            void Renmove(IObserver ser);
+            void Notify(string msg);
+        }
+
+        public class ConcreteSubject : ISubject
+        {
+            public IList<IObserver> Observers { get; set; } = new List<IObserver>();
+
+            public void Add(IObserver ser)
+            {
+                Observers.Add(ser);
+            }
+
+            public void Notify(string msg)
+            {
+                Observers.ToList().ForEach(s => s.Update(msg));
+            }
+
+            public void Renmove(IObserver ser)
+            {
+                Observers.Remove(ser);
+            }
+        }
+
+
+        public static void Main()
+        {
+            var sub1 = new ConcreteSubject();
+            var ob1 = new ConcreteObserver1();
+            var ob2 = new ConcreteObserver1();
+
+            //添加观察者
+            sub1.Add(ob1);
+            sub1.Add(ob2);
+
+            sub1.Notify("New Msg");
+            sub1.Renmove(ob2);
+
+            Console.ReadLine();
+        }
+
+    }
+
+    public class StatePattern
+    {
+        public class Context
+        {
+            private State _state;
+            public void SetState(State state)
+            {
+                //set state change and set action
+                state.Handle();
+            }
+        }
+
+        public abstract class State
+        {
+            public abstract void Handle();
+        }
+
+        public class ConcreteState1 : State
+        {
+            public override void Handle()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class ConcreteState2:State
+        {
+            public override void Handle()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public static void Main()
+        {
+
+        }
+    }
     #endregion
 }

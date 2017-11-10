@@ -1,6 +1,0 @@
-﻿  Stdafx.cpp
-  NativeDll.cpp
-F:\ZhangLiZhong\Demons\CSharp\InjectDemo\NativeDll\NativeDll.cpp : warning C4747: 调用托管“_DllMain@12”: 托管代码可能未运行在加载程序锁下，包括 DLL 入口点和从 DLL 入口点访问到的调用
-  .NETFramework,Version=v4.5.2.AssemblyAttributes.cpp
-  NativeDll.vcxproj -> F:\ZhangLiZhong\Demons\CSharp\InjectDemo\Release\NativeDll.dll
-  NativeDll.vcxproj -> F:\ZhangLiZhong\Demons\CSharp\InjectDemo\Release\NativeDll.pdb (Full PDB)
