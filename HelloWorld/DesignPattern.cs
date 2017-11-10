@@ -1517,5 +1517,129 @@ namespace HelloWorld
 
         }
     }
+
+    public class StrategyPattern
+    {
+        public class Context
+        {
+            private Strategy _strategy;
+
+            public void SetStrategy(Strategy st)
+            {
+                _strategy = st;
+            }
+
+            public void RunAlgorithm()
+            {
+                _strategy?.Algorithm();
+            }
+        }
+
+        public abstract class Strategy
+        {
+            public abstract void Algorithm();
+        }
+
+        public class ConcreteStrategy1 : Strategy
+        {
+            public override void Algorithm()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class ConcreteStrategy2 : Strategy
+        {
+            public override void Algorithm()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public static void Main()
+        {
+            var context = new Context();
+            var cs1 = new ConcreteStrategy1();
+            var cs2 = new ConcreteStrategy2();
+
+            context.SetStrategy(cs1);
+            context.RunAlgorithm();
+            context.SetStrategy(cs2);
+            context.RunAlgorithm();
+
+            Console.ReadLine();
+        }
+
+    }
+
+    public class TemplateMethodPattern
+    {
+        public abstract class Abstraction
+        {
+            public void TemplateMethod()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                Func1();
+                Func2();
+                Func3();
+            }
+            protected abstract void Func1();
+            protected abstract void Func2();
+            protected abstract void Func3();
+        }
+
+        public class ConcreteClass1 : Abstraction
+        {
+            protected override void Func1()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+
+            protected override void Func2()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+
+            protected override void Func3()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+        public class ConcreteClass2 : Abstraction
+        {
+            protected override void Func1()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            }
+
+            protected override void Func2()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            }
+
+            protected override void Func3()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            }
+        }
+
+        public static void Main()
+        {
+            Abstraction cc1 = new ConcreteClass1();
+            Abstraction cc2 = new ConcreteClass2();
+            cc1.TemplateMethod();
+            cc2.TemplateMethod();
+
+            Console.ReadLine();
+        }
+
+    }
+
+    public class VisitorPattern
+    {
+         
+    }
+
     #endregion
 }

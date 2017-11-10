@@ -38,15 +38,15 @@ namespace EmitExamples.HelloWorld
 
             Console.WriteLine("Hello World!");
             //Console.ReadLine();
-            var cc =new Clacc();
+            var cc = new Clacc();
             cc.bol = true;
             cc.a = 0x88;
             cc.b = 16;
             cc.c = 16;
             cc.d = 166d;
             cc.str = "abcdefg";
-            decimal dd = 89m,dd2=89M;
-            float ff = 89f,ff2 = 89F;
+            decimal dd = 89m, dd2 = 89M;
+            float ff = 89f, ff2 = 89F;
             long ll = 89l, ll2 = 89L;
             double ddo = 89d, ddo2 = 89D;
             byte bb = 89;
@@ -55,7 +55,7 @@ namespace EmitExamples.HelloWorld
             var a = new MemoryAlignA() { b = 98, c = 97, d = 96 };
             var b = new MemoryAlignB() { b = 98, c = 97, d = 96 };
             unsafe
-            {                
+            {
                 //Console.WriteLine(Marshal.SizeOf(a));
                 //Console.WriteLine(Marshal.SizeOf(b));
                 Console.WriteLine(sizeof(MemoryAlignA));
@@ -63,10 +63,17 @@ namespace EmitExamples.HelloWorld
                 Console.WriteLine(sizeof(MemoryAlignC));
                 //Console.WriteLine(sizeof(bool));
             }
-
+            Ffffunction();
             Console.ReadKey();
         }
+        public static void Ffffunction()
+        {
+            Console.WriteLine(":@@@@:" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        }
     }
+
+
+         
 
     [StructLayout(LayoutKind.Explicit)]
     public class Clacc

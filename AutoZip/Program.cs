@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common;
-using ZQ.LogHelper;
+//using ZQ.LogHelper;
 
 namespace AutoZip
 {
@@ -16,8 +16,8 @@ namespace AutoZip
     {
         static void Main(string[] args)
         {
-            var helper = new EventLogHelper();
-            var helperEx = new FileLogHelper();
+            //var helper = new EventLogHelper();
+            //var helperEx = new FileLogHelper();
             try
             {
                 var directory = Properties.Settings.Default.filePath;
@@ -41,21 +41,21 @@ namespace AutoZip
                         stringb.AppendLine("压缩后文件名为：" + name);
                         stringb.AppendLine("文件路径：" + dir.Parent.FullName);
                         Console.WriteLine("Begin Record Event...");
-                        helperEx.WriteLog(stringb.ToString(), EventLogEntryType.Information);
-                        helper.WriteLog(stringb.ToString(), EventLogEntryType.Information);
+                        //helperEx.WriteLog(stringb.ToString(), EventLogEntryType.Information);
+                        //helper.WriteLog(stringb.ToString(), EventLogEntryType.Information);
                         Console.WriteLine("Record done.");
                         Console.WriteLine("AutoZip Exit.");
                     }
                     else
                     {
-                        helperEx.WriteLog(dir.FullName + "父目录为Null", EventLogEntryType.Warning);
-                        helper.WriteLog(dir.FullName + "父目录为Null", EventLogEntryType.Warning);
+                        //helperEx.WriteLog(dir.FullName + "父目录为Null", EventLogEntryType.Warning);
+                        //helper.WriteLog(dir.FullName + "父目录为Null", EventLogEntryType.Warning);
                     }
                 }
             }
             catch (Exception ex)
             {
-                helper.WriteLog(ex, EventLogEntryType.Error);
+                //helper.WriteLog(ex, EventLogEntryType.Error);
             }
         }
 
