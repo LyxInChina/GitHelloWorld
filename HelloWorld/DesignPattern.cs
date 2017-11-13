@@ -1518,6 +1518,10 @@ namespace HelloWorld
         }
     }
 
+    /// <summary>
+    /// 策略模式
+    /// 
+    /// </summary>
     public class StrategyPattern
     {
         public class Context
@@ -1537,31 +1541,136 @@ namespace HelloWorld
 
         public abstract class Strategy
         {
+            protected IList<IComparable> _array;
+            public int CalculateDegree()
+            {
+                return 0;
+            }
             public abstract void Algorithm();
         }
 
         public class ConcreteStrategy1 : Strategy
         {
+            /// <summary>
+            /// bubble sort
+            /// </summary>
             public override void Algorithm()
             {
-                throw new NotImplementedException();
+                for (int i = 0; i < _array.Count; i++)
+                {
+                    for (int j = i + 1; j < _array.Count; j++)
+                    {
+                        if (_array[i].CompareTo(_array[j]) > 0)
+                        {
+                            var temp = _array[j];
+                            _array[j] = _array[i];
+                            _array[i] = temp;
+                        }
+                    }
+                }
             }
         }
 
         public class ConcreteStrategy2 : Strategy
         {
+            /// <summary>
+            /// quick sort
+            /// </summary>
             public override void Algorithm()
             {
-                throw new NotImplementedException();
+                Sort_q(_array, 0, _array.Count - 1);
+            }
+
+            private void Sort_q(IList<IComparable> rest, int left, int right)
+            {
+                if (left < right)
+                {
+                    //找到中间元素为中间值
+                    var middle = rest[(left + right) / 2];
+                    int i = left - 1,
+                        j = right + 1;
+                    while (true)
+                    {
+                        //找到比middle小的元素
+                        while (rest[++i].CompareTo(middle) < 0 && i < right) ;
+                        //找到比middle大的元素
+                        while (rest[--j].CompareTo(middle) > 0 && j > 0) ;
+                        //若越界则退出循环
+                        if (i >= j)
+                            break;
+                        //交互元素
+                        var num = rest[i];
+                        rest[j] = rest[j];
+                        rest[j] = num;
+                    }
+                    //迭代排序
+                    Sort_q(rest, left, i - 1);
+                    Sort_q(rest, j + 1, right);
+                }
             }
         }
 
+        public class ConcreteStrategy3 : Strategy
+        {
+            /// <summary>
+            /// insert sort
+            /// </summary>
+            public override void Algorithm()
+            {
+                for (int i = 1; i < _array.Count; i++)
+                {
+                    int j;
+                    var temp = _array[i];//index i
+                    for (j = i;  j > 0; j--)//遍历i之前元素
+                    {
+                        if (_array[j - 1].CompareTo(temp) > 0)//比较当前元素与之前元素
+                        {
+                            _array[j] = _array[j - 1];
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    _array[j] = temp;
+                }
+            }
+        }
+
+        public class ConcreteStrategy4 : Strategy
+        {
+            /// <summary>
+            /// select sort
+            /// </summary>
+            public override void Algorithm()
+            {
+                IComparable temp;
+                for (int i = 0; i < _array.Count; i++)
+                {
+                    temp = _array[i];//index i
+                    int j;
+                    int select = i;
+                    for (j = i+1; j < _array.Count; j++)
+                    {
+                        if (_array[j].CompareTo(temp) < 0)
+                        {
+                            temp = _array[j];
+                            select = j;
+                        }
+                    }
+                    _array[select] = _array[i];
+                    _array[i] = temp;
+                }
+            }
+        }
+        
         public static void Main()
         {
             var context = new Context();
+            //定义算法
             var cs1 = new ConcreteStrategy1();
             var cs2 = new ConcreteStrategy2();
-
+            //
             context.SetStrategy(cs1);
             context.RunAlgorithm();
             context.SetStrategy(cs2);
@@ -1572,6 +1681,11 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 模板模式
+    /// 定义一个模板类，预留使用的每个抽象实现
+    /// 子类实现每个抽象实现
+    /// </summary>
     public class TemplateMethodPattern
     {
         public abstract class Abstraction
@@ -1635,10 +1749,105 @@ namespace HelloWorld
         }
 
     }
-
+    /// <summary>
+    /// 访问者模式
+    /// </summary>
     public class VisitorPattern
     {
-         
+        /// <summary>
+        /// 抽象访问者
+        /// </summary>
+        public abstract class Visitor
+        {
+            public abstract void Visit(Element element);
+        }
+
+        public class ConcreteVisotor1 : Visitor
+        {
+            public override void Visit(Element element)
+            {
+                element.Func();
+            }
+        }
+        public class ConcreteVisotor2 : Visitor
+        {
+            public override void Visit(Element element)
+            {
+                element.Func();
+            }
+        }
+
+        /// <summary>
+        /// 抽象元素
+        /// </summary>
+        public abstract class Element
+        {
+            public abstract void Accept(Visitor vistor);
+            public abstract void Func();
+        }
+
+        public class ConcreteElement1 : Element
+        {
+            public override void Accept(Visitor vistor)
+            {
+                vistor.Visit(this);
+            }
+
+            public override void Func()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        public class ConcreteElement2 : Element
+        {
+            public override void Accept(Visitor vistor)
+            {
+                vistor.Visit(this);
+            }
+            public override void Func()
+            {
+                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+        /// <summary>
+        /// 具体元素集合
+        /// </summary>
+        public class ObjectStruct
+        {
+            public IList<Element> Elements = new List<Element>();
+            public void AddElement(Element ele)
+            {
+                Elements.Add(ele);
+            }
+
+            public void RemoveElement(Element ele)
+            {
+                Elements.Remove(ele);
+            }
+
+            public void Accept(Visitor vistor)
+            {
+                Elements.ToList().ForEach(e => e.Accept(vistor));
+            }
+        }
+
+        public static void Main()
+        {
+            var os = new ObjectStruct();
+            os.AddElement(new ConcreteElement1());
+            os.AddElement(new ConcreteElement2());
+            os.AddElement(new ConcreteElement1());
+            os.AddElement(new ConcreteElement2());
+
+            var vis1 = new ConcreteVisotor1();
+            var vis2 = new ConcreteVisotor2();
+            os.Accept(vis1);
+            os.Accept(vis2);
+
+            Console.ReadLine();
+        }
+
     }
 
     #endregion
