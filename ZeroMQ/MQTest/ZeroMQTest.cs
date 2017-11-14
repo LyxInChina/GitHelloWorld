@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetMQ;
-using AsyncIO;
-using System.Runtime.Remoting.Contexts;
 using ZeroMQ;
 using System.Threading;
 
@@ -24,7 +17,9 @@ namespace MQTest
             return string.Format("{0}.{1}.{2}", major, minor, patch);
         }
         
-
+        /// <summary>
+        /// 请求回复模式
+        /// </summary>
         public class Request_Reply
         {
             public static ZError error;
@@ -73,6 +68,9 @@ namespace MQTest
             }
         }
 
+        /// <summary>
+        /// 发布者订阅者模式
+        /// </summary>
         public class Publish_Subscribe
         {
             public static ZSocket CreatePublisher(string url)
@@ -114,10 +112,7 @@ namespace MQTest
 
         public class Parallel_Pipeline
         {
-            //public static ZSocket Create()
-            //{
 
-            //}
         }
 
     }

@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EmitExamples.HelloWorld.Program</StartupObject>
+    <StartupObject>HelloWorld.CircuitBreakerPattern</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -69,8 +69,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>MyPorfile.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
@@ -125,6 +124,7 @@
     <None Include="Licenses\v8.strongtalk.license" />
     <None Include="Licenses\v8.v8.license" />
     <None Include="Licenses\v8.valgrind.license" />
+    <None Include="MyPorfile.snk" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>

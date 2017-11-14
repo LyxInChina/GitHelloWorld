@@ -13,16 +13,18 @@ namespace MQTest
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("ZeroMQ VersionInfo:" + ZeroMQTest.GetZeroMQVersion());
+            Console.WriteLine("选择类型:server?client?publisher?subscriber?");
             string u = "tcp://127.0.0.1:8989";
             string us = "tcp://127.0.0.1:9000";
             var res = Console.ReadLine();
             switch(res.ToLower())
             {
                 case "server":
-                    DoS(u);
+                    DoServer(u);
                     break;
                 case "client":
-                    DoC(u);
+                    DoClient(u);
                     break;
                 case "publisher":
                     DoPublisher(us);
@@ -60,13 +62,13 @@ namespace MQTest
             } while (true);
         }
 
-        static void  DoS(string u)
+        static void  DoServer(string u)
         {
             var socket = Request_Reply.CreateServer(u);
             Request_Reply.Listen(socket);
         }
 
-        static void DoC(string u)
+        static void DoClient(string u)
         {
             var socket = Request_Reply.CreateClient(u);
             Request_Reply.SendAndWaitReply(socket);

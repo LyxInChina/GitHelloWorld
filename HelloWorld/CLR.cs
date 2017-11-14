@@ -122,7 +122,10 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
 
     18.强命名程序集
         a.为程序集分配强名称-程序集唯一标识：文件名；版本号；语言文化标识；公钥标记；
-
+        Step-1:使用SN.exe获取一个密钥：
+            创建包含二进制私钥和公钥的文件：sn -k <FilePath><Name>.snk；
+            创建一个只包含公钥的文件（将snk公钥导出到指定文件）：sn -p <name>.snk <name>.PublicKey;
+            显示公钥文件公钥信息：sn -tp <name>.PublicKey;
  
      */
 }
