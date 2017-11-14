@@ -14,7 +14,7 @@ void TestStructMemoryAllocation();
 
 int main(array<System::String ^> ^args)
 {
-    Console::WriteLine(L"Hello World");
+    printf("Hello World");
 	
 	int res[4] = { 100,3,5,7 };
 	ForEach(res, 4);
@@ -31,8 +31,8 @@ void ForEach(int p[],int len)
 	int* ptr = p;
 	for (size_t i = 0; i < len; i++)
 	{
-		Console::WriteLine(L"index :" + i + L" value :" + *ptr);
-		Console::WriteLine(ptr);
+		//printf("index :" + i + L" value :" + *ptr);
+		//printf(ptr);
 		ptr++;
 		//int temp = sizeof(*ptr);
 		int sss = sizeof(ptr);
@@ -44,7 +44,7 @@ void ForEach(int p[],int len)
 	int *pp = p;
 	for (size_t i = 0; i < len; i++)
 	{
-		Console::WriteLine(L"index :" + i + L" value :" + *pp);
+		//Console::WriteLine(L"index :" + i + L" value :" + *pp);
 		(*pp)++;
 	}
 
@@ -190,6 +190,8 @@ void TestStructMemoryAllocation()
 	->指向运算符
 	所有C/C++编译器在排列数组单元时，总是把各个数组单元存放在连续的存储空间里，单元和单元之间没有空隙
 	对于结构体，在某些编译情况下需要字节对齐，需要在相邻的两个成员间添加填充字节，导致成员间存在间隙
+	
+	内存对齐
 	结构体存储分配与对齐
 	内存分配原则：编译器按照成员顺序一个接一个给每个成员分配内存，只有当存储成员满足正确的边界对齐要求时，
 	成员之间可能出现用于填充的额外内存空间
