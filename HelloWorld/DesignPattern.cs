@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace HelloWorld
 {
-
     #region Create Pattern
     
-    public class DesignPattern
-    {
-
-    }
-    
-    public class Singleton
+    /// <summary>
+    /// 单例模式
+    /// </summary>
+    public class SingletonPattern
     {
         public class SingleClass
         {
@@ -67,6 +64,7 @@ namespace HelloWorld
                     _mutex = new System.Threading.Mutex(true, _name, out res);
                     if (res)
                     {
+                        _mutex.ReleaseMutex();
                         if (_instance == null)
                         {
                             lock (_lock)
@@ -320,6 +318,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 原型模式
+    /// </summary>
     public class PrototypePattern
     {
         public abstract class Prototype:ICloneable
@@ -364,17 +365,18 @@ namespace HelloWorld
                         return (Prototype)formatter.Deserialize(stream);
                     }
                     //XML序列化
-                    System.Xml.Serialization.XmlSerializer formatter1 = new System.Xml.Serialization.XmlSerializer(this.GetType());
-                    using (var mems = new System.IO.MemoryStream())
-                    {
-                        formatter1.Serialize(mems, this);
-                        mems.Seek(0, System.IO.SeekOrigin.Begin);
-                        return (Prototype)formatter1.Deserialize(mems);
-                    }
+                    //System.Xml.Serialization.XmlSerializer formatter1 = new System.Xml.Serialization.XmlSerializer(this.GetType());
+                    //using (var mems = new System.IO.MemoryStream())
+                    //{
+                    //    formatter1.Serialize(mems, this);
+                    //    mems.Seek(0, System.IO.SeekOrigin.Begin);
+                    //    return (Prototype)formatter1.Deserialize(mems);
+                    //}
                 }
                 else
                 {
                     //使用反射实现
+                    //效率不高
                     var t = this.GetType();
                     var obj = Activator.CreateInstance(t);
                     var properties = t.GetProperties();
@@ -397,45 +399,7 @@ namespace HelloWorld
             }
             public override Prototype CloneEx()
             {
-
-                if (this.GetType().IsSerializable)
-                {
-                    //序列化与反序列化方法 进行对象的深复制   
-                    if (Object.ReferenceEquals(this, null))
-                    {
-                        return null;
-                    }
-                    //二进制序列化
-                    System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    System.IO.Stream stream = new System.IO.MemoryStream();
-                    using (stream)
-                    {
-                        formatter.Serialize(stream, this);
-                        stream.Seek(0, System.IO.SeekOrigin.Begin);
-                        return (Prototype)formatter.Deserialize(stream);
-                    }
-                    //XML序列化
-                    System.Xml.Serialization.XmlSerializer formatter1 = new System.Xml.Serialization.XmlSerializer(this.GetType());
-                    using (var mems = new System.IO.MemoryStream())
-                    {
-                        formatter1.Serialize(mems, this);
-                        mems.Seek(0, System.IO.SeekOrigin.Begin);
-                        return (Prototype)formatter1.Deserialize(mems);
-                    }
-                }
-                else
-                {
-                    //使用反射实现
-                    var t = this.GetType();
-                    var obj = Activator.CreateInstance(t);
-                    var properties = t.GetProperties();
-                    for (int i = 0; i < properties.Length; i++)
-                    {
-                        var p = properties[i];
-                        p.SetValue(obj, p.GetValue(obj));//对于引用类型还需要进行再次的递归深复制
-                    }
-                    return (Prototype)obj;
-                }
+                return null;
             }
         }
 
@@ -1749,6 +1713,7 @@ namespace HelloWorld
         }
 
     }
+
     /// <summary>
     /// 访问者模式
     /// </summary>

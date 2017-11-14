@@ -99,6 +99,7 @@ namespace HelloWorld
         }
 
     }
+    //common language specification
     public static class cls
     {
         public static ushort MAXIMUM_CAPACITY_Ushort = 1 << (sizeof(ushort) - 1);
