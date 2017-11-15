@@ -50,11 +50,11 @@ namespace HelloWorld
 
         public static object RunJS_MS(string code)
         {
-            var msc = new MSScriptControl.ScriptControlClass();
-            msc.Language = "javascript";
-            msc.AddCode("test.js");
-            var res = msc.Eval(@"test(""sfsafafas"")");
-            Console.WriteLine(res);
+            //var msc = new MSScriptControl.ScriptControlClass();
+            //msc.Language = "javascript";
+            //msc.AddCode("test.js");
+            //var res = msc.Eval(@"test(""sfsafafas"")");
+            //Console.WriteLine(res);
             return null;
         }
 

@@ -8,15 +8,15 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 using AutoZip;
-using ZQ.LogHelper;
+//using ZQ.LogHelper;
 
 namespace AutoZipM
 {
     class Program
     {
         static bool _IsExit = false;
-        static EventLogHelper helper = new EventLogHelper();
-        static FileLogHelper helperEx = new FileLogHelper();
+        //static EventLogHelper helper = new EventLogHelper();
+        //static FileLogHelper helperEx = new FileLogHelper();
 
         static void Main(string[] args)
         {
@@ -39,8 +39,8 @@ namespace AutoZipM
             }
             catch (Exception ex)
             {
-                helperEx.WriteLog(ex, EventLogEntryType.Error);
-                helper.WriteLog(ex, EventLogEntryType.Error);
+                //helperEx.WriteLog(ex, EventLogEntryType.Error);
+                //helper.WriteLog(ex, EventLogEntryType.Error);
             }
         }
         private static void MonitorInput()

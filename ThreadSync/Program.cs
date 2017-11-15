@@ -64,10 +64,10 @@ namespace ThreadSync
             //    }
             //}
 
-            //var process = new ProcessStartInfo();
-            //process.FileName = "F://Test//FileAssociation.exe";
-            //process.Verb = "runas";
-            //Process.Start(process);
+            //var p = new ProcessStartInfo();
+            //p.FileName = "F://Test//FileAssociation.exe";
+            //p.Verb = "runas";
+            //Process.Start(p);
             Console.WriteLine("wait exit...");
             do
             {
