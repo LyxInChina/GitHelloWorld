@@ -1,11 +1,30 @@
 ﻿using System;
 using ZeroMQ;
 using System.Threading;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace MQTest
 {
     public class ZeroMQTest
     {
+        /*
+         * Hadoop Zookeeper
+         * AMQP
+         * 
+         请求回复模式
+         lockstep
+         客户端必须zmq_send()然后zmq_recv()
+         服务端必须zmq_recv()然后zmq_send()
+         服务器重启后客户端不会自动重新连接(一定几率)
+
+        ZeroMQ 字符串结尾不含终止符
+        ZContext对象在进程开始和终止时进行创建和释放
+        退出清理
+        三种对象context socket message
+
+        */
+
         /// <summary>
         /// 获取当前ZeroMQ版本号
         /// </summary>
@@ -16,19 +35,7 @@ namespace MQTest
             ZeroMQ.lib.zmq.version(out major,out minor,out patch);
             return string.Format("{0}.{1}.{2}", major, minor, patch);
         }
-        /*请求回复模式
-         lockstep
-         客户端必须zmq_send()然后zmq_recv()
-         服务端必须zmq_recv()然后zmq_send()
-         服务器重启后客户端不会自动重新连接
 
-        ZeroMQ 字符串结尾不含终止符
-        ZContext对象在进程开始和终止时进行创建和释放
-        退出清理
-        三种对象context socket message
-        尽量使用send receive bytes
-
-             */
         /// <summary>
         /// 请求回复模式
         /// </summary>
@@ -40,6 +47,22 @@ namespace MQTest
                 var context = new ZContext();
                 var zsocker = new ZSocket(context, ZSocketType.REP);
                 zsocker.Bind(url);
+                return zsocker;
+            }
+
+            /// <summary>
+            /// 同一个服务端可以帮到多个IP
+            /// </summary>
+            /// <param name="url"></param>
+            /// <returns></returns>
+            public static ZSocket CreateServer(string[] url)
+            {
+                var context = new ZContext();
+                var zsocker = new ZSocket(context, ZSocketType.REP);
+                for (int i = 0; i < url.Length; i++)
+                {
+                    zsocker.Bind(url[i]);
+                }
                 return zsocker;
             }
 
@@ -66,7 +89,6 @@ namespace MQTest
                     socket.SendFrame(new ZFrame("NONO::" +msg));
                 }
             }
-            
 
             public static void Listen(ZSocket socket)
             {
@@ -157,13 +179,13 @@ namespace MQTest
                 private ZContext context;
                 private ZSocket sender;
                 private ZSocket sink;
-                public string SUrl;
-                public string CUrl;
+                private string CUrl;
+                private string VUrl;
                 public int TaskNum = 10;
                 public Ventilator(string s,string c)
                 {
-                    SUrl = s;
-                    CUrl = c;
+                    CUrl = s;
+                    VUrl = c;
                     Init();
                 }
 
@@ -172,13 +194,15 @@ namespace MQTest
                     context = new ZContext();
                     sender = new ZSocket(context, ZSocketType.PUSH);
                     sink = new ZSocket(context, ZSocketType.PUSH);
-                    sender.Bind(CUrl);
-                    sink.Connect(SUrl);
+                    sender.Bind(VUrl);
+                    sink.Connect(CUrl);
                 }
-                public void ProduceTask(int num=10)
+                public void ProduceTask(uint num=10)
                 {
+                    num = num > 100 ? 100 : num;
+                    num = num <= 0 ? 1 : num;
                     //发出任务分配信号
-                    var sig = BitConverter.GetBytes(-num);
+                    var sig = BitConverter.GetBytes(num);
                     sink.Send(sig, 0, sig.Length);
                     //发出任务信息
                     for (int i = 0; i < num; i++)
@@ -259,10 +283,10 @@ namespace MQTest
                 private ZContext context;
                 private ZSocket sink;
                 private bool loop=true;
-                public string CUlr;
+                private string SUrl;
                 public Sinker(string c)
                 {
-                    CUlr = c;
+                    SUrl = c;
                     Init();
                 }
 
@@ -270,7 +294,7 @@ namespace MQTest
                 {
                     context = new ZContext();
                     sink = new ZSocket(context, ZSocketType.PULL);
-                    sink.Bind(CUlr);
+                    sink.Bind(SUrl);
                 }
 
                 public void WaitResult()
@@ -299,7 +323,35 @@ namespace MQTest
                     context.Dispose();
                 }
             }
+
+            private Ventilator ventilator;
+            private TaskWorker taskWorker;
+            private Sinker sinker;
+            private IList<TaskWorker> taskWorkers = new List<TaskWorker>();
+            public string SinkerUrl="tcp://127.0.0.1:10001";
+            public string VentiltorUrl="tcp://127.0.0.1:10002";
+
+            public Parallel_Pipeline(string surl,string vurl)
+            {
+                if(!string.IsNullOrEmpty(surl))
+                {
+                    SinkerUrl = surl;
+                }
+                if (!string.IsNullOrEmpty(vurl))
+                {
+                    VentiltorUrl = vurl;
+                }
+            }
+
+            public void Init()
+            {
+                ventilator = new Ventilator(SinkerUrl, VentiltorUrl);
+                taskWorker = new TaskWorker(SinkerUrl, VentiltorUrl);
+                sinker = new Sinker(SinkerUrl);
+            }
+                
         }
+
 
     }
 }

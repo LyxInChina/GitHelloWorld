@@ -163,8 +163,8 @@ namespace MQTest
             do
             {
                 Console.WriteLine("Input Number:");
-                int t = 1;
-                int.TryParse(Console.ReadLine(),out t);
+                uint t = 1;
+                uint.TryParse(Console.ReadLine(),out t);
                 t = t > 100 ? 100 : t;
                 v.ProduceTask(t);
             } while (true);
@@ -192,8 +192,9 @@ namespace MQTest
             p.FileName = System.IO.Path.Combine(path,name);
             p.Verb = "runas";
             p.Arguments = arg;
+            p.CreateNoWindow = false;
             //p.RedirectStandardInput = true;
-            //p.UseShellExecute = false;
+            p.UseShellExecute = false;
             p.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
             p.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
             System.Diagnostics.Process.Start(p);
