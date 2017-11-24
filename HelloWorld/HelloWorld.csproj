@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="CLR.cs" />
     <Compile Include="DesignPattern.cs" />
+    <Compile Include="English.cs" />
     <Compile Include="GetPost.cs" />
     <Compile Include="IntropJS.cs" />
     <Compile Include="MyResources.Designer.cs">

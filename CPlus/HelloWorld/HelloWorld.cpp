@@ -4,7 +4,8 @@
 #include <iostream>//Ä¬ÈÏÂ·¾¶
 #include <stdio.h>
 
-using namespace System;
+#define AUDIO32_t 0x7fffffff	
+
 
 void ForEach(int p[], int len);
 void Func1(char p[]);
@@ -12,17 +13,23 @@ void ArrayAndPointer();
 void StructAndPointer();
 void TestStructMemoryAllocation();
 
-int main(array<System::String ^> ^args)
+
+int main(int argc, char* argv[])
 {
     printf("Hello World");
-	
-	int res[4] = { 100,3,5,7 };
-	ForEach(res, 4);
-	char ress[6] = { 'a','b','c','d','e','f' };
-	Func1(ress);
-	ArrayAndPointer();
-	StructAndPointer();
-	TestStructMemoryAllocation();
+	float ff = 1.2f;
+	float *p_ch = &ff;
+	int32_t sf = (int32_t)((*p_ch) * (float)AUDIO32_t);
+
+	printf("%d", sf);
+
+	//int res[4] = { 100,3,5,7 };
+	//ForEach(res, 4);
+	//char ress[6] = { 'a','b','c','d','e','f' };
+	//Func1(ress);
+	//ArrayAndPointer();
+	//StructAndPointer();
+	//TestStructMemoryAllocation();
     return 0;
 }
 
