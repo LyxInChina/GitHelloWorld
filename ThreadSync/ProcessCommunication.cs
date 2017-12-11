@@ -167,5 +167,32 @@ namespace ThreadSync
 
         }
 
+        public class MemoryMappedFile:IPCommunication
+        {
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+            public void SendMsg(string msg)
+            {
+
+            }
+            public void SendMsg(byte[] msg)
+            {
+                throw new NotImplementedException();
+            }
+
+            public string ReceiveMsg()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class SharedMemory
+        {
+            
+        }
+
+
     }
 }

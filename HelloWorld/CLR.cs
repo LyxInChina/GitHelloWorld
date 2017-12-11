@@ -5,11 +5,15 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo(assemblyName: "ThreadSync,Publickey=c624defc-4780-4435-ae11-c630a26c83ac",
+    AllInternalsVisible = true)]
 
 //using strstr = System.String;
-
 namespace HelloWorld
 {
+    
     public class CLR
     {
         public static void Func()
@@ -288,7 +292,30 @@ Chapter 5
         可传递：
         一致：
 
-    32.
+    32.友元程序集
+        定义为internal的代码可以被指定的程序集访问
+        使用System.Runtime.ComplierServices.InternalsVisibleTo特性定义在程序集上
+        参数指定程序集名称和公钥
+
+    33.静态类
+        静态类直接从基类System.Object继承；
+        不实现任何接口；
+        只能定义静态成员；
+        不能作为字段、方法参数、局部变量；
+    34.分部类、结构、接口
+        partial
+        完全由C#编译器提供；
+    35.CLR调用虚方法（属性/事件）
+        CLR编译方法时，在方法定义表中写入三个记录项，并用记录项的一组标识指明根据方法的类型：静态方法、实例方法、虚方法；
+        CLR方法调用指令：
+        call：可调用静态、实例、虚方法，调用方法时，必须指定所定义的类型或者实例对象；
+        callvirt：只能调用实例、虚方法，会检查变量是否为null，执行比call慢；
+        C#使用callvirt调用所有的实例方法（密封类、基类方法以及值类型特殊）；
+        调用虚方法速度比非虚方法速度慢；
+        JIT没有内嵌虚方法；
+        sealed类
+    36.
+
 
      */
 }

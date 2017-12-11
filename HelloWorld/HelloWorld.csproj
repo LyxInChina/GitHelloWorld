@@ -144,6 +144,12 @@
       <LastGenOutput>MyResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ThreadSync\SYS_ThreadSync.csproj">
+      <Project>{c624defc-4780-4435-ae11-c630a26c83ac}</Project>
+      <Name>SYS_ThreadSync</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
