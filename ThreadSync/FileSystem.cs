@@ -15,6 +15,17 @@ namespace ThreadSync
         文件系统实现
 
     1.文件系统结构
+        
+        应用程序 
+        ---> 高层文件高级操作
+        逻辑文件系统 
+        ---> 存储文件逻辑块和物理块地址转换
+        基本文件系统
+        --->对磁盘物理块进行读写操作
+        IO控制
+        --->底层设备驱动 中断以及通信
+        设备
+
         文件系统的两个设计问题：
             1.如何定义文件系统对用户的接口 - 定义文件、文件属性、文件操作
             2.创建数据结构和算法将逻辑文件系统映射到物理外存设备
@@ -25,7 +36,7 @@ namespace ThreadSync
         基本文件系统 ： 向设备驱动程序发送命令对磁盘上的物理块进行读写（使用实际物理块地址：驱动器 柱面cylinder、磁道 track 扇区sector）
         文件组织模块 file-organization module ： 联系逻辑块与物理块，将逻辑块地址转换成基本文件系统使用的物理块地址
         逻辑文件系统 管理元数据 - 包括文件系统所有的结构数据 通过文件控制块维护文件结构 ；负责保护和安全
-        文件控制块 file control block FCB 包含文件信息
+            文件控制块 file control block FCB 包含文件信息
 
         Unix 使用Unix文件系统 UFS - 基于伯克利快速文件系统FFS
         Linux 标准文件系统 可扩展文件系统 extended file system  - ext2 ext3
@@ -55,6 +66,8 @@ namespace ThreadSync
             文件对象 File object
             超级块对象 superblock object
             目录条目对象 dentry object
+    保护
+        访问控制-每个文件和目录都增加一个访问控制列表ACL-Access Control list
         
 
      */
