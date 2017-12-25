@@ -1,6 +1,5 @@
 *.db
 *.cache
-*.dll
 *.exe
 *.exe.config
 *.exp
