@@ -2,7 +2,7 @@
 
 #include <iostream>//Ĭ��·��
 #include <stdio.h>
-
+#include "stdafx.h"
 #define AUDIO32_t 0x7fffffff	
 
 
@@ -150,5 +150,3 @@ void TestStructMemoryAllocation()
 	printf("%p\n", &p->a);
 	printf("%p\n", &p->c);
 }
-
-
