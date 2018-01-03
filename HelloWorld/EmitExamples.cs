@@ -3,19 +3,29 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
+using HelloWorld;
 
 [assembly:CLSCompliant(true)]
-namespace EmitExamples.HelloWorld
+namespace EmitExamples
 {
     [StructLayout(LayoutKind.Sequential)]
-    class Program
+    class EmitProgram
     {
         /// <summary>
         /// 用来调用动态方法的委托
         /// </summary>
         private delegate void HelloWorldDelegate();
 
+
         static void Main(string[] args)
+        {
+            MakeHelloWorldFunc();
+            FCurrentFunction();
+            RegexTest.HasChinese("sdfioafia汉asf");
+            Console.ReadKey();
+        }
+
+        public static void MakeHelloWorldFunc()
         {
             //定义一个名为HelloWorld的动态方法，没有返回值，没有参数
             DynamicMethod helloWorldMethod = new DynamicMethod("HelloWorld", null, null);
@@ -37,7 +47,10 @@ namespace EmitExamples.HelloWorld
             HelloWorld();
 
             Console.WriteLine("Hello World!");
-            //Console.ReadLine();
+        }
+
+        public static void NumberFormat()
+        {
             var cc = new Clacc();
             cc.bol = true;
             cc.a = 0x88;
@@ -51,7 +64,10 @@ namespace EmitExamples.HelloWorld
             double ddo = 89d, ddo2 = 89D;
             byte bb = 89;
             int ii = 32, ii2 = 0x32;
-            //Console.WriteLine(cc.c);
+        }
+
+        public static void StructSize()
+        {
             var a = new MemoryAlignA() { b = 98, c = 97, d = 96 };
             var b = new MemoryAlignB() { b = 98, c = 97, d = 96 };
             unsafe
@@ -63,13 +79,18 @@ namespace EmitExamples.HelloWorld
                 Console.WriteLine(sizeof(MemoryAlignC));
                 //Console.WriteLine(sizeof(bool));
             }
-            Ffffunction();
-            Console.ReadKey();
         }
-        public static void Ffffunction()
+
+        public static void FCurrentFunction()
         {
             Console.WriteLine(":@@@@:" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
         }
+
+        public static void FileInfo()
+        {
+
+        }
+
     }
 
 

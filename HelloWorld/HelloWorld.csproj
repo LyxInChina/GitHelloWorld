@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EmitExamples.HelloWorld.Program</StartupObject>
+    <StartupObject>EmitExamples.EmitProgram</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -87,6 +87,8 @@
     <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -105,7 +107,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MyResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="EmitExamples.cs" />
+    <Compile Include="NofityIcon.cs" />
     <Compile Include="P_HackersDelight.cs" />
     <Compile Include="ProgramIL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -35,9 +35,6 @@ InvokerHelperDemo
 MEF
 MEF框架测试项目；
 
-ShowNotifyMode
-隐藏应用程序到右下角多盘；
-
 ThreadSync
 多线程测试；
 

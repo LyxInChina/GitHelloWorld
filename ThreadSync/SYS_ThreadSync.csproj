@@ -52,7 +52,6 @@
     <Compile Include="PhilosopherEatingProblem.cs" />
     <Compile Include="ProcessCommunication.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProgramEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

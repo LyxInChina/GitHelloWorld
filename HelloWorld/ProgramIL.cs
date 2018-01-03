@@ -77,18 +77,9 @@ namespace HelloWorld
             Console.Write("___");
             Console.Write(t);
             Console.Write("___");
-            var res = CalCulateShowRate(633, 337);
             Console.ReadLine();
         }
-
-        private static Tuple<int, int> CalCulateShowRate(int w, int h)
-        {
-            var t1 = Math.Floor((decimal)w / 16);
-            var t2 = Math.Floor((decimal)h / 9);
-            var t3 = Math.Min(t1, t2);
-            return new Tuple<int, int>((int)t3 * 16, (int)t3 * 9);
-        }
-
+        
         /// <summary>
         /// 编译器条件编译
         /// </summary>

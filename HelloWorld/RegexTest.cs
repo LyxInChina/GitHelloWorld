@@ -32,11 +32,22 @@ namespace HelloWorld
 
         public static void IsHtml(string var=null)
         {
-            var str = var ?? "fsafhoi.Htm.hht";
             var pattern = @"^*\.(html|htm)$";
+            var str = var ?? "fsafhoi.Htm.hht";
             var regex = new Regex(pattern, RegexOptions.IgnoreCase);
             var res = regex.IsMatch("sfafaf.htm");
             Console.WriteLine("{0} is html {1}", str, res);
+        }
+
+        public static bool HasChinese(string var = null)
+        {
+            //System.Text.RegularExpressions.Regex.IsMatch("NLine.Str", @"[\u4e00-\u9fa5]+")
+            var parttern = @"[\u4e00-\u9fa5]+";
+            var str = var ?? "ok汉s字test";
+            var regex = new Regex(parttern, RegexOptions.IgnoreCase);
+            var res = regex.IsMatch(str);
+
+            return res;
         }
     }
 }

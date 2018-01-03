@@ -1,40 +1,40 @@
 
-C++ ��̬��ʾ��
-��ʹ��crpycppΪ����
+C++ 动态库示例
+以使用crpycpp为例：
 
-1.ʹ���ⲿC++�⣻
-	ʹ�ö�̬�⣺
-	�ⲿ��ͷ�ļ���lib�ļ���dll�ļ�
-	����ͷ�ļ�����Ŀ--����--c/c++--��������Ŀ¼=������ͷ�ļ�Ŀ¼��
-	����lib�ļ�����Ŀ--����--������--����--���ӿ�Ŀ¼=������lib���ļ�Ŀ¼��
-	ָ������ļ�����Ŀ--����--������--����--����������=������������lib�ļ�����
-	��Ҫ��Ϸ��Ҫ���������ĳ������ݿ��ļ�����Ŀ--����--������--����--���������ĳ������ݿ��ļ����ǣ�
+1.使用外部C++库；
+	使用动态库：
+	外部库头文件，lib文件，dll文件
+	添加头文件：项目--属性--c/c++--附件包含目录=》添加头文件目录；
+	添加lib文件：项目--属性--链接器--常规--附加库目录=》添加lib库文件目录；
+	指定礼拜文件：项目--属性--链接器--输入--附加依赖项=》添加依赖的lib文件名；
+	若要调戏需要生成完整的程序数据库文件：项目--属性--链接器--调试--生成完整的程序数据库文件：是；
 
-2.�Զ���DLL���ܣ�
+2.自定义DLL功能；
 	
-3.���ӵ���������
-	ʹ�� extern "C" __declspec(dllexport) ���Ҫ�����ĺ���
+3.添加导出函数；
+	使用 extern "C" __declspec(dllexport) 标记要导出的函数
 	eg:
 	extern "C" __declspec(dllexport)
 	int Test(int a)
 	{
 		return a*100;
 	}
-	ʹ��.defģ���ļ�
-	ʹ��Depends���߲鿴�����ĺ�������Щ��
+	使用.def模块文件
+	使用Depends工具查看导出的函数有哪些；
 
-4.���ɶ�̬�⣻
-	�Զ����ƽű� --- ����Ŀ����ʱ�Զ��������������
-	ʹ��Depends���߲鿴�����⣻
-	����Ȼȱ�������⣬ʹ��processmonitor���߽�����ϣ�
-	���������¼����ӣ�
+4.生成动态库；
+	自动复制脚本 --- 在项目生成时自动复制相关依赖库
+	使用Depends工具查看依赖库；
+	若仍然缺少依赖库，使用processmonitor工具进行诊断；
+	后期生成事件添加：
 	copy "$(ProjectDir)lib\x64\*.*" "$(OutputPath)*.*"
 
-5.�ⲿ����ʱ�����е���
-	���ӽ��е���
-	��Ҫ����C++�⣬��Ҫ�����ڵ�pdb�ļ����Ƶ���Ŀ·���£�Ȼ����и��ӵ���
+5.外部调用时，进行调试
+	附加进行调试
+	若要调试C++库，需要将对于的pdb文件复制到项目路径下，然后进行附加调试
 
-6.C#��ʹ�ã�
+6.C#中使用：
 	[DllImport(DLLPATH, EntryPoint = "GetNdiName")]
     public static extern void GetNdiName(IntPtr sources,ref int count);
 -----------------------------------------------------------------------
@@ -43,36 +43,36 @@ C++ ��̬��ʾ��
 
 Mark:
 
-7.C++��������ֵ���������
-	1.����ֵ����/�ṹ��
-		ֵ���ͣ���C#����������ͣ�
-		�ṹ�壺��C#�����Ӧ�Ľṹ�壺(���ݽṹ���ڴ�ռ���Ҫ��C#�߼�������)
-			C++�������� Fun(struct * s,int * i);//����ṹ��s������i��
-			C#�������� Fun(IntPtr s,ref int i);
-	2.�����������ͣ�
-	//�������ݽṹ
-	[StructLayoutAttribute(LayoutKind.Sequential)]//ָ�����ݽṹ�ڴ�ֲ�Ϊ˳��洢����
+7.C++函数返回值或者输出项
+	1.单个值类型/结构体
+		值类型：在C#定义兼容类型；
+		结构体：在C#定义对应的结构体：(数据结构的内存空间需要在C#逻辑中申请)
+			C++函数定义 Fun(struct * s,int * i);//输出结构体s和整形i；
+			C#函数调用 Fun(IntPtr s,ref int i);
+	2.返回数组类型：
+	//定义数据结构
+	[StructLayoutAttribute(LayoutKind.Sequential)]//指定数据结构内存分布为顺序存储布局
     public struct NDIlib_source_t
     {   
-        public IntPtr p_ndi_name;//�ַ�������
-        public IntPtr p_ip_address;//�ַ�������
+        public IntPtr p_ndi_name;//字符串类型
+        public IntPtr p_ip_address;//字符串类型
     }
-		1.������Ҫȷ������ֵ�Ŀռ��С��������Ԫ�ش�С*Ԫ�ظ�����
-			Ԫ�ش�С��
-			eg��int size = Marshal.SizeOf(typeof(NDIlib_source_t));
+		1.首先需要确定返回值的空间大小，即数组元素大小*元素个数：
+			元素大小：
+			eg：int size = Marshal.SizeOf(typeof(NDIlib_source_t));
 				int totalsize = count*size;
-		2.��ָ�����ռ䣺
+		2.给指针分配空间：
 			eg: IntPtr data = Marshal.AllocHGlobal(total);
-		3.����C++������������ֵ���ݷŵ�C#ָ����ָ��ռ��У�
-		4.��ȡ���ݲ�ת��ΪC#�ж�����������ͣ�
-			dataָ��ƫ��һ�����ݽṹ��
+		3.调用C++函数，将返回值数据放到C#指定的指针空间中；
+		4.读取数据并转换为C#中定义的数据类型：
+			data指针偏移一个数据结构：
 			InPtr res = IntPtr.Add(data, size);
-			//����ת��
+			//类型转化
 			var src = (NDIlib_source_t)Marshal.PtrToStructure(res, typeof(NDIlib_source_t))
 
-	8.C++ʹ�ÿⷽʽ��
-		1.���øÿ�ľ�̬�⣨static��-Static��
-		2.���ÿ�Ķ�̬�⣨dll��-DLL-ONLY��
-		3.ͬʱʹ�þ�̬��Ͷ�̬��-DLL-Import,��ʱ�������п����루MT/MTD����
+	8.C++使用库方式：
+		1.引用该库的静态库（static）-Static；
+		2.引用库的动态库（dll）-DLL-ONLY；
+		3.同时使用静态库和动态库-DLL-Import,此时工程运行库引入（MT/MTD）；
 
 

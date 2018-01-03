@@ -70,12 +70,6 @@
     <EmbeddedResource Include="Rsc\eye_green_512px_1175577_easyicon.net.png" />
     <EmbeddedResource Include="Rsc\eye_red_512px_1175777_easyicon.net.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ShowNotifyMode\ShowNotifyMode.csproj">
-      <Project>{63ff142f-e3e4-4d55-87fc-513f795ee2d4}</Project>
-      <Name>ShowNotifyMode</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
