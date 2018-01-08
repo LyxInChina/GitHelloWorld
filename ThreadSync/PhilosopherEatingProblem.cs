@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ThreadSync
 {
+    /// <summary>
+    /// 哲学家吃饭问题
+    /// </summary>
     public class PhilosopherEatingProblem
     {
         public enum PhilosopherState

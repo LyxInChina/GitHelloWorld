@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace ThreadSync
 {
+    /// <summary>
+    /// 银行家算法
+    /// </summary>
     public static class BankerAligorithmcs
     {
         //n Number of Process
-        //m Number of Resouce
+        //m Number of Resources
         private static int M=1;
         private static int N=1;
         public static int[] Available=new int[M];
@@ -52,7 +55,7 @@ namespace ThreadSync
         /// <param name="m"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        public static bool CheckSafaStatus(int m,int n)
+        public static bool CheckSafeStatus(int m,int n)
         { //Step 1
             var work = Available;
             var finish =new bool[n];
@@ -80,7 +83,7 @@ namespace ThreadSync
         /// source request of i
         /// </summary>
         /// <param name="i"></param>
-        public static void SourceRequest(int i)
+        public static void RequestSource(int i)
         {
             int[] request=null;
             if (BigOrEqual(Need[i],request))

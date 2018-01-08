@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ThreadSync
 {
     public class FileSystem
     {
-
+        public static void FileInfo()
+        {
+            var f = new FileInfo("");
+            
+        }
     }
 
     /*
@@ -19,7 +24,9 @@ namespace ThreadSync
         应用程序 
         ---> 高层文件高级操作
         逻辑文件系统 
-        ---> 存储文件逻辑块和物理块地址转换
+        ---> 管理元数据
+        文件组织系统
+        ---> 将文件逻辑块转换为物理地址
         基本文件系统
         --->对磁盘物理块进行读写操作
         IO控制

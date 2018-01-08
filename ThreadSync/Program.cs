@@ -40,34 +40,12 @@ namespace ThreadSync
         #endregion
 
         static void Main(string[] args)
-        {
-            Thread th1 = new Thread(C.EntryMethod);
-            th1.Start(0);
-            Thread th2 = new Thread(C.EntryMethod);
-            th2.Start(1);
-
-            //int a = 3;
-            //C.InitEx(a);
-            //for (int i = 0; i < a; i++)
-            //{
-            //    Thread th = new Thread(C.EntryMethodEx);
-            //    th.Start(i);
-            //}
-            //while (true)
-            //{
-            //    var str = Console.ReadLine();
-            //    if (!string.IsNullOrEmpty(str)&&str.Equals("exit"))
-            //    {
-            //        C.Exit = false;
-            //        C.ExitEx = false;
-            //        break;
-            //    }
-            //}
-
+        {            
             //var p = new ProcessStartInfo();
             //p.FileName = "F://Test//FileAssociation.exe";
             //p.Verb = "runas";
             //Process.Start(p);
+            C.EntryMethodEx();
             Console.WriteLine("wait exit...");
             do
             {
@@ -87,8 +65,9 @@ namespace ThreadSync
         public static Random random= new Random(7);
         public static bool Exit = true;
 
-        public static bool[] FlagEx;
+        public static int[] FlagEx = new int[3] { 0,1,2};
         public static int TurnEx;
+        public static int[] TurnExx = new int[2] { 0,1};
         public static Random randomEx=new Random();
         public static bool ExitEx = true;
         public static int Max;
@@ -103,17 +82,16 @@ namespace ThreadSync
         public static AutoResetEvent SleepEventEx = new AutoResetEvent(false);
 
         public static bool MLock = false;
-        public static void EntryMethod(object pas)
+        public static void EntryMethod()
         {
-            int pa = (int) pas;
-            if (pa<0||pa>1)
-            {
-                return;
-            }
-            Method(pa, 1 - pa);
+            Thread th1 = new Thread(()=>Method(0));
+            th1.Start();
+            Thread th2 = new Thread(() => Method(1));
+            th2.Start();            
         }
-        public static void Method(int i,int j)
+        public static void Method(int i)
         {
+            int j = Flag.Length-1 - i;
             do
             {
                 //Entry Section
@@ -122,6 +100,7 @@ namespace ThreadSync
                 Turn = j;
                 while (Flag[j] && Turn == j)
                 {
+                    Thread.Sleep(10);
                     //Console.WriteLine(Thread.CurrentThread.ManagedThreadId + "Wating the work");
                 }
                 //Critical Section
@@ -135,20 +114,14 @@ namespace ThreadSync
             } while (!StopEvent.WaitOne(1));
         }
 
-        public static void InitEx(int max)
+        public static void EntryMethodEx()
         {
-            Max = max;
-            FlagEx= new bool[Max];
-        }
-
-        public static void EntryMethodEx(object pas)
-        {
-            int pa = (int) pas;
-            if (pa<0||pa>=Max)
-            {
-                return;
-            }
-            MethodEx(pa);
+            Thread th1 = new Thread(() => MethodEx(0));
+            th1.Start();
+            Thread th2 = new Thread(() => MethodEx(1));
+            th2.Start();
+            Thread th3 = new Thread(() => MethodEx(2));
+            th3.Start();
         }
 
         public static void MethodEx(int i)
@@ -156,12 +129,13 @@ namespace ThreadSync
             do
             {
                 //Entry Section 进入区
-                FlagEx[i] = true;
+                FlagEx[i] = i;
                 TurnEx = i + 1 >=Max ? 0 : i + 1;//0 到 Max-1
-                while (Wait(i))
-                {
-
-                }
+                //while (Wait(i))
+                //{
+                //    Thread.Sleep(10);
+                //}
+                WaitEx(i);
                 //WaitEx(i);
                 //Critical Section 临界区
                 // 互斥 mutual exclusion 
@@ -169,7 +143,7 @@ namespace ThreadSync
                 // 有限等待 bounded waiting
                 Work();
                 //Exit Section 退出区
-                FlagEx[i] = false;
+                FlagEx[i] = i;
 
                 //Remainder Section 剩余区
                 var t = random.Next(50, 500);
@@ -179,16 +153,17 @@ namespace ThreadSync
 
         public static bool Wait(int i)
         {
-            int t = i + 1 >= Max ? 0 : i + 1;
-            bool temp= FlagEx[t] && TurnEx == t;
-            for (int j = 0; j < Max; j++)
-            {
-                if (j != i && j != t)
-                {
-                    temp = temp || FlagEx[j] && TurnEx == j;
-                }
-            }
-            return temp;
+            //int t = i + 1 >= Max ? 0 : i + 1;
+            //bool temp= FlagEx[t] && TurnEx == t;
+            //for (int j = 0; j < Max; j++)
+            //{
+            //    if (j != i && j != t)
+            //    {
+            //        temp = temp || FlagEx[j] && TurnEx == j;
+            //    }
+            //}
+            //return temp;
+            return false;
         }
 
         public static void WaitEx(int i)
@@ -197,7 +172,7 @@ namespace ThreadSync
             {
                 if (j!=i)
                 {
-                    while (FlagEx[j] && TurnEx == j) ;
+                    //while (FlagEx[j] && TurnEx == j) ;
                 }
             }
         }
@@ -273,8 +248,6 @@ namespace ThreadSync
         public static SemaphoreSlim MMutexEx = new SemaphoreSlim(0,1);
         public static SemaphoreSlim MEmptyEx = new SemaphoreSlim(9,9);
         public static SemaphoreSlim MFullEx = new SemaphoreSlim(0,9);
-        public static SpinLock MSpinLock = new SpinLock(false);
-
         public static void Producter()
         {
             do
@@ -352,18 +325,15 @@ namespace ThreadSync
         {
             //Entry Section
             MSemaphoreSlim.Wait();
-
             //Critical Section
             //TODO: Critical Action
-
             //Exit Section
             MSemaphoreSlim.Release();
-
             //Remainder Section
-
         }
 
         public static bool MLockToken = false;
+        public static SpinLock MSpinLock = new SpinLock(false);
 
         public static void SpinLockMethod()
         {

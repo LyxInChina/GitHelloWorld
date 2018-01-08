@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoZip", "AutoZip\AutoZip.csproj", "{5AD5F4E7-1A55-40EA-9CDE-E6052591A762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SYS_ThreadSync", "ThreadSync\SYS_ThreadSync.csproj", "{C624DEFC-4780-4435-AE11-C630A26C83AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SYS", "ThreadSync\SYS.csproj", "{C624DEFC-4780-4435-AE11-C630A26C83AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld.csproj", "{DF475759-2C65-48AC-8B94-712A3525042F}"
 EndProject

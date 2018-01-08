@@ -148,9 +148,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ThreadSync\SYS_ThreadSync.csproj">
+    <ProjectReference Include="..\ThreadSync\SYS.csproj">
       <Project>{c624defc-4780-4435-ae11-c630a26c83ac}</Project>
-      <Name>SYS_ThreadSync</Name>
+      <Name>SYS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,7 +11,6 @@ namespace HelloWorld
         {
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
             var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             var v1 = System.Reflection.Assembly.GetExecutingAssembly().GetName().VersionCompatibility;
             var v2 = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributesData();

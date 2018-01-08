@@ -20,7 +20,7 @@ namespace ThreadSync
         }
 
         /// <summary>
-        /// 
+        /// 管道
         /// </summary>
         public class PipePC:IPCommunication
         {
@@ -116,6 +116,9 @@ namespace ThreadSync
             }
         }
 
+        /// <summary>
+        /// socket
+        /// </summary>
         public class Remoting
         {
             /*
@@ -124,6 +127,9 @@ namespace ThreadSync
              */
         }
 
+        /// <summary>
+        /// Windows消息
+        /// </summary>
         public class Wm_CopyData: IPCommunication
         {
 
@@ -167,6 +173,9 @@ namespace ThreadSync
 
         }
 
+        /// <summary>
+        /// 内存映射
+        /// </summary>
         public class MemoryMappedFile:IPCommunication
         {
             public void Dispose()
@@ -188,6 +197,9 @@ namespace ThreadSync
             }
         }
 
+        /// <summary>
+        /// 共享内存
+        /// </summary>
         public class SharedMemory
         {
             
