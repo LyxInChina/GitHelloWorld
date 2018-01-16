@@ -9,10 +9,13 @@ namespace ThreadSync
 {
     public class FileSystem
     {
-        public static void FileInfo()
+        public static void ReName(string path)
         {
-            var f = new FileInfo("");
-            
+            if (Directory.Exists(path))
+            {
+                var dir = new DirectoryInfo(path);
+                var files = dir.GetFiles();
+            }
         }
     }
 
