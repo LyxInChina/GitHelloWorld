@@ -43,6 +43,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InjectDemo", "InjectDemo\In
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeDll", "InjectDemo\NativeDll\NativeDll.vcxproj", "{A2705FDD-EE42-499B-80E3-B8ED7B95E046}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMake", "CMake", "{A9FBB511-BAF2-4497-A6BE-D89E5A5972B4}"
+	ProjectSection(SolutionItems) = preProject
+		CPlus\CMake\helloworld.c = CPlus\CMake\helloworld.c
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

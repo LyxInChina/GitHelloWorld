@@ -1,8 +1,9 @@
-// HelloWorld.cpp: ����Ŀ�ļ���
+// HelloWorld.cpp: 
 
-#include <iostream>//Ĭ��·��
+#include <iostream>
 #include <stdio.h>
 #include "stdafx.h"
+#include "cryptdll\cryptlib.h"
 #define AUDIO32_t 0x7fffffff	
 
 
@@ -11,6 +12,12 @@ void Func1(char p[]);
 void ArrayAndPointer();
 void StructAndPointer();
 void TestStructMemoryAllocation();
+
+void crypt() 
+{
+	
+
+}
 
 
 int main(int argc, char* argv[])

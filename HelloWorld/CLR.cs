@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
+//引用友元程序集
 [assembly: InternalsVisibleTo(assemblyName: "ThreadSync,Publickey=c624defc-4780-4435-ae11-c630a26c83ac",
     AllInternalsVisible = true)]
 
@@ -32,6 +33,9 @@ namespace HelloWorld
             System.Threading.Monitor.Exit(obj);
         }
 
+        /// <summary>
+        /// 动态类型 
+        /// </summary>
         internal class Employee: System.Dynamic.IDynamicMetaObjectProvider
         {
             public virtual string GetName()=> "";
@@ -39,6 +43,11 @@ namespace HelloWorld
             public Int32 GetYear() => 20;
 
             public static dynamic s;
+
+            public DynamicMetaObject GetMetaObject(Expression parameter)
+            {
+                throw new NotImplementedException();
+            }
 
             public static dynamic Plus(dynamic d)
             {
@@ -50,9 +59,10 @@ namespace HelloWorld
                 {
                     var t = typeof(string);
                     var m = t.GetMethod("Contains", System.Reflection.BindingFlags.IgnoreCase, null, new Type[] { typeof(string) }, null);
-                    var res = m.Invoke(d, new object[] { '5' });
+                    var res1 = m?.Invoke(d, new object[] { '5' });
 
-                    bool ress = d.Contains('5');
+                    var res2 = d.Contains('5');
+                    Console.WriteLine("res1:{0},res2:{1}", res1, res2);
                 }
                 return d+d;
             }
@@ -83,14 +93,13 @@ namespace HelloWorld
 
             public override int GetHashCode()
             {
-                var id = System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(this);
-                return base.GetHashCode();
+                var id1 = System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(this);
+                var id2 = base.GetHashCode();
+                Console.WriteLine("ID1:{0},ID2:{1}", id1, id2);
+                return id1 - id2;
             }
 
-            public DynamicMetaObject GetMetaObject(Expression parameter)
-            {
-                throw new NotImplementedException();
-            }
+   
         }
 
         internal sealed class Manager:Employee
@@ -114,10 +123,26 @@ namespace HelloWorld
             unchecked
             {
                 e.GetName();
+                var sum = int.MaxValue + long.MaxValue;
+                Console.WriteLine("sum:{0}", sum);
+            }
+            unchecked
+            {
+                var sum = int.MaxValue + long.MaxValue;
+                Console.WriteLine("sum:{0}", sum);
+            }       
+            checked
+            {
+                var d = new Decimal();
+                d = Decimal.MaxValue;
+                d += 1;
             }
 
         }
 
+        /// <summary>
+        /// 显示指定结构体内成员分布
+        /// </summary>
         [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
         internal struct MyStruct
         {
@@ -214,6 +239,9 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
 
     19.GAC global assembly cache
         安装程序集（只能安装强名称）到GAC - GACUtil.exe
+        */
+        /*
+Chapter 4
     20.CLR查找引用类型：
         a.同一文件 - 早期绑定；
         b.不同文件，同一程序集；
@@ -240,33 +268,54 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
         d.方法回溯，若当前类型没有调用的方法，则JIT回溯类层次结构直到object，在沿途查找方法；
         f.虚实例方法调用：JIT在虚方法中添加额外代码，检查发出调用的变量，找到调用的对象，根据对象的类型对象指针获取实际类型，
             在该类型的方法中查找要本地化的方法；
+            */
+            /*
 Chapter 5
 
-    24.对于结果进行截断处理，即向下取整;默认检查溢出关闭；
+    24.什么是基元类型
+        编译器直接支持的数据类型，基元类型直接映射FCL中存在的类型
+        string还是String？
+        string是C#中的关键字直接映射到FCL类型 System.String
+        无论x86或x64平台int都是映射到System.Int32
+        不同编程语言对于同一个关键字可能映射不同的类型：eg：long
 
-    26.System.Demical 特殊类型 CLR没有相应的IL指令对应，因此运行速度慢；
+    对于结果进行截断处理，即向下取整;
+    默认检查溢出关闭；
+    IL指令：
+    add 不执行溢出检查
+    add.ovf 执行溢出检查，抛出异常
+
+    26.System.Demical 特殊类型,CLR不视为基元类型
+        CLR没有相应的IL指令对应，checked和unchecked对其无效；
+        内部重载方法，调用其成员，因此运行速度慢；
+
     27.引用类型和值类型
-        引用类型降低性能 在托管堆上分配对象 clas；
+        引用类型降低性能 总是在托管堆上分配对象 claas；
         值类型 在线程栈上分配对象 enum struct ；
         所有的结构都是抽象类System.ValueType的直接派生类
         System.ValueType从System.Object派生；
         所有枚举类型从System.Enum抽象类派生，而Enum从ValueType派生；
         所有值类型都是隐式密封的
+
     28.控制类型中的字段布局
         System.Runtime.InteropServices.StructLayoutAttribute
+
     29.值类型装箱和拆箱
         装箱IL指令:box
-        装箱代价比拆箱代价高
+        装箱代价比拆箱代价高:
+            
         接口变量必须是包含对堆上的一个对象的引用；
         调用虚方法时不会装箱；调用非虚方法时装箱；
-        a.在托管堆分配内存，内存大小为值类型所有字段所需内存+类型对象指针+同步块索引；
+        装箱：
+        a.在托管堆分配内存，内存大小：值类型所有字段所需内存+类型对象指针+同步块索引；
         b.值类型的字段复制到托管堆；
         c.返回托管堆中该对象的地址；
         拆箱
         a.获取已装箱对象各个字段地址；
         b.将该值由托管堆复制到线程栈上；
+
     30.同步索引块-SyncBlockIndex
-        a.线程同步 --- 不能用lock以及Monitor锁定值类型对象
+        a.线程同步 --- 用lock以及Monitor不能锁定值类型对象，无同步块索引
         SyncBlock[]
         SyncTable<*SyncBlock,*object>
 
