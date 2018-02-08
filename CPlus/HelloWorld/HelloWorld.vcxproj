@@ -105,7 +105,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(ProjectDir)face;$(ProjectDir)ffmpeg\win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)ffmpeg\win64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BeautyofProgramming.cpp" />
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
@@ -152,9 +153,7 @@
     <None Include="Source.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cryptdll\cryptlib.h" />
-    <ClInclude Include="cryptdll\dll.h" />
-    <ClInclude Include="cryptdll\fips140.h" />
+    <ClInclude Include="BeautyofProgramming.h" />
     <ClInclude Include="ffmpeg\win64\include\libavcodec\ac3_parser.h" />
     <ClInclude Include="ffmpeg\win64\include\libavcodec\adts_parser.h" />
     <ClInclude Include="ffmpeg\win64\include\libavcodec\avcodec.h" />

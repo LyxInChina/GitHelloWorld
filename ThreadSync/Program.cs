@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -13,38 +14,29 @@ namespace ThreadSync
 {
     class Program
     {
-        #region 处理键盘命令
-
-//        /// <summary>
-//        /// 处理键盘命令
-//        /// </summary>
-//        /// <param name="msg"></param>
-//        /// <param name="keyData"></param>
-//        /// <returns></returns>
-//        protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData)
-//        {
-//            int WM_KEYDOWN = 256;
-//            int WM_SYSKEYDOWN = 260;
-//            if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
-//            {
-//                switch (keyData)
-//                {
-//                    case Keys.Escape:
-//                        this.Close(); //esc关闭窗体
-//                        break;
-//                }
-//            }
-//            return false;
-//        }
-
-        #endregion
 
         static void Main(string[] args)
-        {            
+        {
             //var p = new ProcessStartInfo();
             //p.FileName = "F://Test//FileAssociation.exe";
             //p.Verb = "runas";
             //Process.Start(p);
+            var f = "test.txt";
+            var p = "E:\\";
+            var fn = Path.Combine(p, f);
+            if (!File.Exists(fn))
+            {
+                File.Create(fn).Close();
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                if (!File.Exists(fn))
+                {
+                    File.Create(fn).Close(); ;
+                }
+                FileSystem.ReNameFile(fn);
+            }
+
             C.EntryMethodEx();
             Console.WriteLine("wait exit...");
             do
@@ -56,6 +48,36 @@ namespace ThreadSync
                 Thread.Sleep(50);
             } while (true);
         }
+    }
+
+    class Keyboard
+    {
+        #region 处理键盘命令
+
+        ///// <summary>
+        ///// 处理键盘命令
+        ///// </summary>
+        ///// <param name="msg"></param>
+        ///// <param name="keyData"></param>
+        ///// <returns></returns>
+        //protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData)
+        //{
+        //    int WM_KEYDOWN = 256;
+        //    int WM_SYSKEYDOWN = 260;
+        //    if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
+        //    {
+        //        switch (keyData)
+        //        {
+        //            case Keys.Escape:
+        //                this.Close(); //esc关闭窗体
+        //                break;
+        //        }
+        //    }
+        //    return false;
+        //}
+
+        #endregion
+
     }
 
     public static class C

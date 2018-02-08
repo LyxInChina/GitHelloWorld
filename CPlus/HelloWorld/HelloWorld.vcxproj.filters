@@ -3,6 +3,7 @@
   <ItemGroup>
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="BeautyofProgramming.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -20,9 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="cryptdll\cryptlib.h" />
-    <ClInclude Include="cryptdll\dll.h" />
-    <ClInclude Include="cryptdll\fips140.h" />
     <ClInclude Include="ffmpeg\win64\include\libavcodec\ac3_parser.h" />
     <ClInclude Include="ffmpeg\win64\include\libavcodec\adts_parser.h" />
     <ClInclude Include="ffmpeg\win64\include\libavcodec\avcodec.h" />
@@ -135,5 +133,6 @@
     <ClInclude Include="ffmpeg\win64\include\libswresample\version.h" />
     <ClInclude Include="ffmpeg\win64\include\libswscale\swscale.h" />
     <ClInclude Include="ffmpeg\win64\include\libswscale\version.h" />
+    <ClInclude Include="BeautyofProgramming.h" />
   </ItemGroup>
 </Project>

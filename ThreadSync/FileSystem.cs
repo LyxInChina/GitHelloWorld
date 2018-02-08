@@ -9,12 +9,23 @@ namespace ThreadSync
 {
     public class FileSystem
     {
-        public static void ReName(string path)
+        static string _linkChar = ".";
+        public static void ReNameFile(string path, int number = 0)
         {
-            if (Directory.Exists(path))
+            if (File.Exists(path))
             {
-                var dir = new DirectoryInfo(path);
-                var files = dir.GetFiles();
+                var fp = Path.GetDirectoryName(path);
+                var fn = Path.GetFileNameWithoutExtension(path);
+                var fe = Path.GetExtension(path);
+                var np = Path.Combine(fp, fn + _linkChar + number.ToString()+fe);
+                if (File.Exists(np))
+                {
+                    ReNameFile(path, ++number);
+                }
+                else
+                {
+                    File.Move(path, np);
+                }
             }
         }
     }

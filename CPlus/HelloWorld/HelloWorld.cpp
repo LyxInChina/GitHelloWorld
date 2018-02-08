@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdio.h>
 #include "stdafx.h"
-#include "cryptdll\cryptlib.h"
+
 #define AUDIO32_t 0x7fffffff	
 
 
