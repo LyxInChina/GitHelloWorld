@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using System.Collections;
 
 //引用友元程序集
 [assembly: InternalsVisibleTo(assemblyName: "ThreadSync,Publickey=c624defc-4780-4435-ae11-c630a26c83ac",
@@ -32,6 +33,8 @@ namespace HelloWorld
             s = 55;
             System.Threading.Monitor.Exit(obj);
         }
+
+        #region 动态类型
 
         /// <summary>
         /// 动态类型 
@@ -140,6 +143,8 @@ namespace HelloWorld
 
         }
 
+        #endregion
+
         /// <summary>
         /// 显示指定结构体内成员分布
         /// </summary>
@@ -152,8 +157,10 @@ namespace HelloWorld
             [System.Runtime.InteropServices.FieldOffset(2)]
             public int ms;
         }
+
+
     }
-    /*
+    /* CLR基础
 1.如何检测系统是否安装.NET Framework？
 　　检查%SystemRoot%\System32目录下是否存在文件MSCorEE.dll。
 2.如何确定已安装的.NET Framework版本？
@@ -240,131 +247,193 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
     19.GAC global assembly cache
         安装程序集（只能安装强名称）到GAC - GACUtil.exe
         */
-        /*
-Chapter 4
-    20.CLR查找引用类型：
-        a.同一文件 - 早期绑定；
-        b.不同文件，同一程序集；
-        c.不同文件，不同程序集；
-    21.new操作符：
-        a.计算类型以及所有基类型中定义的所有实例成员的字节数；
-        b.从托管堆分配内存；
-        c.初始化对象 类型对象指针和同步块索引；
-        d.调用类型实例构造器；
-    22.类型对象
-        JIT将IL代码编译为本地代码时，CLR读取程序集中的元数据信息，然后在堆中为每个类型预定义的数据结构 - 类型对象；
-        数据结构：
-        额外的数据成员：
-        类型对象指针 - 指向该实例的一个System.Type的一个实例引用，object.GetType()方法返回该引用；
-        同步块索引；
-        静态自动；
-        方法表；
-        类型对象都是System.Type的一个实例；
-        System.Type实例的类型对象指针指向自身；
-    23.方法执行
-        a.CLR准备条件：方法内的所有类型在堆上已创建类型对象；
-        b.序幕代码执行：在线程栈中为局部变量分配内存，自动将局部变量值初始化为null或者0；
-        c.执行代码，创建引用对象,将该对象的内存地址返回到栈上的局部变量，该引用对象在堆内结构：类型对象指针、同步块索引、实例字段；
-        d.方法回溯，若当前类型没有调用的方法，则JIT回溯类层次结构直到object，在沿途查找方法；
-        f.虚实例方法调用：JIT在虚方法中添加额外代码，检查发出调用的变量，找到调用的对象，根据对象的类型对象指针获取实际类型，
-            在该类型的方法中查找要本地化的方法；
-            */
-            /*
-Chapter 5
 
-    24.什么是基元类型
-        编译器直接支持的数据类型，基元类型直接映射FCL中存在的类型
-        string还是String？
-        string是C#中的关键字直接映射到FCL类型 System.String
-        无论x86或x64平台int都是映射到System.Int32
-        不同编程语言对于同一个关键字可能映射不同的类型：eg：long
+    /*Chapter 4 类型基础
+        20.CLR查找引用类型：
+            a.同一文件 - 早期绑定；
+            b.不同文件，同一程序集；
+            c.不同文件，不同程序集；
+        21.new操作符：
+            a.计算类型以及所有基类型中定义的所有实例成员的字节数；
+            b.从托管堆分配内存；
+            c.初始化对象 类型对象指针和同步块索引；
+            d.调用类型实例构造器；
+        22.类型对象
+            JIT将IL代码编译为本地代码时，CLR读取程序集中的元数据信息，然后在堆中为每个类型预定义的数据结构 - 类型对象；
+            数据结构：
+            额外的数据成员：
+            类型对象指针 - 指向该实例的一个System.Type的一个实例引用，object.GetType()方法返回该引用；
+            同步块索引；
+            静态自动；
+            方法表；
+            类型对象都是System.Type的一个实例；
+            System.Type实例的类型对象指针指向自身；
+        23.方法执行
+            a.CLR准备条件：方法内的所有类型在堆上已创建类型对象；
+            b.序幕代码执行：在线程栈中为局部变量分配内存，自动将局部变量值初始化为null或者0；
+            c.执行代码，创建引用对象,将该对象的内存地址返回到栈上的局部变量，该引用对象在堆内结构：类型对象指针、同步块索引、实例字段；
+            d.方法回溯，若当前类型没有调用的方法，则JIT回溯类层次结构直到object，在沿途查找方法；
+            f.虚实例方法调用：JIT在虚方法中添加额外代码，检查发出调用的变量，找到调用的对象，根据对象的类型对象指针获取实际类型，
+                在该类型的方法中查找要本地化的方法；
+                */
 
-    对于结果进行截断处理，即向下取整;
-    默认检查溢出关闭；
-    IL指令：
-    add 不执行溢出检查
-    add.ovf 执行溢出检查，抛出异常
+    public class ValueClass
+    {
+        struct point
+        {
+            public float x, y;
+        }
 
-    26.System.Demical 特殊类型,CLR不视为基元类型
-        CLR没有相应的IL指令对应，checked和unchecked对其无效；
-        内部重载方法，调用其成员，因此运行速度慢；
+        public static void Func()
+        {
+            ArrayList a = new ArrayList();
+            List<point> ls = new List<point>();
+            point p;
+            for (int i = 0; i < 20; i++)
+            {
+                p.x = p.y = i;
+                a.Add(p);//装箱
+                ls.Add(p);//无装箱
+            }
+            for (int i = 0; i < a.Count; i++)
+            {
+                point pp = (point)a[i];//拆箱
+                point ppp = ls[i];//无拆箱
+            }
+            point po;
+            po.x = 11;
+            po.y = 22;
+            object o = po;
+            po = (point)o;
+            po.x++;
+            o = po;
+        }
 
-    27.引用类型和值类型
-        引用类型降低性能 总是在托管堆上分配对象 claas；
-        值类型 在线程栈上分配对象 enum struct ；
-        所有的结构都是抽象类System.ValueType的直接派生类
-        System.ValueType从System.Object派生；
-        所有枚举类型从System.Enum抽象类派生，而Enum从ValueType派生；
-        所有值类型都是隐式密封的
+    }
 
-    28.控制类型中的字段布局
-        System.Runtime.InteropServices.StructLayoutAttribute
+    /*Chapter 5 基元类型 引用类型 值类型
 
-    29.值类型装箱和拆箱
-        装箱IL指令:box
-        装箱代价比拆箱代价高:
+        24.什么是基元类型
+            编译器直接支持的数据类型，基元类型直接映射FCL中存在的类型
+            string还是String？
+            string是C#中的关键字直接映射到FCL类型 System.String
+            无论x86或x64平台int都是映射到System.Int32
+            不同编程语言对于同一个关键字可能映射不同的类型：eg：long
+
+        对于结果进行截断处理，即向下取整;
+        默认检查溢出关闭；
+        IL指令：
+        add 不执行溢出检查
+        add.ovf 执行溢出检查，抛出异常
+
+        26.System.Demical 特殊类型,CLR不视为基元类型
+            CLR没有相应的IL指令对应，checked和unchecked对其无效；
+            内部重载方法，调用其成员，因此运行速度慢；
+
+        27.引用类型和值类型
+            引用类型降低性能 总是在托管堆上分配对象 claas；
+
+            1.从托管堆上分配内存；
+            2.堆上分配的每个对象都有一些额外成员，这些成员必须初始化；
+            3.对象中的其他字节总是设置为0；
+            4.从托管堆上分配对象时，可能会强制执行一次垃圾收集操作；
+
+            值类型 在线程栈上分配对象：enum struct ；
+            枚举类型具有特殊性；
+
+            继承关系：
+            值类型--》System.ValueType--》System.Object
+            枚举类型--》System.Enum--》System.ValueType--》System.Object
             
-        接口变量必须是包含对堆上的一个对象的引用；
-        调用虚方法时不会装箱；调用非虚方法时装箱；
-        装箱：
-        a.在托管堆分配内存，内存大小：值类型所有字段所需内存+类型对象指针+同步块索引；
-        b.值类型的字段复制到托管堆；
-        c.返回托管堆中该对象的地址；
-        拆箱
-        a.获取已装箱对象各个字段地址；
-        b.将该值由托管堆复制到线程栈上；
+            所有值类型都是隐式密封的
+            值类型的两种形式：未装箱unboxed、已装箱boxed
+            值类型使用new操作符，编译器知道该类型的生成位置，new保证了值类型中的所有字段初始化为0
+            声明为值类型：
+            1.类型具有基元类型行为；（不可变类型immutable：一个类型没有提供会更改其字段的成员）
+            2.不需要从其他类型继承；
+            3.不需要派生其他类型；
+            4.类型实例较小（小于等于16字节）或者 类型的实例较大（大于16字节），但不需要作为方法的实参传递或者方法返回；
 
-    30.同步索引块-SyncBlockIndex
-        a.线程同步 --- 用lock以及Monitor不能锁定值类型对象，无同步块索引
-        SyncBlock[]
-        SyncTable<*SyncBlock,*object>
+            System.ValueType:该类型重写Equals方法和GetHashCode方法
+            引用类型变量默认初始化为null
+            值类型变量赋值：逐字段复制；
+            引用类型变量赋值：复制内存地址；
+            值类型实例内存回收是不会调用Finalize方法；
+                
+        28.控制类型中的字段布局 - 提高性能
+            System.Runtime.InteropServices.StructLayoutAttribute
+            C#编译器默认为引用类型使用LayoutKind.Auto,值类型：LayoutKind.Sequential
+            指定每个字段的偏移量：LayoutKind.Explicit,字段使用属性：FiledOffset,指出该字段距离实例起始处偏移（单位字节）
+            在同一类型中，一个引用类型和一个值类型互相重叠不合法；
+            多个引用类型可以重叠，多个值类型可以重叠，所有重叠字节都可以通过公共字段访问；
 
-        SyncBlock结构
-        AwareLock
-        PTR_IntropSyncBlockInfo
-        SLink m_link:
-        ADIndex   
-        DWord m_dwHashCode --存储对象哈希值
+        29.值类型：装箱和拆箱
+            装箱IL指令:box
+            装箱代价比拆箱代价高:
 
-        CLR初始化时，构建一个SyncBlock数组；
-        当一个线程进行Monitor.Enter(obj)时，或者lock开始，线程检查obj的同步索引块；
-        若索引为空，即无同步块，从SyncBlock数组中选择一个空闲块赋值到该索引；
-        若索引不为空，则等待；
-        Monitor退出时，obj的同步块索引；
-        b.存储特定数据
-        总共32位，高6位为控制为，低26位根据高6位为确定存储值；
-        c.即存储哈希值又作为lock对象
+            接口变量必须是包含对堆上的一个对象的引用；
+            调用虚方法时不会装箱；调用非虚方法时装箱；
+            装箱boxing：
+            a.在托管堆分配内存，内存大小：值类型所有字段所需内存+类型对象指针+同步块索引；
+            b.值类型的字段复制到托管堆；
+            c.返回托管堆中该对象的地址；
+            拆箱unboxing：
+            a.获取已装箱对象所有的字段的地址（不要求内存中复制任何字节）；            
+            将该值由托管堆复制到线程栈上，该过程属于字段复制操作，紧跟拆箱；
+            拆箱异常：已装箱实例为Null---NullReferenceException，类型不一致---InvalidCastException；
+            对一个对象进行拆箱时，只能将其转型为原先装箱时的类型，然后可进行类型转换；
 
-    31.重写Equals(object)方法
-        自反：x.Equals(x)==true;
-        对称：x.Equals(y)==y.Equals(x);
-        可传递：
-        一致：
+        30.同步索引块-SyncBlockIndex
+            a.线程同步 --- 用lock以及Monitor不能锁定值类型对象，无同步块索引
+            SyncBlock[]
+            SyncTable<*SyncBlock,*object>
 
-    32.友元程序集
-        定义为internal的代码可以被指定的程序集访问
-        使用System.Runtime.ComplierServices.InternalsVisibleTo特性定义在程序集上
-        参数指定程序集名称和公钥
+            SyncBlock结构
+            AwareLock
+            PTR_IntropSyncBlockInfo
+            SLink m_link:
+            ADIndex   
+            DWord m_dwHashCode --存储对象哈希值
 
-    33.静态类
-        静态类直接从基类System.Object继承；
-        不实现任何接口；
-        只能定义静态成员；
-        不能作为字段、方法参数、局部变量；
-    34.分部类、结构、接口
-        partial
-        完全由C#编译器提供；
-    35.CLR调用虚方法（属性/事件）
-        CLR编译方法时，在方法定义表中写入三个记录项，并用记录项的一组标识指明根据方法的类型：静态方法、实例方法、虚方法；
-        CLR方法调用指令：
-        call：可调用静态、实例、虚方法，调用方法时，必须指定所定义的类型或者实例对象；
-        callvirt：只能调用实例、虚方法，会检查变量是否为null，执行比call慢；
-        C#使用callvirt调用所有的实例方法（密封类、基类方法以及值类型特殊）；
-        调用虚方法速度比非虚方法速度慢；
-        JIT没有内嵌虚方法；
-        sealed类
-    36.
+            CLR初始化时，构建一个SyncBlock数组；
+            当一个线程进行Monitor.Enter(obj)时，或者lock开始，线程检查obj的同步索引块；
+            若索引为空，即无同步块，从SyncBlock数组中选择一个空闲块赋值到该索引；
+            若索引不为空，则等待；
+            Monitor退出时，obj的同步块索引；
+            b.存储特定数据
+            总共32位，高6位为控制为，低26位根据高6位为确定存储值；
+            c.即存储哈希值又作为lock对象
+
+        31.重写Equals(object)方法
+            自反：x.Equals(x)==true;
+            对称：x.Equals(y)==y.Equals(x);
+            可传递：
+            一致：
+
+        32.友元程序集
+            定义为internal的代码可以被指定的程序集访问
+            使用System.Runtime.ComplierServices.InternalsVisibleTo特性定义在程序集上
+            参数指定程序集名称和公钥
+
+        33.静态类
+            静态类直接从基类System.Object继承；
+            不实现任何接口；
+            只能定义静态成员；
+            不能作为字段、方法参数、局部变量；
+        34.分部类、结构、接口
+            partial
+            完全由C#编译器提供；
+        35.CLR调用虚方法（属性/事件）
+            CLR编译方法时，在方法定义表中写入三个记录项，并用记录项的一组标识指明根据方法的类型：静态方法、实例方法、虚方法；
+            CLR方法调用指令：
+            call：可调用静态、实例、虚方法，调用方法时，必须指定所定义的类型或者实例对象；
+            callvirt：只能调用实例、虚方法，会检查变量是否为null，执行比call慢；
+            C#使用callvirt调用所有的实例方法（密封类、基类方法以及值类型特殊）；
+            调用虚方法速度比非虚方法速度慢；
+            JIT没有内嵌虚方法；
+            sealed类
+        36.
 
 
-     */
+         */
 }

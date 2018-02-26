@@ -21,6 +21,22 @@ namespace ThreadSync
             //p.FileName = "F://Test//FileAssociation.exe";
             //p.Verb = "runas";
             //Process.Start(p);
+            //C.EntryMethodEx();
+
+            ThreadLocalT.Run();
+            Console.WriteLine("wait exit...");
+            do
+            {
+                if (Console.ReadLine().ToLower()=="exit")
+                {
+                    break;
+                }
+                Thread.Sleep(50);
+            } while (true);
+        }
+
+        static void Rename()
+        {
             var f = "test.txt";
             var p = "E:\\";
             var fn = Path.Combine(p, f);
@@ -36,19 +52,10 @@ namespace ThreadSync
                 }
                 FileSystem.ReNameFile(fn);
             }
-
-            C.EntryMethodEx();
-            Console.WriteLine("wait exit...");
-            do
-            {
-                if (Console.ReadLine().ToLower()=="exit")
-                {
-                    break;
-                }
-                Thread.Sleep(50);
-            } while (true);
         }
     }
+
+    
 
     class Keyboard
     {
@@ -486,6 +493,70 @@ namespace ThreadSync
 
         }
 
+    }
+
+    public static class ThreadLocalT
+    {
+        public struct struct1
+        {
+            public int A { get; set; }
+            public string Str { get; set; }
+        }
+        public class Obj
+        {
+            public Obj()
+            {
+
+            }
+            public int A { get; set; } = 10;
+            public string Str { get; set; } = "ok";
+            public struct1 stru { get; set; } = new struct1 { A = 20, Str = "no" };
+        }
+        public static ThreadLocal<int> count = new ThreadLocal<int>();
+        public static ThreadLocal<struct1> st = new ThreadLocal<struct1>();
+        public static ThreadLocal<Obj> objs = new ThreadLocal<Obj>(() =>{return new Obj(); }) ;
+
+        public static void Run()
+        {
+            
+            var th1 = new Thread(() =>
+            {
+                for (int i = 0; i < 1<<20; i++)
+                {
+                    count.Value++;
+                    var stt = st.Value;
+                    stt.A++;
+                    stt.Str += i;
+                    st.Value = stt;
+                    var o = objs.Value;
+                    o.Str = "s" + i;                    
+                    Thread.Sleep(67);
+                    System.Diagnostics.Trace.WriteLine("th1:"+ objs.Value.Str);
+                }
+            });
+            
+            var th2 = new Thread(() =>
+            {
+                for (int i = 0; i < 1 << 20; i++)
+                {
+                    count.Value++;
+                    var stt = st.Value;
+                    stt.A++;
+                    stt.Str += i;
+                    st.Value = stt;
+                    var o = objs.Value;
+                    o.Str = "s" + i;                    
+                    Thread.Sleep(7);
+                    System.Diagnostics.Trace.WriteLine("th2:" + objs.Value.Str);
+                }
+            });
+            th1.Start();
+            Thread.Sleep(60);
+            th2.Start();
+
+            Thread.Sleep(100);
+            System.Diagnostics.Trace.WriteLine("Main:" + objs.Value.Str);
+        }
     }
 
     /*
