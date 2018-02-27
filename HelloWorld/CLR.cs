@@ -309,6 +309,58 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
             o = po;
         }
 
+        public static void Func1()
+        {
+            int a = 32;
+            object o = a;
+            Console.WriteLine(a+","+o);
+            Console.WriteLine(a.ToString() + "," + o);
+
+            var mvt = new MyValueType();
+            mvt.GetHashCode();//不会装箱,方法内没有基类实现
+            mvt.ToString();//会装箱，方法内有基类实现
+            mvt.GetType();//会装箱，该方法由System.Object定义
+            mvt.Clone();//不会装箱，值类型实现了接口
+            var ic = mvt as ICloneable;//会装箱,转化为某个接口
+            IComparable icc = mvt;//会装箱,转化为某个接口
+        }
+        
+    }
+
+    public struct MyValueType: ICloneable,IComparable
+    {
+        public object Clone()
+        {
+            return null;
+        }
+
+        public int CompareTo(MyValueType value)
+        {
+            return 0;
+        }
+
+        public int CompareTo(object obj)
+        {
+            return 0;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (this.GetType() != obj.GetType())
+                return false;
+            //比较所有字段
+            return true;
+        }
+        public override int GetHashCode()
+        {
+            return 0;
+        }
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 
     /*Chapter 5 基元类型 引用类型 值类型
@@ -374,7 +426,8 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
             接口变量必须是包含对堆上的一个对象的引用；
             调用虚方法时不会装箱；调用非虚方法时装箱；
             装箱boxing：
-            a.在托管堆分配内存，内存大小：值类型所有字段所需内存+类型对象指针+同步块索引；
+            a.在托管堆分配内存，内存大小：
+                值类型所有字段所需内存 + 类型对象指针 + 同步块索引；
             b.值类型的字段复制到托管堆；
             c.返回托管堆中该对象的地址；
             拆箱unboxing：
@@ -382,6 +435,19 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
             将该值由托管堆复制到线程栈上，该过程属于字段复制操作，紧跟拆箱；
             拆箱异常：已装箱实例为Null---NullReferenceException，类型不一致---InvalidCastException；
             对一个对象进行拆箱时，只能将其转型为原先装箱时的类型，然后可进行类型转换；
+        调用值类型的虚方法：
+            值类型是隐式密封类，CLR可以非虚的调用值类型的重写方法，同时该值类型实例不会被装箱
+            但值类型中重写的虚方法中在基类实现，该值类型实例会装箱；
+            调用非虚的、继承的方法时，值类型一定会被装箱，这些方法由System.Object定义；
+            将值类型的未装箱的实例转型为类型的某个接口时，会对实例进行装箱---接口变量必须包含对堆上的一个对象的引用；
+            调用值类型实现的接口不会被装箱（在接口方法中没有基类实现），编译器可以直接调用；
+            将值类型的所有字段设置为readonly；
+
+        29.1.对象相等性和同一性
+            a. bool System.Equals(object）方法：
+                该方法实现对象的同一性identity比较；自己定义值类型应该重写该方法，ValueType类的Equals方法使用反射实现性能较慢；
+            b.静态方法：bool System.Object.ReferenceEquals(object,object):
+                检查两个引用是否是引用同一个对象；
 
         30.同步索引块-SyncBlockIndex
             a.线程同步 --- 用lock以及Monitor不能锁定值类型对象，无同步块索引
