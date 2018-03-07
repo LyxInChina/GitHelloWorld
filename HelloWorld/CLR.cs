@@ -327,7 +327,15 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
         
     }
 
-    public struct MyValueType: ICloneable,IComparable
+    public static class ExternClass
+    {
+        public static bool ExternFunc(this MyValueType objs, object obj)
+        {
+            return false;
+        }
+    }
+
+    public struct MyValueType: ICloneable,IComparable,IEquatable<MyValueType>
     {
         public object Clone()
         {
@@ -353,8 +361,28 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
             //比较所有字段
             return true;
         }
+
+        public bool Equals(MyValueType obj)
+        {
+            //比较所有字段
+            return true;
+        }
+
+        public static bool operator == (MyValueType objl,MyValueType objr)
+        {
+            return false;
+        }
+
+        public static bool operator !=(MyValueType objl, MyValueType objr)
+        {
+            return false;
+        }
+
+
+
         public override int GetHashCode()
         {
+            var hc = System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(this);
             return 0;
         }
         public override string ToString()
@@ -386,7 +414,7 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
             引用类型降低性能 总是在托管堆上分配对象 claas；
 
             1.从托管堆上分配内存；
-            2.堆上分配的每个对象都有一些额外成员，这些成员必须初始化；
+            2.堆上分配的每个对象都有一些额外成员(类型对象指针，同步块索引)，这些成员必须初始化；
             3.对象中的其他字节总是设置为0；
             4.从托管堆上分配对象时，可能会强制执行一次垃圾收集操作；
 
@@ -446,8 +474,26 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
         29.1.对象相等性和同一性
             a. bool System.Equals(object）方法：
                 该方法实现对象的同一性identity比较；自己定义值类型应该重写该方法，ValueType类的Equals方法使用反射实现性能较慢；
+                自定义Equals的四个特征：自反x.Equals(x)==true,对称x.Equals(y)==y.Equals(x),可传递x=y,y=z,则x=z,一致x=y,x=y;
+                实现System.IEquatable<T>
+                还应重载==和!=;
             b.静态方法：bool System.Object.ReferenceEquals(object,object):
                 检查两个引用是否是引用同一个对象；
+        29.2.对象的哈希码
+            哈希码用途：System.Collections.Hashtable类型和System.Collections.Generic.Dictionary类型以及其他集合中，对比两个对象相等时，
+            必须具有相等的哈希码；
+            集合中添加key/value时，首先获取键的哈希码，该哈希码指出该键值对的存储位置（哈希桶中bucket），
+            集合中查找键时，根据键的哈希码，搜索哈希桶，然后再查找与指定键相等的对象；
+            计算类型的哈希码：
+            1.FCL提供的方法：
+                保证返回对象唯一性ID
+                System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(object)
+        29.3.dynamic基元类型
+            编译器将dynamic类型转换为object类型，生成payload代码，payload代码使用运行时绑定器（runtime binder）的类；
+            不用语言使用不同的运行时绑定器，c#再microsoft.csharp.dll（同样加载System.dll、System.Core.dll）中
+ */
+ 
+    /*Chapter 6 类型和成员            
 
         30.同步索引块-SyncBlockIndex
             a.线程同步 --- 用lock以及Monitor不能锁定值类型对象，无同步块索引
@@ -468,7 +514,7 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
             Monitor退出时，obj的同步块索引；
             b.存储特定数据
             总共32位，高6位为控制为，低26位根据高6位为确定存储值；
-            c.即存储哈希值又作为lock对象
+            c.即存储哈希值又作为lock对象；
 
         31.重写Equals(object)方法
             自反：x.Equals(x)==true;
