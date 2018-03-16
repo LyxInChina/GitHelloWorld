@@ -20,6 +20,7 @@
 *.VC.db
 
 /.vs
+/x64
 /bin
 /AppendContentToCosole/bin
 /AppendContentToCosole/obj
@@ -28,6 +29,9 @@
 /CPlus/HelloWorld/x64
 /CPlus/HelloWorld/Debug
 /CPlus/HelloWorld/bin
+/CPlus/UnitTestProject/bin
+/CPlus/UnitTestProject/obj
+
 /CreateChm/bin
 /CreateChm/obj
 /FileAssociation/bin

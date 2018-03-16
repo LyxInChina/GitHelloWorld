@@ -28,7 +28,6 @@ public:
 			temp = temp % 10;
 
 		}
-
 		return res;
 	}
 private:
