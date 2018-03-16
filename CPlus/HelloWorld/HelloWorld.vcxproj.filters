@@ -4,6 +4,7 @@
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="BeautyofProgramming.cpp" />
+    <ClCompile Include="IntroCrypt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -134,5 +135,6 @@
     <ClInclude Include="ffmpeg\win64\include\libswscale\swscale.h" />
     <ClInclude Include="ffmpeg\win64\include\libswscale\version.h" />
     <ClInclude Include="BeautyofProgramming.h" />
+    <ClInclude Include="IntroCrypt.h" />
   </ItemGroup>
 </Project>

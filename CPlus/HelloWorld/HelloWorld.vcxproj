@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="BeautyofProgramming.cpp" />
     <ClCompile Include="HelloWorld.cpp" />
+    <ClCompile Include="IntroCrypt.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +267,7 @@
     <ClInclude Include="ffmpeg\win64\include\libswresample\version.h" />
     <ClInclude Include="ffmpeg\win64\include\libswscale\swscale.h" />
     <ClInclude Include="ffmpeg\win64\include\libswscale\version.h" />
+    <ClInclude Include="IntroCrypt.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

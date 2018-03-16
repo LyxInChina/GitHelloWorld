@@ -28,14 +28,6 @@ int main(int argc, char* argv[])
 	int32_t sf = (int32_t)((*p_ch) * (float)AUDIO32_t);
 
 	printf("%d", sf);
-
-	//int res[4] = { 100,3,5,7 };
-	//ForEach(res, 4);
-	//char ress[6] = { 'a','b','c','d','e','f' };
-	//Func1(ress);
-	//ArrayAndPointer();
-	//StructAndPointer();
-	//TestStructMemoryAllocation();
     return 0;
 }
 
@@ -44,10 +36,7 @@ void ForEach(int p[],int len)
 	int* ptr = p;
 	for (size_t i = 0; i < len; i++)
 	{
-		//printf("index :" + i + L" value :" + *ptr);
-		//printf(ptr);
 		ptr++;
-		//int temp = sizeof(*ptr);
 		int sss = sizeof(ptr);
 		int64_t s = (int64_t)p;
 		s = s + sizeof(int);
@@ -57,7 +46,6 @@ void ForEach(int p[],int len)
 	int *pp = p;
 	for (size_t i = 0; i < len; i++)
 	{
-		//Console::WriteLine(L"index :" + i + L" value :" + *pp);
 		(*pp)++;
 	}
 
@@ -68,7 +56,7 @@ void Func1(char ary[])
 	char* p= ary;
 	char** ptr = &p;
 
-	ptr++;//����Χ��
+	ptr++;
 
 	std::cout << ptr << std::endl;
 	std::cout << *ptr << std::endl;
@@ -83,6 +71,12 @@ void ArrayAndPointer()
 	printf("*(array+0):%d\n", sizeof(*(array+0)));
 	printf("array+0:%d\n", sizeof(array + 0));
 }
+
+
+/*内存对齐
+
+
+*/
 
 struct MyStruct
 {
