@@ -9,12 +9,14 @@
 #endif
 
 typedef struct MyIntroStruct
-{
-	bool BB;
-	int C;
+{	
 	const char* charsA;
 	const char* charsB;
-	MyIntroStruct(char* charsA = NULL,char* charsB = NULL,int C = 99,bool BB = true);
+	int C;
+	bool A;
+	bool B;
+	char D;
+	//MyIntroStruct(char* charsA,char* charsB,int C,bool BB);
 };
 
 class IntroCrypt

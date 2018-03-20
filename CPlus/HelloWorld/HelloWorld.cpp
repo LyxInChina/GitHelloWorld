@@ -80,10 +80,11 @@ void ArrayAndPointer()
 
 struct MyStruct
 {
-	int a;
-	char b;
-	int c[3];
-	char d[3];
+	int a;//4
+	char b; //1->4
+	int c[3]; //3->4
+	char d[3]; //3->4
+	//4+4+4+4 = 16
 };
 
 struct MyStruct1

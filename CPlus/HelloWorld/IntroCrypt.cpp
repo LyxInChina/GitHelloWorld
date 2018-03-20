@@ -27,9 +27,9 @@ int TestFunc(int a)
 }
 
 extern "C" __declspec(dllexport)
-int Funci(int a, int b)
+bool Funci(int a, int b)
 {
-	return a+b*1000;
+	return (a+b)%2==1;
 }
 
 extern "C" __declspec(dllexport)
@@ -55,18 +55,22 @@ char Funcc2()
 extern "C" __declspec(dllexport)
 int GetMyIntroStruct(MyIntroStruct* mystr, int* c)
 {
-	size_t count = 7;
-	if(mystr == nullptr){
-		mystr = new MyIntroStruct[count];
-	}
+	size_t count = 1;
 	*c = (int)count;
-	for (size_t i = 0; i < count; i++)
+	if(mystr == nullptr){
+		return -1;
+		//mystr = new MyIntroStruct[count];
+	}
+	for (size_t i = 0; i < *c; i++)
 	{
 		char buf[32];		
 		itoa(i, buf, 10);
-		//char buf2[32];
-		//itoa(Random(20) + 1, buf2, 10);
-		mystr[i] = MyIntroStruct(buf, "OKOKOKOKOK", i, false);
+		mystr[i].A = false;
+		mystr[i].B = true;
+		mystr[i].C = (i+2)*100;
+		mystr[i].charsA = "LLLLL";
+		mystr[i].charsB = "OKOKOK";
+		mystr[i].D = 'Q';
 	}
 	return 0;
 }
@@ -81,14 +85,14 @@ int SetMyIntroStruct(MyIntroStruct mystr, int index)
 
 void printStr(MyIntroStruct* str)
 {
-	printf("%d,%d,A::%s,B::%s", str->BB, str->C, str->charsA, str->charsB);
+	printf("%d,%d,A::%s,B::%s", str->B, str->C, str->charsA, str->charsB);
 }
 
 
-MyIntroStruct::MyIntroStruct(char * ca, char * cb, int c, bool b)
-{
-	BB = b;
-	C = c;
-	charsA = ca;
-	charsB = cb;
-}
+//MyIntroStruct::MyIntroStruct(char * ca, char * cb, int c, bool b)
+//{
+//	BB = b;
+//	C = c;
+//	charsA = ca;
+//	charsB = cb;
+//}
