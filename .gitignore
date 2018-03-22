@@ -46,8 +46,6 @@
 /InjectDemo/ManagedDll/obj
 /InjectDemo/NativeDll/Debug
 /InjectDemo/NativeDll/Release
-/InvokerHelperDemo/bin
-/InvokerHelperDemo/obj
 /LogHelper/obj
 /LogHelper/bin
 /MEF/MEFConsole/bin

@@ -32,9 +32,7 @@ C++学习项目；
 
 ###InjectDemo
 向指定进程中进行代码注入；
-
-###InvokerHelperDemo
-
+    
 ###MEF
     MEF框架测试项目；
 

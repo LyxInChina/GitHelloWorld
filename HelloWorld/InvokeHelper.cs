@@ -1,16 +1,6 @@
 ﻿/*******************************************************************************
  * InvokeHelper.cs
  * A thread-safe control invoker helper class.
- * -----------------------------------------------------------------------------
- * Project:Conmajia.Controls
- * Author:Conmajia
- * Url:conmajia@gmail.com
- * History:
- *      4th Aug., 2012
- *      Added support for "Non-control" controls (such as ToolStripItem).
- *      
- *      4th Aug., 2012
- *      Initiated.
  ******************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -18,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-namespace InvokerHelperDemo
+namespace InvokeHelper
 {
     /// <summary>
     /// A thread-safe control invoker helper class.
