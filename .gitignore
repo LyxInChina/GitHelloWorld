@@ -20,17 +20,18 @@
 *.VC.db
 
 /.vs
-/x64
 /bin
 /AppendContentToCosole/bin
 /AppendContentToCosole/obj
 /AutoZip/obj
 /AutoZip/bin
+
 /CPlus/HelloWorld/x64
 /CPlus/HelloWorld/Debug
 /CPlus/HelloWorld/bin
 /CPlus/UnitTestProject/bin
 /CPlus/UnitTestProject/obj
+/CPlus/x64
 
 /CreateChm/bin
 /CreateChm/obj
