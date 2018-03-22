@@ -16,7 +16,7 @@ using System.Collections;
 namespace HelloWorld
 {
     
-    public class CLR
+    public partial class CommonLanguageRuntime
     {
         public static void Func()
         {

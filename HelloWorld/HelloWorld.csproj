@@ -97,7 +97,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CLR.cs" />
+    <Compile Include="CLR\CLR.cs" />
+    <Compile Include="CLR\CSharpPerformancePromote.cs" />
     <Compile Include="DesignPattern.cs" />
     <Compile Include="English.cs" />
     <Compile Include="GetPost.cs" />

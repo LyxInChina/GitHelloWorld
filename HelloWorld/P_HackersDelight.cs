@@ -100,7 +100,7 @@ namespace HelloWorld
 
     }
     //common language specification
-    public static class cls
+    public static class CLS
     {
         public static ushort MAXIMUM_CAPACITY_Ushort = 1 << (sizeof(ushort) - 1);
         public static short MAXIMUM_CAPACITY_Short = 1 << (sizeof(short) - 1);

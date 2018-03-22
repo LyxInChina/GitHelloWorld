@@ -173,15 +173,5 @@ namespace EmitExamples
         public int[] i { get; set; } 
         public List<int> k { get; set; } 
         private ushort j { get; set; }
-
-        //~A()
-        //{
-
-        //}
-
-        public void Finalize()
-        {
-
-        }
     }
 }
