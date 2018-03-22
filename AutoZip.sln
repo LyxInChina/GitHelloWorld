@@ -48,6 +48,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMake", "CMake", "{A9FBB511
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "CPlus\UnitTestProject\UnitTestProject.csproj", "{33945C49-7CE1-4F4D-AA3E-39A7B68CD971}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4995A42F-ECD5-4175-82EA-21A19C0DE296}"
+	ProjectSection(SolutionItems) = preProject
+		leaf.png = leaf.png
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
