@@ -24,6 +24,35 @@ namespace MEF
             Console.ReadKey();
         }
 
+
+        public static void FileWatch(FileSystemWatcher w, string path)
+        {
+            w = new FileSystemWatcher(path, "*.txt");
+            //设置监视类型
+            //w.NotifyFilter = NotifyFilters.FileName |
+            //                 NotifyFilters.LastWrite ;
+            Console.WriteLine("WathcPath:" + path + ";FileType:" + "*.txt");
+            w.Changed += (sender, e) =>
+            {
+                Console.WriteLine("Changed   Name:" + e.Name + ";ChangeType:" + e.ChangeType + ";FullPath:" + e.FullPath);
+            };
+            w.Created += (s, e) =>
+            {
+                Console.WriteLine("Created   Name:" + e.Name + ";ChangeType:" + e.ChangeType + ";FullPath:" + e.FullPath);
+            };
+            w.Deleted += (s, e) =>
+            {
+                Console.WriteLine("Delete   Name:" + e.Name + ";ChangeType:" + e.ChangeType + ";FullPath:" + e.FullPath);
+            };
+            w.Renamed += (s, e) =>
+            {
+                Console.WriteLine("Rename   Name:" + e.Name + ";ChangeType:" + e.ChangeType + ";FullPath:" + e.FullPath);
+                Console.WriteLine("Rename   OldName:" + e.OldName + ";OldFullPath:" + e.OldFullPath);
+            };
+            w.EnableRaisingEvents = true;//开始监视
+
+        }
+
         static void MefTest(string pa)
         {
             var a = new MEFClient.MyClass();
@@ -45,8 +74,6 @@ namespace MEF
                 c.RefeObj(s1, s2);
             }
         }
-
-
 
         /// <summary>
         /// 使用特性标识查找部件
@@ -94,32 +121,21 @@ namespace MEF
             });
         }
 
-        public static void FileWatch(FileSystemWatcher w,string path)
+        public static async void InitlizeContainer<T>(string path, object obj)
+            where T: IPartImportsSatisfiedNotification, new()
         {
-            w = new FileSystemWatcher(path,"*.txt");
-            //设置监视类型
-            //w.NotifyFilter = NotifyFilters.FileName |
-            //                 NotifyFilters.LastWrite ;
-            Console.WriteLine("WathcPath:"+path+";FileType:"+ "*.txt");
-            w.Changed += (sender, e) =>
+            var catalog = new DirectoryCatalog(path);
+            var cb = new CompositionBatch();
+            cb.AddPart(obj);
+
+            var container = new CompositionContainer(catalog);
+            var part = new T();
+            part.OnImportsSatisfied();            
+            await Task.Run(() =>
             {
-                Console.WriteLine("Changed   Name:"+e.Name+";ChangeType:"+e.ChangeType+";FullPath:"+e.FullPath);
-            };
-            w.Created += (s, e) =>
-            {
-                Console.WriteLine("Created   Name:" + e.Name + ";ChangeType:" + e.ChangeType + ";FullPath:" + e.FullPath);
-            };
-            w.Deleted += (s, e) =>
-            {
-                Console.WriteLine("Delete   Name:" + e.Name + ";ChangeType:" + e.ChangeType + ";FullPath:" + e.FullPath);
-            };
-            w.Renamed += (s, e) =>
-            {
-                Console.WriteLine("Rename   Name:" + e.Name + ";ChangeType:" + e.ChangeType + ";FullPath:" + e.FullPath);
-                Console.WriteLine("Rename   OldName:"+e.OldName+";OldFullPath:"+e.OldFullPath);
-            };
-            w.EnableRaisingEvents = true;//开始监视
-           
+                container.ComposeParts(part);
+                container.Compose(cb);
+            });
         }
 
         /// <summary>
