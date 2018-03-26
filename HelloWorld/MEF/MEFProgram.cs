@@ -82,7 +82,7 @@ namespace MEF
             cb.AddPart(obj);
 
             var container = new CompositionContainer(catalog);
-            var minc = new MImC();
+            var minc = new MEFClient.MImC();
             minc.OmImportsStatisied += (s, e) =>
             {
                 Console.WriteLine(e);
@@ -133,7 +133,7 @@ namespace MEF
             var res = false;
             var rb = new RegistrationBuilder();//用于定义出口和入口的约定
             rb.ForTypesDerivedFrom<MEFContract.ICalShow>().Export<MEFContract.ICalShow>();//指定出口约定  给所有实现接口的类型应用[Export(Type)]特性
-            rb.ForType<MyCal>().ImportProperty<MEFContract.ICalShow>(t =>t.Show);//指定入口约定 将入口映射到指定的属性上
+            rb.ForType<MEFClient.MyCal>().ImportProperty<MEFContract.ICalShow>(t =>t.Show);//指定入口约定 将入口映射到指定的属性上
             var dc = new DirectoryCatalog(path,rb);
             CompositionService sv = dc.CreateCompositionService();
             try
