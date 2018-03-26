@@ -10,7 +10,7 @@ using System.Security.Principal;
 
 namespace ThreadSync
 {
-    public class ProcessCommunication
+    public class IPC
     {
         public interface IPCommunication: IDisposable
         {
@@ -117,7 +117,7 @@ namespace ThreadSync
         }
 
         /// <summary>
-        /// socket
+        /// socket TCP/UDP
         /// </summary>
         public class Remoting
         {

@@ -50,7 +50,7 @@
     <Compile Include="BankerAligorithmcs.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="PhilosopherEatingProblem.cs" />
-    <Compile Include="ProcessCommunication.cs" />
+    <Compile Include="IPC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

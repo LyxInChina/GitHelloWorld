@@ -452,14 +452,14 @@ namespace ThreadSync
 
         }
 
-        static ProcessCommunication.IPCommunication IPC;
+        static IPC.IPCommunication IPC;
         static void IPCMain(string[] args)
         {
             var s = Console.ReadLine();
             switch (s)
             {
                 case "c":
-                    IPC = new ProcessCommunication.PipePC("111", "222");
+                    IPC = new IPC.PipePC("111", "222");
                     do
                     {
                         var t = Console.ReadLine();
@@ -473,7 +473,7 @@ namespace ThreadSync
                     break;
                 case "s":
                     {
-                        IPC = new ProcessCommunication.PipePC("222", "111");
+                        IPC = new IPC.PipePC("222", "111");
                         do
                         {
                             var ss = IPC.ReceiveMsg();
@@ -487,7 +487,7 @@ namespace ThreadSync
                     }
                     break;
                 default:
-                    IPC = new ProcessCommunication.PipePC("222", "111");
+                    IPC = new IPC.PipePC("222", "111");
                     break;
             }
 

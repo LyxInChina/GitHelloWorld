@@ -57,6 +57,10 @@ namespace HelloWorld
      * optimized    优化
      * illustrate   说明
      * caution      警告
+     * privilege    特权
+     * IPC          inter-process communication 进程间通信
+     * LPC          local-process communication 本地过程调用
+     * RPC          remote-process communication    远程过程调用
      * 
      * 
      * 
