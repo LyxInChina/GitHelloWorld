@@ -88,8 +88,11 @@
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.registration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Reflection.Context" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -114,6 +117,7 @@
     <Compile Include="GetPost.cs" />
     <Compile Include="IntropJS.cs" />
     <Compile Include="InvokeHelper.cs" />
+    <Compile Include="MEF\MEFProgram.cs" />
     <Compile Include="MyResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

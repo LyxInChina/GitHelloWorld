@@ -42,6 +42,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinService", "Service\WinService\WinService.csproj", "{12EF228A-F369-405F-95B2-352F9ACAC0D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EF82B194-60FA-4078-9A84-B986F4D00F56} = {EF82B194-60FA-4078-9A84-B986F4D00F56}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{790EDF5F-C307-42F7-8227-CF1F3AE72501}"
 EndProject
