@@ -90,6 +90,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -123,6 +127,7 @@
     <Compile Include="RegexTest.cs" />
     <Compile Include="RPC\Program.cs" />
     <Compile Include="RPC\ZeroMQTest.cs" />
+    <Compile Include="WCF\WCF.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

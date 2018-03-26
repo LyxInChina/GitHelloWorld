@@ -57,20 +57,12 @@
 
 /packages
 
+/Service/WinSerive/bin
+/Service/WinSerive/obj
+/Service/WebService/bin
+/Service/WebService/obj
+
 /ShowNotifyMode/bin
 /ShowNotifyMode/obj
 /ThreadSync/bin
 /ThreadSync/obj
-/WCF/Icl/bin
-/WCF/Icl/obj
-/WCF/IclLibrary/bin
-/WCF/IclLibrary/obj
-/WCF/TestWCF/bin
-/WCF/TestWCF/obj
-/WCF/WcfService1/bin
-/WCF/WcfService1/obj
-/WCF/WcfServiceHost/bin
-/WCF/WcfServiceHost/obj
-
-/WSerive/bin
-/WSerive/obj
