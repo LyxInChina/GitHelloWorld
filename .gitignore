@@ -43,24 +43,15 @@
 
 /InjectDemo/InjectDemo/Debug
 /InjectDemo/InjectDemo/Release
-/InjectDemo/ManagedDll/obj
 /InjectDemo/NativeDll/Debug
 /InjectDemo/NativeDll/Release
-/MEF/MEFConsole/bin
-/MEF/MEFConsole/obj
-/MEF/MEFContract/bin
-/MEF/MEFContract/obj
-/MEF/MEFSimple/bin
-/MEF/MEFSimple/obj
 
 /packages
 
-/Service/WinSerive/bin
-/Service/WinSerive/obj
 /Service/WebService/bin
 /Service/WebService/obj
+/Service/WinSerivce/bin
+/Service/WinSerivce/obj
 
-/ShowNotifyMode/bin
-/ShowNotifyMode/obj
 /ThreadSync/bin
 /ThreadSync/obj
