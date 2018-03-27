@@ -450,49 +450,7 @@ namespace ThreadSync
                 } while (true);
             }
 
-        }
-
-        static IPC.IPCommunication IPC;
-        static void IPCMain(string[] args)
-        {
-            var s = Console.ReadLine();
-            switch (s)
-            {
-                case "c":
-                    IPC = new IPC.PipePC("111", "222");
-                    do
-                    {
-                        var t = Console.ReadLine();
-                        IPC.SendMsg(t);
-                        Console.WriteLine("send msg :" + t);
-                        if (t == "exit")
-                        {
-                            break;
-                        }
-                    } while (true);
-                    break;
-                case "s":
-                    {
-                        IPC = new IPC.PipePC("222", "111");
-                        do
-                        {
-                            var ss = IPC.ReceiveMsg();
-                            Console.WriteLine("receive msg:" + ss);
-                            if (ss == "exits")
-                            {
-                                break;
-                            }
-                            Thread.Sleep(500);
-                        } while (true);
-                    }
-                    break;
-                default:
-                    IPC = new IPC.PipePC("222", "111");
-                    break;
-            }
-
-        }
-
+        }        
     }
 
     public static class ThreadLocalT
