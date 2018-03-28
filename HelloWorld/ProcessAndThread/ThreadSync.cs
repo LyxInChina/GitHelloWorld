@@ -55,38 +55,6 @@ namespace ThreadSync
         }
     }
 
-    
-
-    class Keyboard
-    {
-        #region 处理键盘命令
-
-        ///// <summary>
-        ///// 处理键盘命令
-        ///// </summary>
-        ///// <param name="msg"></param>
-        ///// <param name="keyData"></param>
-        ///// <returns></returns>
-        //protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, System.Windows.Forms.Keys keyData)
-        //{
-        //    int WM_KEYDOWN = 256;
-        //    int WM_SYSKEYDOWN = 260;
-        //    if (msg.Msg == WM_KEYDOWN | msg.Msg == WM_SYSKEYDOWN)
-        //    {
-        //        switch (keyData)
-        //        {
-        //            case Keys.Escape:
-        //                this.Close(); //esc关闭窗体
-        //                break;
-        //        }
-        //    }
-        //    return false;
-        //}
-
-        #endregion
-
-    }
-
     public static class C
     {
         public static bool[] Flag = new bool[2];
