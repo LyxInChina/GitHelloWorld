@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-
+using System.IO;
+using System.Security;
+using System.Runtime;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using Timer = System.Timers.Timer;
 namespace HelloWorld
 {
     #region Create Pattern
@@ -50,8 +58,8 @@ namespace HelloWorld
                 return _instance;
             }
 
-            private static string _name = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-            private static System.Threading.Mutex _mutex;
+            private static string _name = Process.GetCurrentProcess().MainModule.FileName;
+            private static Mutex _mutex;
             public static SingleClass GetInstanceProcessAsync()
             {
                 if (_name.Length > 260)
@@ -60,9 +68,8 @@ namespace HelloWorld
                 }
                 try
                 {
-                    bool res = true;
-                    System.Security.AccessControl.MutexSecurity ms = new System.Security.AccessControl.MutexSecurity(_name, System.Security.AccessControl.AccessControlSections.Access);
-                    _mutex = new System.Threading.Mutex(true, _name, out res);
+                    //MutexSecurity ms = new MutexSecurity(_name, System.Security.AccessControl.AccessControlSections.Access);
+                    _mutex = new Mutex(true, _name, out bool res);
                     if (res)
                     {
                         _mutex.ReleaseMutex();
@@ -79,7 +86,7 @@ namespace HelloWorld
                     }
                     else
                     {
-                        if(System.Threading.Mutex.TryOpenExisting(_name, out _mutex))
+                        if(Mutex.TryOpenExisting(_name, out _mutex))
                         {
                             //
                         }
@@ -97,6 +104,9 @@ namespace HelloWorld
         }
     }
 
+    /// <summary>
+    /// 简单工厂模式
+    /// </summary>
     public class SimpleFactory
     {
         public abstract class Product
@@ -153,6 +163,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 抽象工厂模式
+    /// </summary>
     public class AbstructFactory
     {
         public abstract class Product
@@ -211,6 +224,9 @@ namespace HelloWorld
         }
     }
 
+    /// <summary>
+    /// 构造者模式
+    /// </summary>
     public class BuilderParttern
     {
         public class Part
@@ -352,17 +368,17 @@ namespace HelloWorld
                 if (this.GetType().IsSerializable)
                 {
                     //序列化与反序列化方法 进行对象的深复制   
-                    if (Object.ReferenceEquals(this, null))
+                    if (this is null)
                     {
                         return null;
                     }
                     //二进制序列化
-                    System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    System.IO.Stream stream = new System.IO.MemoryStream();
+                    IFormatter formatter = new BinaryFormatter();
+                    Stream stream = new MemoryStream();
                     using (stream)
                     {
                         formatter.Serialize(stream, this);
-                        stream.Seek(0, System.IO.SeekOrigin.Begin);
+                        stream.Seek(0, SeekOrigin.Begin);
                         return (Prototype)formatter.Deserialize(stream);
                     }
                     //XML序列化
@@ -426,6 +442,9 @@ namespace HelloWorld
 
     #region Struct Pattern
 
+    /// <summary>
+    /// 适配器模式
+    /// </summary>
     public class AdapterPattern
     {
         public class ObjectAdapter
@@ -505,6 +524,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 桥接模式
+    /// </summary>
     public class BridgePattern
     {
         /// <summary>
@@ -589,7 +611,7 @@ namespace HelloWorld
     }
 
     /// <summary>
-    /// Wrapper
+    /// 装饰者模式
     /// </summary>
     public class DecoratorPattern
     {
@@ -660,6 +682,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 组合模式
+    /// </summary>
     public class CompositePattern
     {
         public interface IComponent
@@ -736,6 +761,9 @@ namespace HelloWorld
         }
     }
 
+    /// <summary>
+    /// 外观模式
+    /// </summary>
     public class FacadePattern
     {
         //解耦客户端程序与子系统
@@ -777,6 +805,9 @@ namespace HelloWorld
         }
     }
 
+    /// <summary>
+    /// 享元模式
+    /// </summary>
     public class FlyweightPattern
     {
         //使用共享支持大量的细颗粒度对象
@@ -847,6 +878,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 代理模式
+    /// </summary>
     public class ProxyPattern
     {
         public abstract class Subject
@@ -890,6 +924,9 @@ namespace HelloWorld
 
     #region Action Pattern
 
+    /// <summary>
+    /// 责任链模式
+    /// </summary>
     public class ChainOfResponsibilityPattern
     {
 
@@ -973,6 +1010,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 命令模式
+    /// </summary>
     public class CommandPattern
     {
         public abstract class Command
@@ -1069,6 +1109,9 @@ namespace HelloWorld
         }
     }
 
+    /// <summary>
+    /// 解释器模式
+    /// </summary>
     public class InterpreterPattern
     {
         public abstract class Expression
@@ -1139,9 +1182,12 @@ namespace HelloWorld
         }
     }
 
+    /// <summary>
+    /// 迭代器模式
+    /// </summary>
     public class IteratorPattern
     {
-        public interface Iterator: System.Collections.IEnumerator
+        public interface Iterator
         {
 
         }
@@ -1238,6 +1284,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 中介者模式
+    /// </summary>
     public class MediatorPattern
     {
         public abstract class Mediator
@@ -1304,11 +1353,15 @@ namespace HelloWorld
         public static void Main()
         {
             var mediator = new ConcreteMediator1();
-            var coll1 = new ConcreteColleage1();
-            coll1.Med = mediator;
-            var coll2 = new ConcreteColleage2();
-            coll2.Med = mediator;
-            
+            var coll1 = new ConcreteColleage1
+            {
+                Med = mediator
+            };
+            var coll2 = new ConcreteColleage2
+            {
+                Med = mediator
+            };
+
             coll1.SendMsg(new Message() { Msg="coll01"});
             coll2.SendMsg(new Message() { Msg="coll02"});
 
@@ -1374,6 +1427,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 观察者模式
+    /// </summary>
     public class ObserverPattern
     {
         public interface IObserver
@@ -1444,6 +1500,9 @@ namespace HelloWorld
 
     }
 
+    /// <summary>
+    /// 状态模式
+    /// </summary>
     public class StatePattern
     {
         public class Context
@@ -1657,7 +1716,7 @@ namespace HelloWorld
         {
             public void TemplateMethod()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
                 Func1();
                 Func2();
                 Func3();
@@ -1671,17 +1730,17 @@ namespace HelloWorld
         {
             protected override void Func1()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
 
             protected override void Func2()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
 
             protected override void Func3()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
 
@@ -1689,17 +1748,17 @@ namespace HelloWorld
         {
             protected override void Func1()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
             }
 
             protected override void Func2()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
             }
 
             protected override void Func3()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
             }
         }
 
@@ -1761,7 +1820,7 @@ namespace HelloWorld
 
             public override void Func()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
         public class ConcreteElement2 : Element
@@ -1772,7 +1831,7 @@ namespace HelloWorld
             }
             public override void Func()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
 
@@ -1905,7 +1964,7 @@ namespace HelloWorld
             /// <param name="s"></param>
             public void ConvertState(State s)
             {
-                System.Diagnostics.Trace.WriteLine("ConvertState::" + s);
+                Trace.WriteLine("ConvertState::" + s);
                 State = s;
                 switch (s)
                 {
@@ -1956,15 +2015,15 @@ namespace HelloWorld
             }
             public void Process()
             {
-                System.Threading.Monitor.Enter(_lock);
+                Monitor.Enter(_lock);
                 Critical();
-                System.Threading.Monitor.Exit(_lock);
+                Monitor.Exit(_lock);
             }
             public void ConvertState(State state)
             {
-                System.Threading.Monitor.Enter(_lock);
+                Monitor.Enter(_lock);
                 _breaker.ConvertState(state);
-                System.Threading.Monitor.Exit(_lock);
+                Monitor.Exit(_lock);
             }
         }
 
@@ -2105,11 +2164,11 @@ namespace HelloWorld
                     throw new Exception() { Source = "Error Int::" + t };
                 }else
                 {
-                    System.Diagnostics.Trace.WriteLine("Success Int::" + t);
+                    Trace.WriteLine("Success Int::" + t);
                 }
             },()=>
             {
-                System.Diagnostics.Trace.WriteLine("restore::");
+                Trace.WriteLine("restore::");
                 return true;
             }
             );

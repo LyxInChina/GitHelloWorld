@@ -21,8 +21,6 @@
 
 /.vs
 /bin
-/AutoZip/obj
-/AutoZip/bin
 
 /CPlus/HelloWorld/x64
 /CPlus/HelloWorld/Debug
@@ -33,8 +31,6 @@
 
 /CreateChm/bin
 /CreateChm/obj
-/FileAssociation/bin
-/FileAssociation/obj
 /FolderWatcher/bin
 /FolderWatcher/obj
 
@@ -52,6 +48,3 @@
 /Service/WebService/obj
 /Service/WinSerivce/bin
 /Service/WinSerivce/obj
-
-/ThreadSync/bin
-/ThreadSync/obj

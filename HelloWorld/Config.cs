@@ -12,7 +12,7 @@ namespace Config
     /// </summary>
     public abstract class AbstConfig
     {
-        protected Configuration _conf;
+        protected Configuration conf;
         public static AbstConfig GetInstance()
         {
             return null;
@@ -53,7 +53,7 @@ namespace Config
         public BSDbConfig(string fileName)
         {
             fileName = fileName == "~" ? fileName : "~\\" + fileName;
-            _conf = WebConfigurationManager.OpenWebConfiguration(fileName);
+            conf = WebConfigurationManager.OpenWebConfiguration(fileName);
         }
         private BSDbConfig():this("~")
         {            
@@ -61,11 +61,11 @@ namespace Config
         public override string ReadValue(string ID, string groupName)
         {
             string res = null;
-            if (_conf.SectionGroups[groupName] != null)
+            if (conf.SectionGroups[groupName] != null)
             {
                 try
                 {
-                   res = (_conf.SectionGroups[groupName].Sections[ID] as ConfigData)?.Value;
+                   res = (conf.SectionGroups[groupName].Sections[ID] as ConfigData)?.Value;
                 }
                 catch (Exception)
                 {
@@ -78,22 +78,22 @@ namespace Config
             bool res = true;
             try
             {
-                if (_conf.SectionGroups[groupName] == null)
+                if (conf.SectionGroups[groupName] == null)
                 {
-                    _conf.SectionGroups.Add(groupName, new ConfigurationSectionGroup());
+                    conf.SectionGroups.Add(groupName, new ConfigurationSectionGroup());
                 }
-                var data = _conf.SectionGroups[groupName].Sections[id] as ConfigurationSection;
+                var data = conf.SectionGroups[groupName].Sections[id] as ConfigurationSection;
                 var cfd = new ConfigData() { ID = id,Value = value};
                 if (data == null)
                 {
-                    _conf.SectionGroups[groupName].Sections.Add(id, cfd);
+                    conf.SectionGroups[groupName].Sections.Add(id, cfd);
                 }
                 else
                 {
-                    _conf.SectionGroups[groupName].Sections.Remove(id);
-                    _conf.SectionGroups[groupName].Sections.Add(id, cfd);
+                    conf.SectionGroups[groupName].Sections.Remove(id);
+                    conf.SectionGroups[groupName].Sections.Add(id, cfd);
                 }
-                _conf.Save();                
+                conf.Save();                
             }
             catch (Exception)
             {
@@ -110,7 +110,7 @@ namespace Config
     {
         private CSDbConfig(string configFilePath, string fileName)
         {
-            _conf = ConfigurationManager.OpenExeConfiguration(System.IO.Path.Combine(configFilePath, fileName));
+            conf = ConfigurationManager.OpenExeConfiguration(System.IO.Path.Combine(configFilePath, fileName));
         }
         private CSDbConfig(string fileName):this(Environment.CurrentDirectory,fileName)
         {            
@@ -118,9 +118,9 @@ namespace Config
         public override string ReadValue(string ID, string groupName)
         {
             string res = null;
-            if (_conf.SectionGroups[groupName] != null)
+            if (conf.SectionGroups[groupName] != null)
             {
-                res = (_conf.SectionGroups[groupName].Sections[ID] as ConfigData)?.Value;
+                res = (conf.SectionGroups[groupName].Sections[ID] as ConfigData)?.Value;
             }
             return res;
         }
@@ -129,22 +129,22 @@ namespace Config
             bool res = true;
             try
             {
-                if (_conf.SectionGroups[groupName] == null)
+                if (conf.SectionGroups[groupName] == null)
                 {
-                    _conf.SectionGroups.Add(groupName, new ConfigurationSectionGroup());
+                    conf.SectionGroups.Add(groupName, new ConfigurationSectionGroup());
                 }
-                var data = _conf.SectionGroups[groupName].Sections[id] as ConfigurationSection;
+                var data = conf.SectionGroups[groupName].Sections[id] as ConfigurationSection;
                 var cfd = new ConfigData() { ID = id, Value = value };
                 if (data == null)
                 {
-                    _conf.SectionGroups[groupName].Sections.Add(id, cfd);
+                    conf.SectionGroups[groupName].Sections.Add(id, cfd);
                 }
                 else
                 {
-                    _conf.SectionGroups[groupName].Sections.Remove(id);
-                    _conf.SectionGroups[groupName].Sections.Add(id, cfd);
+                    conf.SectionGroups[groupName].Sections.Remove(id);
+                    conf.SectionGroups[groupName].Sections.Add(id, cfd);
                 }
-                _conf.Save();
+                conf.Save();
             }
             catch
             {

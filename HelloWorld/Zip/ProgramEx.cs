@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics;
-using AutoZip;
-//using ZQ.LogHelper;
 
-namespace AutoZipM
+namespace HelloWorld.Zip
 {
-    class Program
+    public class Zip
     {
-        static bool _IsExit = false;
-        //static EventLogHelper helper = new EventLogHelper();
-        //static FileLogHelper helperEx = new FileLogHelper();
+        public static readonly string MICOFile =Environment.CurrentDirectory+ @"\Zip\ZIP.cio";
 
+        static bool _IsExit = false;
         static void Main(string[] args)
         {
             try
@@ -37,23 +30,12 @@ namespace AutoZipM
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //helperEx.WriteLog(ex, EventLogEntryType.Error);
-                //helper.WriteLog(ex, EventLogEntryType.Error);
             }
         }
         private static void MonitorInput()
         {
-//            while (true)
-//            {
-//                string input = Console.ReadLine();
-//                if (input == "exit")
-//                {
-//                    _IsExit = true;
-//                    Thread.CurrentThread.Abort();
-//                }
-//            }
             AutoZipClass.MainWork();
             _IsExit = true;
             Thread.CurrentThread.Abort();
@@ -64,7 +46,7 @@ namespace AutoZipM
         private static bool _mShow = false;
         static ConsoleWin32Helper()
         {
-            var icos = Resource1.ZIP;
+            var icos = new Icon(Zip.MICOFile);
             _NotifyIcon.Icon = icos; 
             _NotifyIcon.Visible = false;
             _NotifyIcon.Text = "AutoZip";

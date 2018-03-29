@@ -2,7 +2,6 @@ D:\MyGit\0\GitHelloWorld\Service\WinService\bin\Debug\Process.txt
 D:\MyGit\0\GitHelloWorld\Service\WinService\bin\Debug\WService.exe.config
 D:\MyGit\0\GitHelloWorld\Service\WinService\bin\Debug\WService.exe
 D:\MyGit\0\GitHelloWorld\Service\WinService\bin\Debug\WService.pdb
-D:\MyGit\0\GitHelloWorld\Service\WinService\obj\Debug\WinService.csprojResolveAssemblyReference.cache
 D:\MyGit\0\GitHelloWorld\Service\WinService\obj\Debug\WService.ProjectInstaller.resources
 D:\MyGit\0\GitHelloWorld\Service\WinService\obj\Debug\WService.WServiceTest.resources
 D:\MyGit\0\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.GenerateResource.cache

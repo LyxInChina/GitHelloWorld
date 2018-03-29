@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-
+using System.Reflection;
 
 
 namespace HelloWorld
@@ -11,9 +11,9 @@ namespace HelloWorld
         {
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            var v1 = System.Reflection.Assembly.GetExecutingAssembly().GetName().VersionCompatibility;
-            var v2 = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributesData();
+            var v = Assembly.GetExecutingAssembly().GetName().Version;
+            var v1 = Assembly.GetExecutingAssembly().GetName().VersionCompatibility;
+            var v2 = Assembly.GetExecutingAssembly().GetCustomAttributesData();
             //Run();
             //RunRegex();
             IntropJS.RunJS_V8();
@@ -22,7 +22,7 @@ namespace HelloWorld
             Console.ReadLine();
         }
 
-        private static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             var ass = args.Name;
             var sa = args.RequestingAssembly;

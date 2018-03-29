@@ -1,32 +1,28 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Common;
-//using ZQ.LogHelper;
 
-namespace AutoZip
+namespace HelloWorld.Zip
 {
-    class Program
+    public class AutoZipClass
     {
-        static void Main(string[] args)
+        public static readonly string FilePath = "";
+        public static readonly string FileNameFormat = "";
+
+        public static void MainWork()
         {
             //var helper = new EventLogHelper();
             //var helperEx = new FileLogHelper();
             try
             {
-                var directory = Properties.Settings.Default.filePath;
+                var directory = FilePath;
                 var time = new Stopwatch();
                 if (Directory.Exists(directory))
                 {
                     var dir = new DirectoryInfo(directory);
-                    var timeFormat = Properties.Settings.Default.fileNameFormat;
-                    var fileName = dir.Name+"-" + DateTime.Now.ToString(timeFormat);
+                    var timeFormat = FileNameFormat;
+                    var fileName = dir.Name + "-" + DateTime.Now.ToString(timeFormat);
                     var name = CheckFileName(fileName);
                     if (dir.Parent != null)
                     {
@@ -37,7 +33,7 @@ namespace AutoZip
                         Console.WriteLine("Zip done!");
                         var stringb = new StringBuilder();
                         stringb.AppendLine("********" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "********");
-                        stringb.AppendLine(dir.FullName + "压缩完成！(用时：" + time.ElapsedMilliseconds/1000 + "s)");
+                        stringb.AppendLine(dir.FullName + "压缩完成！(用时：" + time.ElapsedMilliseconds / 1000 + "s)");
                         stringb.AppendLine("压缩后文件名为：" + name);
                         stringb.AppendLine("文件路径：" + dir.Parent.FullName);
                         Console.WriteLine("Begin Record Event...");
@@ -55,15 +51,15 @@ namespace AutoZip
             }
             catch (Exception ex)
             {
+                //helperEx.WriteLog(ex, EventLogEntryType.Error);
                 //helper.WriteLog(ex, EventLogEntryType.Error);
             }
         }
-
-        public static string CheckFileName(string fileName,int index=1)
+        public static string CheckFileName(string fileName, int index = 1)
         {
-            if (File.Exists(fileName+".zip"))
+            if (File.Exists(fileName + ".zip"))
             {
-                if (File.Exists(fileName+"("+index+")" + ".zip"))
+                if (File.Exists(fileName + "(" + index + ")" + ".zip"))
                 {
                     index++;
                     CheckFileName(fileName, index);
@@ -76,6 +72,5 @@ namespace AutoZip
             return fileName;
         }
 
-        
     }
 }

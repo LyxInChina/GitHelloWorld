@@ -9,8 +9,6 @@
 
 ### .vscode
 vscode配置；
-### AutoZip
-基于ICSharpCode.SharpZipLib.dll的自动文件压缩项目；
 ### CPlus
 C++学习项目:
 - CMake  CMake 工具学习使用示例；
@@ -18,8 +16,6 @@ C++学习项目:
 - UnitTestProject C#调用C++类库示例；
 ### CreateChm
 一个从本地网页创建chm文件的项目；
-### FileAssociation
-windows下用于设置全局文件后缀关联设置、取消项目；
 ### FolderWatcher
 文件夹监视用于监视指定文件夹下所有文件的改动信息并记录日志；
 ### Helloworld

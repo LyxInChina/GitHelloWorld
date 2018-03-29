@@ -31,6 +31,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -54,6 +55,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>7.2</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>EmitExamples.EmitProgram</StartupObject>
@@ -84,9 +86,13 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="ClearScript, Version=5.4.9.0, Culture=neutral, PublicKeyToken=4d98b1780673c126, processorArchitecture=MSIL">
-      <HintPath>..\packages\ClearScript.V8.5.4.9\lib\net40\ClearScript.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Accessibility" />
+    <Reference Include="ClearScript, Version=5.5.1.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClearScript.V8.5.5.1\lib\net45\ClearScript.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Zip\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
@@ -101,6 +107,7 @@
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -113,6 +120,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CookieSession.cs" />
     <Compile Include="ProcessAndThread\Sync.cs" />
     <Compile Include="ProcessAndThread\ThreadSync.cs" />
     <Compile Include="Base\BaseKnowledge.cs" />
@@ -140,9 +148,13 @@
     <Compile Include="IPC\Program.cs" />
     <Compile Include="IPC\ZeroMQTest.cs" />
     <Compile Include="System\BankerAligorithmcs.cs" />
+    <Compile Include="System\FileAssociation.cs" />
     <Compile Include="System\FileSystem.cs" />
     <Compile Include="System\PhilosopherEatingProblem.cs" />
     <Compile Include="WCF\WCF.cs" />
+    <Compile Include="Zip\AutoZipClass.cs" />
+    <Compile Include="Zip\ProgramEx.cs" />
+    <Compile Include="Zip\ZipHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -151,11 +163,6 @@
     <None Include="HelloWorld.manifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Licenses\ClearScript.main.license" />
-    <None Include="Licenses\v8.main.license" />
-    <None Include="Licenses\v8.strongtalk.license" />
-    <None Include="Licenses\v8.v8.license" />
-    <None Include="Licenses\v8.valgrind.license" />
     <None Include="MyPorfile.snk" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -177,6 +184,14 @@
       <LastGenOutput>MyResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Zip\ICSharpCode.SharpZipLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zip\ZIP.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -187,7 +202,11 @@
 if not exist "$(TargetDir)" md "$(TargetDir)"
 xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.4.9\tools\native\x86\*.*" "$(TargetDir)"
 if not exist "$(TargetDir)" md "$(TargetDir)"
-xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.4.9\tools\native\amd64\*.*" "$(TargetDir)"</PostBuildEvent>
+xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.4.9\tools\native\amd64\*.*" "$(TargetDir)"
+if not exist "$(TargetDir)" md "$(TargetDir)"
+xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.5.1\tools\native\x86\*.*" "$(TargetDir)"
+if not exist "$(TargetDir)" md "$(TargetDir)"
+xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.5.1\tools\native\amd64\*.*" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\ZeroMQ.4.1.0.26\build\net40\ZeroMQ.targets" Condition="Exists('..\packages\ZeroMQ.4.1.0.26\build\net40\ZeroMQ.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

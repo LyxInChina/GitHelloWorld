@@ -9,18 +9,18 @@ using System.CodeDom.Compiler;
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.JavaScript;
 using Microsoft.ClearScript.V8;
+using System.Reflection;
 
 namespace HelloWorld
 {
     public class IntropJS
-    {
-
-        public static JScriptCodeProvider scc;
+    {        
+        public static JScriptCodeProvider MJScriptCodeProvider;
         public static CompilerParameters parameters = new CompilerParameters();
 
         static IntropJS()
         {
-            scc = new JScriptCodeProvider();
+            MJScriptCodeProvider = new JScriptCodeProvider();
             parameters.GenerateInMemory = true;
         }
 
@@ -31,16 +31,18 @@ namespace HelloWorld
                 try
                 {
                     var str = file;
-                    var pa = new CompilerParameters();
-                    pa.GenerateInMemory = true;
-                    var result = scc.CompileAssemblyFromSource(parameters, str);
+                    var pa = new CompilerParameters
+                    {
+                        GenerateInMemory = true
+                    };
+                    var result = MJScriptCodeProvider.CompileAssemblyFromSource(parameters, str);
                     var ass = result.CompiledAssembly;
                     var s = ass.GetType();
-                    var obj = s.InvokeMember("Test", System.Reflection.BindingFlags.InvokeMethod, null, null, new object[] { "this ok"});
+                    var obj = s.InvokeMember("Test", BindingFlags.InvokeMethod, null, null, new object[] { "this ok"});
                     Console.WriteLine("OBJ::"+obj); 
                     return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return false;
                 }

@@ -30,6 +30,7 @@ namespace Test
             //        Thread.Sleep(1000);
             //    }
             //});
+            System.Diagnostics.Debug.WriteLine("");
             Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             Console.WriteLine("开始初始化...");
             Console.WriteLine("当前目录工作目录[" + AppDomain.CurrentDomain.BaseDirectory + "]");
@@ -105,10 +106,12 @@ namespace Test
             Console.WriteLine("初始化成功！");
             //只监控该目录下的
             Console.WriteLine("开始监控[" + Path + "]下的所有[" + Filter + "]文件的追加内容");
-            FileSystemWatcher watcher = new FileSystemWatcher();
-            watcher.Path = Path;
-            watcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite;
-            watcher.Filter = Filter;
+            FileSystemWatcher watcher = new FileSystemWatcher
+            {
+                Path = Path,
+                NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite,
+                Filter = Filter
+            };
             watcher.Changed += new FileSystemEventHandler(watcher_Changed);
             watcher.Created += new FileSystemEventHandler(watcher_Created);
             watcher.Deleted += new FileSystemEventHandler(watcher_Deleted);

@@ -31,8 +31,7 @@ namespace MQTest
         /// <returns></returns>
         public static string GetZeroMQVersion()
         {
-            int major, minor, patch;
-            ZeroMQ.lib.zmq.version(out major,out minor,out patch);
+            ZeroMQ.lib.zmq.version(out int major, out int minor, out int patch);
             return string.Format("{0}.{1}.{2}", major, minor, patch);
         }
 
@@ -41,7 +40,8 @@ namespace MQTest
         /// </summary>
         public class Request_Reply
         {
-            public static ZError error;
+            private static ZError error;
+
             public static ZSocket CreateServer(string url)
             {
                 var context = new ZContext();

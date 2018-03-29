@@ -1,20 +1,14 @@
-﻿using System;
-using System.Windows;
-using Microsoft.Win32;
-using System.IO;
+﻿using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace FileAssociation
+namespace HelloWorld.System
 {
-    /// <summary>
-    /// Window1.xaml 的交互逻辑
-    /// </summary>
-    public partial class Window1 : Window
+    class FileAssociation
     {
-        public Window1()
-        {
-            InitializeComponent();
-        }
-
         /// <summary> 
         /// 设置文件关联 
         /// </summary> 
@@ -64,34 +58,5 @@ namespace FileAssociation
             Regkey.DeleteSubKeyTree("Exec");
 
         }
-
-        private void add_Click(object sender, RoutedEventArgs e)
-        {
-            string p_Filename = this.GetType().Assembly.Location;//获取该程序的完整路径
-            SaveReg(p_Filename, ".txt");
-        }
-
-        private void clear_Click(object sender, RoutedEventArgs e)
-        {
-            ResReg(".txt");
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            string PathFileName = Environment.CommandLine; //获取启动行命令
-            string[] para = PathFileName.Split('\"');  //进行分割并判断是否通过关联的文件打开程序
-            if (para.Length > 3)
-            {
-                ReadText(para[3]);
-            } 
-        }
-        private void ReadText(string PathFileName)
-        {
-            StreamReader sr = new StreamReader(PathFileName);
-            string readtxt = sr.ReadToEnd();
-            textbox.Text = readtxt;
-            sr.Close();
-        }
-
     }
 }

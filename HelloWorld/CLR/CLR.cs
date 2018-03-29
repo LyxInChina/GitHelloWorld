@@ -7,10 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.Collections;
+using System.Threading;
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 //引用友元程序集
-[assembly: InternalsVisibleTo(assemblyName: "ThreadSync,Publickey=c624defc-4780-4435-ae11-c630a26c83ac",
-    AllInternalsVisible = true)]
+//[assembly: InternalsVisibleTo(assemblyName: "ThreadSync,Publickey=c624defc-4780-4435-ae11-c630a26c83ac",
+//    AllInternalsVisible = true)]
 
 //using strstr = System.String;
 namespace HelloWorld
@@ -21,7 +25,7 @@ namespace HelloWorld
         public static void Func()
         {
             //
-            var fileInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(AppDomain.CurrentDomain.BaseDirectory + "//" + AppDomain.CurrentDomain.FriendlyName);
+            var fileInfo = FileVersionInfo.GetVersionInfo(AppDomain.CurrentDomain.BaseDirectory + "//" + AppDomain.CurrentDomain.FriendlyName);
             int s = 889;
             object o = s;
             int y = (int)s;
@@ -29,9 +33,9 @@ namespace HelloWorld
             Console.WriteLine("{0},{1},{2}", s, s, s);
             object obj = s;
             Console.WriteLine("{0},{1},{2}", obj, obj, obj);
-            System.Threading.Monitor.Enter(obj);
+            Monitor.Enter(obj);
             s = 55;
-            System.Threading.Monitor.Exit(obj);
+            Monitor.Exit(obj);
         }
 
         #region 动态类型
@@ -39,7 +43,7 @@ namespace HelloWorld
         /// <summary>
         /// 动态类型 
         /// </summary>
-        internal class Employee: System.Dynamic.IDynamicMetaObjectProvider
+        internal class Employee: IDynamicMetaObjectProvider
         {
             public virtual string GetName()=> "";
 
@@ -61,7 +65,7 @@ namespace HelloWorld
                 if(d is string)
                 {
                     var t = typeof(string);
-                    var m = t.GetMethod("Contains", System.Reflection.BindingFlags.IgnoreCase, null, new Type[] { typeof(string) }, null);
+                    var m = t.GetMethod("Contains", BindingFlags.IgnoreCase, null, new Type[] { typeof(string) }, null);
                     var res1 = m?.Invoke(d, new object[] { '5' });
 
                     var res2 = d.Contains('5');
@@ -96,7 +100,7 @@ namespace HelloWorld
 
             public override int GetHashCode()
             {
-                var id1 = System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(this);
+                var id1 = RuntimeHelpers.GetHashCode(this);
                 var id2 = base.GetHashCode();
                 Console.WriteLine("ID1:{0},ID2:{1}", id1, id2);
                 return id1 - id2;
@@ -148,13 +152,13 @@ namespace HelloWorld
         /// <summary>
         /// 显示指定结构体内成员分布
         /// </summary>
-        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
+        [StructLayout(LayoutKind.Explicit)]
         internal struct MyStruct
         {
-            [System.Runtime.InteropServices.FieldOffset(0)]
+            [FieldOffset(0)]
             public string Str;
 
-            [System.Runtime.InteropServices.FieldOffset(2)]
+            [FieldOffset(2)]
             public int ms;
         }
 
@@ -279,7 +283,7 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
 
     public class ValueClass
     {
-        struct point
+        struct Point
         {
             public float x, y;
         }
@@ -287,8 +291,8 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
         public static void Func()
         {
             ArrayList a = new ArrayList();
-            List<point> ls = new List<point>();
-            point p;
+            List<Point> ls = new List<Point>();
+            Point p;
             for (int i = 0; i < 20; i++)
             {
                 p.x = p.y = i;
@@ -297,14 +301,14 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
             }
             for (int i = 0; i < a.Count; i++)
             {
-                point pp = (point)a[i];//拆箱
-                point ppp = ls[i];//无拆箱
+                Point pp = (Point)a[i];//拆箱
+                Point ppp = ls[i];//无拆箱
             }
-            point po;
+            Point po;
             po.x = 11;
             po.y = 22;
             object o = po;
-            po = (point)o;
+            po = (Point)o;
             po.x++;
             o = po;
         }
@@ -382,7 +386,7 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
 
         public override int GetHashCode()
         {
-            var hc = System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(this);
+            var hc = RuntimeHelpers.GetHashCode(this);
             return 0;
         }
         public override string ToString()

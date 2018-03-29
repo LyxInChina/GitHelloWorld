@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -91,7 +92,7 @@ namespace HelloWorld
             var result = reader.ReadToEnd();
             stream.Close();
             reader.Close();
-            System.Diagnostics.Debug.WriteLine(result);
+            Debug.WriteLine(result);
             return response;            
         }
 
@@ -163,7 +164,7 @@ namespace HelloWorld
             var result = reader.ReadToEnd();
             stream.Close();
             reader.Close();
-            System.Diagnostics.Debug.WriteLine(result);
+            Debug.WriteLine(result);
             return response;
         }
 
