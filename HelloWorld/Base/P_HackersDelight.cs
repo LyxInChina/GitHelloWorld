@@ -1,43 +1,30 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace HelloWorld
 {
     class P_HackersDelight
     {
-        static void Out(string s)
+        static void Out(dynamic value,int intbase=2)
         {
-            Console.WriteLine(s);
+            Contract.Requires(intbase == 2 || intbase == 8 || intbase == 10 || intbase == 16);
+            if(value is string)
+            {
+                Console.WriteLine(value);
+            }
+            else if(value is byte|| value is short
+                || value is UInt16||value is Int16
+                || value is UInt32 || value is Int32
+                || value is UInt64 || value is Int64)
+            {
+                Console.WriteLine(Convert.ToString(value, intbase));
+            }
+            else
+            {
+                Console.WriteLine(value.ToSting());
+            }
         }
-        static void Out(byte t)
-        {
-            var x = Convert.ToString(t, 2);
-            Console.WriteLine(x);
-        }
-        static void Out(short t)
-        {
-            var x = Convert.ToString(t, 2);
-            Console.WriteLine(x);
-        }
-        static void Out(ushort t)
-        {
-            var x = Convert.ToString(t, 2);
-            Console.WriteLine(x);
-        }
-        static void Out(int t)
-        {
-            var x = Convert.ToString(t, 2);
-            Console.WriteLine(x);
-        }
-        static void Out(uint t)
-        {
-            var x = Convert.ToString(t, 2);
-            Console.WriteLine(x);
-        }
-        static void Out(long t)
-        {
-            var x = Convert.ToString(t, 2);
-            Console.WriteLine(x);
-        }
+
         static void Main()
         {
             ushort x = ushort.Parse("6086");
@@ -94,8 +81,7 @@ namespace HelloWorld
             Out(~(-x));
 
             int aaa = 255;
-            Console.WriteLine(Convert.ToString(aaa, 2));
-            
+            Out(aaa);            
         }
 
     }
