@@ -1925,7 +1925,6 @@ namespace HelloWorld
         Critical：执行请求，判断结果；
         Exit：
          */
-
         public enum State
         {
             Close = 1 << 0,

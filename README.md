@@ -14,10 +14,6 @@ C++学习项目:
 - CMake  CMake 工具学习使用示例；
 - HelloWorld C++示例：结构体内存对齐测试，简单C++类库示例；
 - UnitTestProject C#调用C++类库示例；
-### CreateChm
-一个从本地网页创建chm文件的项目；
-### FolderWatcher
-文件夹监视用于监视指定文件夹下所有文件的改动信息并记录日志；
 ### Helloworld
 * CLR读书笔记
 * MEF框架

@@ -12,6 +12,10 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
+/*
+ * CLR via C#
+ */
+
 //引用友元程序集
 //[assembly: InternalsVisibleTo(assemblyName: "ThreadSync,Publickey=c624defc-4780-4435-ae11-c630a26c83ac",
 //    AllInternalsVisible = true)]
