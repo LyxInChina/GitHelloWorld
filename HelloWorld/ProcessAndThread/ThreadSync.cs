@@ -485,7 +485,7 @@ namespace ThreadSync
         }
     }
 
-    /*
+    /*AutoResetEvent与ManualResetEvent的区别
      * 
      同步机制包括临界区（critical section），信号量（simphore），互斥量（mutex），管程（monitor）
     关于AutoResetEvent与ManualResetEvent
@@ -520,4 +520,28 @@ namespace ThreadSync
     
      */
 
+    /*线程同步
+     * 临界区问题
+     * 进入区——》临界区——》退出区——》剩余区
+     * 
+     * 解决：
+     * 1.互斥
+     * 2.前进
+     * 3.有限等待
+     * 操作系统内处理临界区：抢占内核、非抢占内核
+     * 
+     * Peterson算法——》基于软件的临界区解决
+     * 硬件同步：原子指令、信号量（semaphore）
+     * 
+     * 1.原子操作：volatile，InterLock
+     * 2.锁：lock，Monitor，SpinLock
+     * 3.互斥算法：
+     * 4.特殊：Threadlocal
+     * 5.信号量
+     * 6.互斥体
+     * 
+     * 原子操作 -   
+     * 
+     * 
+     */
 }
