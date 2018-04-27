@@ -125,7 +125,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CookieSession.cs" />
+    <Compile Include="Web\CookieSession.cs" />
     <Compile Include="ProcessAndThread\Sync.cs" />
     <Compile Include="ProcessAndThread\ThreadSync.cs" />
     <Compile Include="Base\BaseKnowledge.cs" />
@@ -134,7 +134,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="DesignPattern.cs" />
     <Compile Include="English.cs" />
-    <Compile Include="GetPost.cs" />
+    <Compile Include="Web\GetPost.cs" />
     <Compile Include="IntropJS.cs" />
     <Compile Include="InvokeHelper.cs" />
     <Compile Include="MEF\MEFProgram.cs" />

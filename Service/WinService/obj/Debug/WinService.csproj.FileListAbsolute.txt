@@ -8,3 +8,13 @@ D:\MyGit\0\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.Generate
 D:\MyGit\0\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.CoreCompileInputs.cache
 D:\MyGit\0\GitHelloWorld\Service\WinService\obj\Debug\WService.exe
 D:\MyGit\0\GitHelloWorld\Service\WinService\obj\Debug\WService.pdb
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\bin\Debug\Process.txt
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\bin\Debug\WService.exe.config
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\bin\Debug\WService.exe
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\bin\Debug\WService.pdb
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\obj\Debug\WService.ProjectInstaller.resources
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\obj\Debug\WService.WServiceTest.resources
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.GenerateResource.Cache
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.CoreCompileInputs.cache
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\obj\Debug\WService.exe
+E:\zhanglizhong\Demon\GitHelloWorld\Service\WinService\obj\Debug\WService.pdb

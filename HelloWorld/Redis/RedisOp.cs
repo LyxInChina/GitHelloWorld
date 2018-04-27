@@ -112,6 +112,10 @@ namespace Redis
     {
         public static void Main(string[] args)
         {
+            if (5 * 256 == 5 << 8)
+            {
+                Console.WriteLine("yes");
+            }
             var con = Redis.RedisOp.GetConnection();
             var db = RedisOp.GetDatabase();
             var key = "kkkk";
