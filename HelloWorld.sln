@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{7DBC74
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroService", "MicroService", "{D8DEE4A4-A4CB-4B97-9CD0-DC17FC3E850C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusTest", "HelloWorld\Modbus\ModbusTest.csproj", "{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,22 @@ Global
 		{EF82B194-60FA-4078-9A84-B986F4D00F56}.Release|x64.Build.0 = Release|Any CPU
 		{EF82B194-60FA-4078-9A84-B986F4D00F56}.Release|x86.ActiveCfg = Release|Any CPU
 		{EF82B194-60FA-4078-9A84-B986F4D00F56}.Release|x86.Build.0 = Release|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Debug|ARM.Build.0 = Debug|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Debug|x64.Build.0 = Debug|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|ARM.ActiveCfg = Release|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|ARM.Build.0 = Release|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|x64.ActiveCfg = Release|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|x64.Build.0 = Release|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -58,7 +58,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Redis.RedisMain</StartupObject>
+    <StartupObject>EmitExamples.EmitProgram</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -131,7 +131,7 @@
     <Compile Include="Base\BaseKnowledge.cs" />
     <Compile Include="CLR\CLR.cs" />
     <Compile Include="CLR\CSharpPerformancePromote.cs" />
-    <Compile Include="Config.cs" />
+    <Compile Include="ConfigHelper.cs" />
     <Compile Include="DesignPattern.cs" />
     <Compile Include="English.cs" />
     <Compile Include="Web\GetPost.cs" />

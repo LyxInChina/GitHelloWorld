@@ -9,7 +9,7 @@ using HelloWorld;
 namespace EmitExamples
 {
     [StructLayout(LayoutKind.Sequential)]
-    class EmitProgram
+    public class EmitProgram
     {
         /// <summary>
         /// 用来调用动态方法的委托
@@ -22,6 +22,10 @@ namespace EmitExamples
             MakeHelloWorldFunc();
             FCurrentFunction();
             RegexTest.HasChinese("sdfioafia汉asf");
+            float f1 = 12.3456789f;
+            var s = Convert.ToSingle(f1.ToString("0.00"));
+
+
             Console.ReadKey();
         }
 
