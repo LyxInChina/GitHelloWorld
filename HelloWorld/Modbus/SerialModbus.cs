@@ -9,6 +9,7 @@ using System.Threading;
 
 namespace ModbusTest
 {
+    [Obsolete("弃用的测试用例")]
     public class SerialModbus: IDisposable
     {
         private SerialPort MSerialPort;
