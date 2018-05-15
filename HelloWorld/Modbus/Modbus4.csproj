@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPConfig.cs" />
+    <Compile Include="MConfig.cs" />
     <Compile Include="ModBusMaster.cs" />
     <Compile Include="SerialModbus.cs" />
     <Compile Include="NModbus4\Data\DataStore.cs" />

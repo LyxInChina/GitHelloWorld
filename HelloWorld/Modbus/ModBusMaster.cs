@@ -14,7 +14,7 @@ namespace ModBus4
 {
     public static class ModBusMasterFactor
     {
-        public static ModbusMaster CreateSerialMaster(SerialPort port, SerialModBusType type)
+        public static ModbusMaster CreateSerialMaster(SerialPort port, SerialModBusMode type)
         {
             ModbusMaster master = null;
             if (port != null)
@@ -23,10 +23,10 @@ namespace ModBus4
                     port.Open();
                 switch (type)
                 {
-                    case SerialModBusType.Rtu:
+                    case SerialModBusMode.Rtu:
                         master = ModbusSerialMaster.CreateRtu(port);
                         break;
-                    case SerialModBusType.Ascii:
+                    case SerialModBusMode.Ascii:
                         master = ModbusSerialMaster.CreateRtu(port);
                         break;
                     default:
@@ -36,31 +36,37 @@ namespace ModBus4
             return master;
         }
 
-        public static ModbusMaster CreateTcpMaster(TcpClient client)
+        public static ModbusMaster CreateUdpMaster(UdpClient client)
         {
             ModbusMaster master = null;
             if (client != null)
             {
-                if (!client.Connected)
-                {
-                    client.Connect("127.0.0.1", 5250);
-                }
                 master = ModbusIpMaster.CreateIp(client);
             }
             return master;
         }
 
-        public static ModbusSlave CreateSlave(byte id, SerialPortAdapter adapter, SerialModBusType type)
+        public static ModbusMaster CreateTcpMaster(TcpClient client)
+        {
+            ModbusMaster master = null;
+            if (client != null)
+            {
+                master = ModbusIpMaster.CreateIp(client);
+            }
+            return master;
+        }
+
+        public static ModbusSlave CreateSlave(byte id, SerialPortAdapter adapter, SerialModBusMode type)
         {
             ModbusSlave slave = null;
             if (adapter != null)
             {
                 switch (type)
                 {
-                    case SerialModBusType.Rtu:
+                    case SerialModBusMode.Rtu:
                         slave = ModbusSerialSlave.CreateRtu(id, adapter);
                         break;
-                    case SerialModBusType.Ascii:
+                    case SerialModBusMode.Ascii:
                         slave = ModbusSerialSlave.CreateAscii(id, adapter);
                         break;
                     default:
@@ -100,47 +106,45 @@ namespace ModBus4
             return null;
         }
 
-        public static ModbusMaster CreateMaster(MConfig config, SerialModBusType type)
+        public static ModbusMaster CreateMaster(MConfig config)
         {
             if (config != null)
             {
-                switch (config.CType)
+                var s = config.GetType();
+                if(s.FullName == typeof(SerialConfig).FullName)
                 {
-                    case ConfigType.Serial:
+                    var conf = config as SerialConfig;
+                    if (conf != null)
+                    {
+                        var port = conf.CreateSerialPort();
+                        return CreateSerialMaster(port, conf.Mode);
+                    }
+                }
+                else if (s.FullName == typeof(IPConfig).FullName)
+                {
+                    var con = config as IPConfig;
+                    if (con != null)
+                    {
+                        if (con.Mode == IPMode.Tcp)
                         {
-                            var conf = config as SerialConfig;
-                            if (conf != null)
+                            var client = new TcpClient(con.Address.ToString(),con.Port);
+                            if (!client.Connected)
                             {
-                                var port = new SerialPort();
-                                port.PortName = conf.PortName;
-                                port.BaudRate = conf.BaudRate;
-                                port.DataBits = conf.DataBits;
-                                port.StopBits = conf.StopBits;
-                                port.Parity = conf.Parity;
-                                return CreateSerialMaster(port, type);
+                                client.Connect(con.Address, con.Port);
                             }
+                            return ModbusIpMaster.CreateIp(client);
                         }
-                        break;
-                    case ConfigType.Ip:
+                        else if (con.Mode == IPMode.Udp)
                         {
-                            var con = config as IPConfig;
-                            if (con != null)
-                            {
-                                var client = new TcpClient(new System.Net.IPEndPoint(con.Address, con.Port));
-                                return CreateTcpMaster(client);
-                            }
+                            var client = new UdpClient();
+                            client.Connect(con.CreateIPEndPoint());
+                            return ModbusIpMaster.CreateIp(client);
                         }
-                        break;
-                    default:
-                        break;
+                    }
                 }
             }
             return null;
         }
     }
-    public enum SerialModBusType
-    {
-        Rtu=0,
-        Ascii=1,
-    }
+
 }

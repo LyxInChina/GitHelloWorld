@@ -53,7 +53,7 @@ namespace ModbusTest
         }
         static void Func(MConfig config)
         {
-            var master = ModBus4.ModBusMasterFactor.CreateMaster(config, SerialModBusType.Rtu);
+            var master = ModBus4.ModBusMasterFactor.CreateMaster(config);
             ushort addr = 6;
             new Thread(() =>
             {

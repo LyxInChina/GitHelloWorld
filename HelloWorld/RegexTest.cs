@@ -50,12 +50,4 @@ namespace HelloWorld
             return res;
         }
     }
-
-    /*
-     * 
-         
-
-
-     * 
-     */
 }

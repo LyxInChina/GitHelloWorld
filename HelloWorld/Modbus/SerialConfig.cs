@@ -7,29 +7,54 @@ using System.IO.Ports;
 
 namespace ModBus4
 {
-    public abstract class MConfig
-    {
-       public ConfigType CType { get;protected set; }
-    }
-
     [Serializable]
-    public class SerialConfig:MConfig
+    public class SerialConfig : MConfig
     {
+        /// <summary>
+        /// 串口名称
+        /// </summary>
         public string PortName;
+        /// <summary>
+        /// 比特率
+        /// </summary>
         public int BaudRate;
+        /// <summary>
+        /// 奇偶校验检查协议
+        /// </summary>
         public Parity Parity;
+        /// <summary>
+        /// 数据位
+        /// </summary>
         public int DataBits;
+        /// <summary>
+        /// 停止位
+        /// </summary>
         public StopBits StopBits;
+        /// <summary>
+        /// 串口类型
+        /// </summary>
+        public SerialModBusMode Mode = SerialModBusMode.Rtu;
         public SerialConfig()
         {
-            CType = ConfigType.Serial;
+        }
 
+        public SerialPort CreateSerialPort()
+        {
+            var port = new SerialPort()
+            {
+                PortName = PortName,
+                BaudRate = BaudRate,
+                Parity = Parity,
+                DataBits = DataBits,
+                StopBits = StopBits,
+            };
+            return port;
         }
     }
-
-    public enum ConfigType
+    public enum SerialModBusMode
     {
-        Serial =0,
-        Ip=1,
+        Rtu = 0,
+        Ascii = 1,
     }
+
 }
