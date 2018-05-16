@@ -7,12 +7,16 @@ using Modbus.Device;
 
 namespace ModbusTest
 {
+    /// <summary>
+    /// 测试程序入口
+    /// </summary>
     static class Program
     {
         static void Main(string[] args)
         {
             //NewTestSerial();
-            NewTestTcp();
+            //NewTestTcp();
+            NewTestUdp();
             while (true)
             {
                 var input = Console.ReadLine();
@@ -22,11 +26,10 @@ namespace ModbusTest
                 }
             }
         }
-        static void Test()
-        {
-            var serialm = new SerialModbus();
-            serialm.WorkControl(true);
-        }
+
+        /// <summary>
+        /// 串口测试
+        /// </summary>
         static void NewTestSerial()
         {
             var serialc = new SerialConfig()
@@ -39,18 +42,39 @@ namespace ModbusTest
             };
             Func(serialc);
         }
+
         /// <summary>
-        /// tcp 有异常
+        /// tcp测试
         /// </summary>
         static void NewTestTcp()
         {
             var tcp = new IPConfig()
             {
-                Address = System.Net.IPAddress.Parse("127.0.0.1"),
-                Port = 5250
+                Address = "127.0.0.1",
+                Port = 5250,
+                Mode = IPMode.Tcp,
             };
             Func(tcp);
         }
+
+        /// <summary>
+        /// UDP测试
+        /// </summary>
+        static void NewTestUdp()
+        {
+            var conf = new IPConfig()
+            {
+                Address = "127.0.0.1",
+                Port = 5250,
+                Mode = IPMode.Udp,
+            };
+            Func(conf);
+        }
+
+        /// <summary>
+        /// 主要测试函数
+        /// </summary>
+        /// <param name="config"></param>
         static void Func(MConfig config)
         {
             var master = ModBus4.ModBusMasterFactor.CreateMaster(config);

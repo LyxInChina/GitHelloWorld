@@ -12,6 +12,9 @@ using Modbus.IO;
 
 namespace ModBus4
 {
+    /// <summary>
+    /// ModBus协议工厂
+    /// </summary>
     public static class ModBusMasterFactor
     {
         public static ModbusMaster CreateSerialMaster(SerialPort port, SerialModBusMode type)
@@ -117,6 +120,10 @@ namespace ModBus4
                     if (conf != null)
                     {
                         var port = conf.CreateSerialPort();
+                        if (!port.IsOpen)
+                        {
+                            port.Open();
+                        }
                         return CreateSerialMaster(port, conf.Mode);
                     }
                 }
@@ -127,7 +134,7 @@ namespace ModBus4
                     {
                         if (con.Mode == IPMode.Tcp)
                         {
-                            var client = new TcpClient(con.Address.ToString(),con.Port);
+                            var client = new TcpClient(con.Address,con.Port);
                             if (!client.Connected)
                             {
                                 client.Connect(con.Address, con.Port);

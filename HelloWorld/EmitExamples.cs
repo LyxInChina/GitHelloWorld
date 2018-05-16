@@ -19,6 +19,9 @@ namespace EmitExamples
 
         static void Main(string[] args)
         {
+
+            HelloWorld.Serializable.SerializableHelper.SerializableTest();
+
             MakeHelloWorldFunc();
             FCurrentFunction();
             RegexTest.HasChinese("sdfioafia汉asf");

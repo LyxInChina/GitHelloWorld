@@ -7,6 +7,9 @@ using System.IO.Ports;
 
 namespace ModBus4
 {
+    /// <summary>
+    /// 串口配置
+    /// </summary>
     [Serializable]
     public class SerialConfig : MConfig
     {
@@ -31,7 +34,7 @@ namespace ModBus4
         /// </summary>
         public StopBits StopBits;
         /// <summary>
-        /// 串口类型
+        /// 串口模式
         /// </summary>
         public SerialModBusMode Mode = SerialModBusMode.Rtu;
         public SerialConfig()
@@ -40,17 +43,18 @@ namespace ModBus4
 
         public SerialPort CreateSerialPort()
         {
-            var port = new SerialPort()
-            {
-                PortName = PortName,
-                BaudRate = BaudRate,
-                Parity = Parity,
-                DataBits = DataBits,
-                StopBits = StopBits,
-            };
+            var port = new SerialPort();
+            port.PortName = PortName ?? "COM1";
+            port.BaudRate = BaudRate;
+            port.Parity = Parity;
+            port.DataBits = DataBits;
+            port.StopBits = StopBits;
             return port;
         }
     }
+    /// <summary>
+    /// 串口模式
+    /// </summary>
     public enum SerialModBusMode
     {
         Rtu = 0,

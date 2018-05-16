@@ -8,24 +8,30 @@ using System.Threading.Tasks;
 
 namespace ModBus4
 {
+    /// <summary>
+    /// IP配置类
+    /// </summary>
     [Serializable]
     public class IPConfig : MConfig
     {
         /// <summary>
         /// IP地址
         /// </summary>
-        public IPAddress Address;
+        public string Address { get; set; }
         /// <summary>
         /// 端口号
         /// </summary>
-        public int Port;
-        public IPMode Mode = IPMode.Tcp;
+        public int Port { get; set; }
+        /// <summary>
+        /// IP模式：UPD/TCP
+        /// </summary>
+        public IPMode Mode { get; set; } = IPMode.Tcp;
         public IPConfig()
         {
         }
         public IPEndPoint CreateIPEndPoint()
         {
-            return new IPEndPoint(Address, Port);
+            return new IPEndPoint(IPAddress.Parse(Address), Port);
         }
 
     }
