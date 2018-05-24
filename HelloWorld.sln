@@ -17,7 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeDll", "InjectDemo\Nat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMake", "CMake", "{A9FBB511-BAF2-4497-A6BE-D89E5A5972B4}"
 	ProjectSection(SolutionItems) = preProject
-		CPlus\CMake\helloworld.c = CPlus\CMake\helloworld.c
+		CMake\CMake.md = CMake\CMake.md
+		CMake\helloworld.c = CMake\helloworld.c
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "CPlus\UnitTestProject\UnitTestProject.csproj", "{33945C49-7CE1-4F4D-AA3E-39A7B68CD971}"
@@ -54,6 +55,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogHelper", "LogHelper\LogHelper.csproj", "{15CDDD93-30C9-4845-AA27-147D4552070D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modbus4", "HelloWorld\Modbus\Modbus4.csproj", "{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{0D9DCDA5-4ADD-4A78-A7A2-93960737D159}"
+	ProjectSection(SolutionItems) = preProject
+		Docker\DockerLearn.md = Docker\DockerLearn.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleWeb_Docker", "SampleWeb_Docker\SampleWeb_Docker.csproj", "{162F2521-7D45-4C48-901E-18043C680BEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +203,22 @@ Global
 		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|x64.Build.0 = Release|Any CPU
 		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|x86.ActiveCfg = Release|Any CPU
 		{4C7C49A6-87EB-4EEB-8AF5-CEE8235BDE7D}.Release|x86.Build.0 = Release|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Debug|x64.Build.0 = Debug|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Debug|x86.Build.0 = Debug|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Release|ARM.Build.0 = Release|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Release|x64.ActiveCfg = Release|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Release|x64.Build.0 = Release|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Release|x86.ActiveCfg = Release|Any CPU
+		{162F2521-7D45-4C48-901E-18043C680BEC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,6 +231,7 @@ Global
 		{12EF228A-F369-405F-95B2-352F9ACAC0D2} = {790EDF5F-C307-42F7-8227-CF1F3AE72501}
 		{EF82B194-60FA-4078-9A84-B986F4D00F56} = {790EDF5F-C307-42F7-8227-CF1F3AE72501}
 		{15CDDD93-30C9-4845-AA27-147D4552070D} = {3D3639E6-24A7-4120-B217-FFA3A70C29CF}
+		{162F2521-7D45-4C48-901E-18043C680BEC} = {0D9DCDA5-4ADD-4A78-A7A2-93960737D159}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F255F2E8-C1F7-400B-BE64-60202D36778F}

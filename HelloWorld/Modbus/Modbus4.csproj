@@ -49,8 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPConfig.cs" />
-    <Compile Include="MConfig.cs" />
+    <Compile Include="Config\IPConfig.cs" />
+    <Compile Include="Config\MConfig.cs" />
     <Compile Include="ModBusMaster.cs" />
     <Compile Include="SerialModbus.cs" />
     <Compile Include="NModbus4\Data\DataStore.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="NModbus4\Utility\ModbusUtility.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerialConfig.cs" />
+    <Compile Include="Config\SerialConfig.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
