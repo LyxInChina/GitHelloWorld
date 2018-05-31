@@ -81,6 +81,25 @@ namespace ThreadSync
             
 
              */
+        #region MQ-message queue 
+        public class ZeroMq
+        {
+
+        }
+
+        public class RabbitMq
+        {
+
+        }
+
+        public class RocketMq
+        {
+
+        }
+       
+        #endregion
+        #region Pipe
+
         public class AnonymousPipe:IPC
         {
             public volatile AnonymousPipeClientStream MAnClientPipe;
@@ -226,6 +245,10 @@ namespace ThreadSync
 
         }
 
+        #endregion
+
+        #region windows消息
+
         /// <summary>
         /// Windows消息
         /// </summary>
@@ -275,6 +298,10 @@ namespace ThreadSync
 
         }
 
+        #endregion
+
+        #region 内存映射
+
         /// <summary>
         /// 内存映射
         /// </summary>
@@ -303,6 +330,10 @@ namespace ThreadSync
             }
         }
 
+        #endregion
+
+        #region 共享内存
+
         /// <summary>
         /// 共享内存
         /// </summary>
@@ -310,6 +341,7 @@ namespace ThreadSync
         {
             
         }
+        #endregion
 
 
     }

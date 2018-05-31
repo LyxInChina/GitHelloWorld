@@ -107,7 +107,7 @@ namespace HelloWorld.ProcessAndThread
             var proc = Process.GetCurrentProcess();
             var procinfo = new ProcessStartInfo();
             procinfo.FileName = @"C:\Windows\System32\notepad.exe";
-            procinfo.WorkingDirectory = @"C:\Users\zlz\";
+            procinfo.WorkingDirectory = @"";
             procinfo.Verb = "runas";
 
             Process.Start(procinfo);

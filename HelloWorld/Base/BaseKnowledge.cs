@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +30,49 @@ namespace HelloWorld.Base
         {
             public virtual string S { get; set; }
             public abstract string AS { get; set; }
+        }
+
+        static void Main()
+        {
+            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            var v = Assembly.GetExecutingAssembly().GetName().Version;
+            var v1 = Assembly.GetExecutingAssembly().GetName().VersionCompatibility;
+            var v2 = Assembly.GetExecutingAssembly().GetCustomAttributesData();
+            //Run();
+            //RunRegex();
+            IntropJS.RunJS_V8();
+            IntropJS.RunJS_MS("");
+            RunJS();
+            Console.ReadLine();
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var ass = args.Name;
+            var sa = args.RequestingAssembly;
+            throw new NotImplementedException();
+        }
+
+        private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        {
+            //throw new NotImplementedException();
+            var ass = args.LoadedAssembly;
+        }
+
+        public static void RunJS()
+        {
+            var file = @"test.js";
+            if (IntropJS.ImportJSFile(file))
+            {
+
+            }
+        }
+
+        public static void RunRegex()
+        {
+            RegexTest.HasStr();
+            RegexTest.IsHtml();
         }
 
     }

@@ -92,12 +92,6 @@ namespace EmitExamples
         {
             Console.WriteLine(":@@@@:" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
         }
-
-        public static void FileInfo()
-        {
-
-        }
-
     }
 
 

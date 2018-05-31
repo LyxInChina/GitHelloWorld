@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 
 namespace HelloWorld
 {
-    class P_HackersDelight
+    class HackersDelight
     {
         static void Out(dynamic value,int intbase=2)
         {

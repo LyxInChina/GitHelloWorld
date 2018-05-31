@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HelloWorld.CLR
+namespace HelloWorld.CLR.Performance
 {
     public abstract class BaseClass
     {
@@ -18,9 +18,9 @@ namespace HelloWorld.CLR
         }
 
     }
-    public sealed class CSharpPerformancePromote: BaseClass
+    public sealed class ClassA: BaseClass
     {
-        public CSharpPerformancePromote()
+        public ClassA()
         {
 
         }
@@ -58,8 +58,8 @@ namespace HelloWorld.CLR
 
         public static void Test()
         {
-            var obj = new CSharpPerformancePromote();
-            CSharpPerformancePromote.Func1();//call
+            var obj = new ClassA();
+            ClassA.Func1();//call
             obj.Func2();
             obj?.Func3();
             obj.BFunc1();
