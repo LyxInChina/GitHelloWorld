@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="Base\Hash_Md5_Sha_Crc32.cs" />
     <Compile Include="Serializable\AbsClass.cs" />
+    <Compile Include="Base\SortAlgorithmLib.cs" />
     <Compile Include="Web\CookieSession.cs" />
     <Compile Include="ProcessAndThread\Sync.cs" />
     <Compile Include="ProcessAndThread\ThreadSync.cs" />
