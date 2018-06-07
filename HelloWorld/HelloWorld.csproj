@@ -58,7 +58,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>EmitExamples.EmitProgram</StartupObject>
+    <StartupObject>Redis.RedisMain</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
