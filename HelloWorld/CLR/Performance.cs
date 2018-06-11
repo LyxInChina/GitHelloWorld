@@ -120,4 +120,6 @@ namespace HelloWorld.CLR.Performance
     3.调用值类型中的方法，一般使用call；
     4.尽量使用sealed 密封类，JIT使用非虚方式（call）调用该类中的虚方法（C#编译器生成callvirt指令，JIT会优化这个调用）；
 
+    类型构造器
+
      */

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Wpf
             string s = string.Format("Time:{0},TID:{1},Method:{2},Line:{3},File:{4}",
                 tc, tid, mb.Name, sf.GetFileLineNumber(), sf.GetFileName());
             Debug.WriteLine(s);
+            var assembley = Assembly.GetCallingAssembly();
         }
 
 
