@@ -14,11 +14,22 @@ namespace Crawler
     {
         public string Url { get; protected set; }
         public EventHandler OnDone { get; set; }
-
+        /// <summary>
+        /// 分析目录页面
+        /// </summary>
+        public AnalyzeUrlsFn MUlrsFn { get; protected set; }
+        /// <summary>
+        /// 分析单个页面
+        /// </summary>
+        public AnalyzePageFn MFunction { get; protected set; }
         protected HttpWebRequest req;
         protected HttpWebResponse resp;
-
-
+        /// <summary>
+        /// 发送请求
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="stream"></param>
+        /// <param name="info"></param>
         public void SendRequest(string url, out Stream stream, out PageInfo info)
         {
             info =new PageInfo();
@@ -43,7 +54,12 @@ namespace Crawler
                 //TODO:请求url异常
             }
         }
-
+        /// <summary>
+        /// 处理接收流
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="info"></param>
+        /// <param name="html"></param>
         public void ProcessStream(Stream stream, PageInfo info, out string html)
         {
             html = null;
@@ -67,7 +83,7 @@ namespace Crawler
                 reader.Close();
             }
         }
-
+        public abstract void ProcessData(string html);
     }
 
     public struct PageInfo
@@ -80,6 +96,7 @@ namespace Crawler
     {
         void SendRequest(string url, out Stream stream, out PageInfo info);
         void ProcessStream(Stream stream, PageInfo info, out string html);
+        void ProcessData(string html);
     }
 
 
