@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 /*  进程和线程
  * 进程---执行中的代码，活动实体
@@ -89,7 +90,9 @@ using System.Threading.Tasks;
  *      问题处理：
  *          1.处理数据表示差异：大尾端和小尾端问题——》外部数据表示XDR，即数据的机器无关表示；
  *          2.调用的语义问题：最多调用一次——》每个消息附加时间戳；刚好调用一次——》服务器发出ACK消息，客户端重复发生RPC直到收到ACK消息；
- *          3.通信问题，即确定客户端和服务端的端口绑定：a.固定端口地址；b.通过集合点机制（matchmaker）动态进行
+ *          3.通信问题，即确定客户端和服务端的端口绑定：
+ *          a.固定端口地址；
+ *          b.通过集合点机制（matchmaker）动态进行
  *              Client——mathchmaker获取本地端口——》|发送消息到S，C端口号|——》server收到消息——matchmaker找到端口号——》|发送消息到C端口号,回复S端口号|
  *              ——》C收到消息S端口——》|发送RPC消息到S端口号，C端口号|——》S收到RPC，调用——》|发送结果消息到C端口，S端口|——》C收到来自S的RPC结果
  *  RMI——远程方法调用
@@ -104,14 +107,25 @@ namespace HelloWorld.ProcessAndThread
 
         public static void Main(string[] args)
         {
-            var proc = Process.GetCurrentProcess();
+            Console.WriteLine(string.Format("Main :{0}", Environment.Is64BitProcess?"x64":"x86"));
             var procinfo = new ProcessStartInfo();
             procinfo.FileName = @"C:\Windows\System32\notepad.exe";
+            procinfo.FileName = @"Crawler.exe";
+            procinfo.FileName = @"C:\Program Files\Microsoft VS Code\Code.exe";
             procinfo.WorkingDirectory = @"";
             procinfo.Verb = "runas";
 
-            Process.Start(procinfo);
+            var res = Process.Start(procinfo);
+            bool r = false;
+            if(IsWow64Process(res.Handle, out r))
+            {
+                Console.WriteLine(string.Format("Called:{0}",r?"x86":"x64"));
+            }
+            Console.ReadKey();
         }
+
+        [DllImport("Kernel32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Auto, EntryPoint = "IsWow64Process")]
+        public static extern bool IsWow64Process(IntPtr handle, out bool result);
     }
 
 

@@ -116,12 +116,12 @@ namespace RedisHelper
             {
                 Console.WriteLine("yes");
             }
-            var con = Redis.RedisOp.GetConnection();
-            var db = RedisOp.GetDatabase();
+            var con = RedisHelper.GetConnection();
+            var db = RedisHelper.GetDatabase();
             var key = "kkkk";
-            RedisOp.Set(db, key, "11111");
+            RedisHelper.Set(db, key, "11111");
             string s;
-            RedisOp.Get(db, key, out s);
+            RedisHelper.Get(db, key, out s);
         }
     }
 }

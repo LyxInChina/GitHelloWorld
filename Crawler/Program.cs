@@ -26,24 +26,14 @@ namespace Crawler
 
         static void Main(string[] args)
         {
-            string url = @"http://www.bxwx3.org/txt/48595/169891/htm";
-            Console.WriteLine("Now loading " + url);
-            var wc = new WebCrawler(MCrawlerParam[1]);
-            bool end = false;
-            wc.OnDone += (obj, e) =>
-            {
-                end = true;
-                wc.Stop();
-                wc.Dispose();
-            };
-            wc.Run();
+            Console.WriteLine("waiting command...");
             do
             {
                 var str = Console.ReadLine().ToLower();
                 switch (str)
                 {
                     case "exit":
-                        end = true;
+                        isStop = true;
                         break;
                     case "stop":
                         wc.Stop();
@@ -52,13 +42,28 @@ namespace Crawler
                         wc.Run();
                         break;
                     default:
+                        Console.WriteLine("waiting command...");
                         break;
                 }
                 if (str == "exit")
                 {
                     break;
                 }
-            } while (!end);
-        }        
+            } while (!isStop);
+        }
+        static WebCrawler wc;
+        static bool isStop = false;
+        static void Init()
+        {
+            string url = @"http://www.bxwx3.org/txt/48595/169891/htm";
+            Console.WriteLine("Now loading " + url);
+            wc = new WebCrawler(MCrawlerParam[1]);
+            wc.OnDone += (obj, e) =>
+            {
+                isStop = true;
+                wc.Stop();
+                wc.Dispose();
+            };
+        }
     }
 }

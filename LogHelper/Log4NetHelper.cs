@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using log4net.Core;
+using log4net.Repository;
+using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
+using System.Threading;
 
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config", Watch = true)]
 
@@ -23,14 +29,22 @@ namespace LogHelper
         public static readonly ILogHelper Log = new Log4NetHelper();
 
         private readonly ILog logger;
+        private readonly ILoggerRepository repository;
 
         public Log4NetHelper()
         {
-            logger = log4net.LogManager.GetLogger(typeof(Log4NetHelper));
+            repository = log4net.LogManager.GetRepository(Assembly.GetCallingAssembly());
         }
 
         public void Info(string msg, Exception ex=null)
         {
+            StackTrace st = new StackTrace(true);
+            StackFrame sf = st.GetFrame(1);
+            var tid = Thread.CurrentThread.ManagedThreadId;
+            var type = sf.GetType();
+
+            var calling = Assembly.GetCallingAssembly();
+            var type2 = calling.GetType().FullName;            
             logger.Info(msg,ex);
         }
 
