@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Collections.Concurrent;
 
 /*  进程和线程
  * 进程---执行中的代码，活动实体
@@ -107,7 +109,18 @@ namespace HelloWorld.ProcessAndThread
 
         public static void Main(string[] args)
         {
-            Console.WriteLine(string.Format("Main :{0}", Environment.Is64BitProcess?"x64":"x86"));
+            for (int i = 0; i < 1024; i++)
+            {
+                TaskCall.BeginLoadStubAssembly();
+                Thread.Sleep(300);
+                TaskCall.EndLoadStubAssembly();
+            }
+            Console.ReadKey();
+        }
+
+        public static void TestProcess()
+        {
+            Console.WriteLine(string.Format("Main :{0}", Environment.Is64BitProcess ? "x64" : "x86"));
             var procinfo = new ProcessStartInfo();
             procinfo.FileName = @"C:\Windows\System32\notepad.exe";
             procinfo.FileName = @"Crawler.exe";
@@ -117,16 +130,17 @@ namespace HelloWorld.ProcessAndThread
 
             var res = Process.Start(procinfo);
             bool r = false;
-            if(IsWow64Process(res.Handle, out r))
+            if (IsWow64Process(res.Handle, out r))
             {
-                Console.WriteLine(string.Format("Called:{0}",r?"x86":"x64"));
+                Console.WriteLine(string.Format("Called:{0}", r ? "x86" : "x64"));
             }
-            Console.ReadKey();
         }
 
         [DllImport("Kernel32.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Auto, EntryPoint = "IsWow64Process")]
         public static extern bool IsWow64Process(IntPtr handle, out bool result);
+
+        public static Dictionary<string, string> dic = new Dictionary<string, string>();
+
+
     }
-
-
 }

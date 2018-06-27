@@ -21,9 +21,18 @@ using System.Runtime.InteropServices;
 //    AllInternalsVisible = true)]
 
 //using strstr = System.String;
-namespace HelloWorld
+namespace HelloWorld.CLR
 {
     
+    public class CLR
+    {
+        public void Main(string[] args)
+        {
+            CompressMemory.TestRuntimeHandle();
+            Console.ReadLine();
+        }
+    }
+
     public partial class CommonLanguageRuntime
     {
         public static void Func()

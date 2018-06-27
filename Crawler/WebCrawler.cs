@@ -148,6 +148,7 @@ namespace Crawler
                     }
                     catch (Exception ex)
                     {
+                        System.Diagnostics.Debug.WriteLine(ex);
                     }
                 }
                 else

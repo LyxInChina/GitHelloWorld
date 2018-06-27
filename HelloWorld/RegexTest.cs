@@ -15,8 +15,9 @@ namespace HelloWorld
             var pattern = "^[a-zA-Z0-9_.]{4,8}$";
             //^[a-zA-Z][a-zA-Z0-9_]{4,15}$ 
             /// (\d+)\.(\d+)\.(\d+)\.(\d+)/g //
-            var regex = new Regex(pattern, RegexOptions.None);
+            var regex = new Regex(pattern, RegexOptions.Compiled);
             var res = regex.IsMatch(str);
+            Regex.IsMatch("", pattern, RegexOptions.Compiled);
             Console.WriteLine("{0} has {1} {2}", str, pattern, res);
         }
 

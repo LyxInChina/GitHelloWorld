@@ -3,90 +3,98 @@ using System.Text;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
+using System.IO;
+//using System.IO;
+//using System.Security;
 
-/// <summary>
-/// 计算Hash md5 sha crc32值的类
-/// </summary>
-public static class Hash_Md5_Sha_Crc32
+namespace HelloWorld.Base
 {
-    #region Expand Function
 
     /// <summary>
-    /// 读取字符串第n个字符并转化为ASCII
+    /// 计算Hash md5 sha crc32值的类
     /// </summary>
-    /// <param name="str"></param>
-    /// <param name="index"></param>
-    /// <returns></returns>
-    public static byte charAt(this string str, int index)
+    public static class Hash_Md5_Sha_Crc32
     {
-        return str.GetCharbyIndex(index).ToByte_ASCII();
-    }
+        #region Expand Function
 
-    public static byte ToByte_ASCII(this char c)
-    {
-        Contract.Requires(true);
-        return Encoding.ASCII.GetBytes(c.ToString())[0];
-    }
-
-    public static byte ToByte_Unicode(this char c)
-    {
-        Contract.Requires(true);
-        return Encoding.Unicode.GetBytes(c.ToString())[0];
-    }
-
-    /// <summary>
-    /// 扩展方法-获取指定字符串指定位置的字符
-    /// </summary>
-    /// <param name="str"></param>
-    /// <param name="index"></param>
-    /// <returns></returns>
-    public static char GetCharbyIndex(this string str, int index)
-    {
-        Contract.Requires(index > 0 && !string.IsNullOrEmpty(str));
-        try
+        /// <summary>
+        /// 读取字符串第n个字符并转化为ASCII
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static byte charAt(this string str, int index)
         {
-            if (index < str.ToCharArray().Length)
+            return str.GetCharbyIndex(index).ToByte_ASCII();
+        }
+
+        public static byte ToByte_ASCII(this char c)
+        {
+            Contract.Requires(true);
+            return Encoding.ASCII.GetBytes(c.ToString())[0];
+        }
+
+        public static byte ToByte_Unicode(this char c)
+        {
+            Contract.Requires(true);
+            return Encoding.Unicode.GetBytes(c.ToString())[0];
+        }
+
+        /// <summary>
+        /// 扩展方法-获取指定字符串指定位置的字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static char GetCharbyIndex(this string str, int index)
+        {
+            Contract.Requires(index > 0 && !string.IsNullOrEmpty(str));
+            try
             {
-                return str.ToCharArray()[index];
+                if (index < str.ToCharArray().Length)
+                {
+                    return str.ToCharArray()[index];
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return '\0';
+        }
+        /// <summary>
+        /// 获取字符串的MD5值
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <param name="salt">加盐值</param>
+        /// <returns></returns>
+        public static string MD5(this string str, string salt = "")
+        {
+            //MD5计算类
+            using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+            {
+                byte[] bytValue, bytHash;
+                //将要计算的字符串转换为字节数组
+                bytValue = Encoding.UTF8.GetBytes(salt + str);
+                //计算结果同样是字节数组
+                bytHash = md5.ComputeHash(bytValue);
+                //将字节数组转换为字符串
+                string sTemp = "";
+                for (int i = 0; i < bytHash.Length; i++)
+                {
+                    sTemp += bytHash[i].ToString("x").PadLeft(2, '0');
+                }
+                return sTemp;
             }
         }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-        return '\0';
-    }
-    /// <summary>
-    /// 获取字符串的MD5值
-    /// </summary>
-    /// <param name="str">字符串</param>
-    /// <param name="salt">加盐值</param>
-    /// <returns></returns>
-    public static string MD5(this string str, string salt = "")
-    {
-        //MD5计算类
-        using (System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
-        {
-            byte[] bytValue, bytHash;
-            //将要计算的字符串转换为字节数组
-            bytValue = System.Text.Encoding.UTF8.GetBytes(salt + str);
-            //计算结果同样是字节数组
-            bytHash = md5.ComputeHash(bytValue);
-            //将字节数组转换为字符串
-            string sTemp = "";
-            for (int i = 0; i < bytHash.Length; i++)
-            {
-                sTemp += bytHash[i].ToString("x").PadLeft(2, '0');
-            }
-            return sTemp;
-        }
-    }
 
-    #endregion
+        #endregion
+
+    }
     /// <summary>
     /// 通用Hash值计算
     /// </summary>
-    public static class GeneralHash
+    public static class GeneralHashAlgorithm
     {
         /*RSHash*/
         public static long RSHash(String str)
@@ -217,7 +225,7 @@ public static class Hash_Md5_Sha_Crc32
         private static string Md5Encrypt(string input)
         {
             //用来计算MD5值的对象
-            using (MD5 md5Hash = System.Security.Cryptography.MD5.Create())
+            using (MD5 md5Hash = MD5.Create())
             {
                 //获取字符串对应的byte数组，计算MD5值
                 byte[] md5Byts = md5Hash.ComputeHash(Encoding.Default.GetBytes(input));
@@ -246,10 +254,10 @@ public static class Hash_Md5_Sha_Crc32
         {
             try
             {
-                System.Security.Cryptography.MD5CryptoServiceProvider MD5CSP
-                    = new System.Security.Cryptography.MD5CryptoServiceProvider();
+               MD5CryptoServiceProvider MD5CSP
+                    = new MD5CryptoServiceProvider();
 
-                byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(word);
+                byte[] bytValue = Encoding.UTF8.GetBytes(word);
                 byte[] bytHash = MD5CSP.ComputeHash(bytValue);
                 MD5CSP.Clear();
 
@@ -315,10 +323,10 @@ public static class Hash_Md5_Sha_Crc32
         {
             try
             {
-                System.Security.Cryptography.MD5CryptoServiceProvider MD5CSP
-                    = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                MD5CryptoServiceProvider MD5CSP
+                    = new MD5CryptoServiceProvider();
 
-                byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(word);
+                byte[] bytValue = Encoding.UTF8.GetBytes(word);
                 byte[] bytHash = MD5CSP.ComputeHash(bytValue);
 
                 //根据计算得到的Hash码翻译为MD5码
@@ -346,7 +354,7 @@ public static class Hash_Md5_Sha_Crc32
                     sHash += sTemp;
                 }
 
-                bytValue = System.Text.Encoding.UTF8.GetBytes(sHash);
+                bytValue = Encoding.UTF8.GetBytes(sHash);
                 bytHash = MD5CSP.ComputeHash(bytValue);
                 MD5CSP.Clear();
                 sHash = "";
@@ -394,10 +402,10 @@ public static class Hash_Md5_Sha_Crc32
         {
             try
             {
-                System.Security.Cryptography.MD5CryptoServiceProvider MD5CSP
-                        = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                MD5CryptoServiceProvider MD5CSP
+                        = new MD5CryptoServiceProvider();
 
-                byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(word);
+                byte[] bytValue = Encoding.UTF8.GetBytes(word);
                 byte[] bytHash = MD5CSP.ComputeHash(bytValue);
 
                 //根据计算得到的Hash码翻译为MD5码
@@ -427,7 +435,7 @@ public static class Hash_Md5_Sha_Crc32
 
                 sHash = sHash.Substring(8, 16);
 
-                bytValue = System.Text.Encoding.UTF8.GetBytes(sHash);
+                bytValue = Encoding.UTF8.GetBytes(sHash);
                 bytHash = MD5CSP.ComputeHash(bytValue);
                 MD5CSP.Clear();
                 sHash = "";
@@ -484,10 +492,10 @@ public static class Hash_Md5_Sha_Crc32
         {
             try
             {
-                System.Security.Cryptography.SHA1CryptoServiceProvider SHA1CSP
-                    = new System.Security.Cryptography.SHA1CryptoServiceProvider();
+                SHA1CryptoServiceProvider SHA1CSP
+                    = new SHA1CryptoServiceProvider();
 
-                byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(word);
+                byte[] bytValue = Encoding.UTF8.GetBytes(word);
                 byte[] bytHash = SHA1CSP.ComputeHash(bytValue);
                 SHA1CSP.Clear();
 
@@ -534,10 +542,10 @@ public static class Hash_Md5_Sha_Crc32
         {
             try
             {
-                System.Security.Cryptography.SHA256CryptoServiceProvider SHA256CSP
-                    = new System.Security.Cryptography.SHA256CryptoServiceProvider();
+                SHA256CryptoServiceProvider SHA256CSP
+                    = new SHA256CryptoServiceProvider();
 
-                byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(word);
+                byte[] bytValue = Encoding.UTF8.GetBytes(word);
                 byte[] bytHash = SHA256CSP.ComputeHash(bytValue);
                 SHA256CSP.Clear();
 
@@ -585,7 +593,7 @@ public static class Hash_Md5_Sha_Crc32
             try
             {
                 SHA384CryptoServiceProvider SHA384CSP = new SHA384CryptoServiceProvider();
-                byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(word);
+                byte[] bytValue = Encoding.UTF8.GetBytes(word);
                 byte[] bytHash = SHA384CSP.ComputeHash(bytValue);
                 SHA384CSP.Clear();
                 //根据计算得到的Hash码翻译为SHA-1码
@@ -631,7 +639,7 @@ public static class Hash_Md5_Sha_Crc32
             try
             {
                 SHA512CryptoServiceProvider SHA512CSP = new SHA512CryptoServiceProvider();
-                byte[] bytValue = System.Text.Encoding.UTF8.GetBytes(word);
+                byte[] bytValue = Encoding.UTF8.GetBytes(word);
                 byte[] bytHash = SHA512CSP.ComputeHash(bytValue);
                 SHA512CSP.Clear();
 
@@ -674,7 +682,7 @@ public static class Hash_Md5_Sha_Crc32
         /// </summary>
         /// <param name="fileStream">文件流</param>
         /// <returns>System.String.</returns>
-        public static string SHA256File(System.IO.FileStream fileStream)
+        public static string SHA256File(FileStream fileStream)
         {
             SHA256 mySHA256 = SHA256Managed.Create();
 
@@ -732,9 +740,9 @@ public static class Hash_Md5_Sha_Crc32
         /// <returns>哈希值16进制字符串</returns>
         private static string HashFile(string fileName, string algName)
         {
-            if (!System.IO.File.Exists(fileName))
+            if (!File.Exists(fileName))
                 return string.Empty;
-            System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             byte[] hashBytes = HashData(fs, algName);
             fs.Close();
             return ByteArrayToHexString(hashBytes);
@@ -746,16 +754,16 @@ public static class Hash_Md5_Sha_Crc32
         /// <param name="stream">要计算哈希值的 Stream</param>
         /// <param name="algName">算法:sha1,md5</param>
         /// <returns>哈希值字节数组</returns>
-        private static byte[] HashData(System.IO.Stream stream, string algName)
+        private static byte[] HashData(Stream stream, string algName)
         {
-            System.Security.Cryptography.HashAlgorithm algorithm;
+            HashAlgorithm algorithm;
             if (algName == null)
             {
                 throw new ArgumentNullException("algName 不能为 null");
             }
             if (string.Compare(algName, "sha1", true) == 0)
             {
-                algorithm = System.Security.Cryptography.SHA1.Create();
+                algorithm = SHA1.Create();
             }
             else
             {
@@ -763,7 +771,7 @@ public static class Hash_Md5_Sha_Crc32
                 {
                     throw new Exception("algName 只能使用 sha1 或 md5");
                 }
-                algorithm = System.Security.Cryptography.MD5.Create();
+                algorithm = MD5.Create();
             }
             return algorithm.ComputeHash(stream);
         }
@@ -797,9 +805,9 @@ public static class Hash_Md5_Sha_Crc32
         {
             String hashCRC32 = String.Empty;
             //检查文件是否存在，如果文件存在则进行计算，否则返回空值
-            if (System.IO.File.Exists(fileName))
+            if (File.Exists(fileName))
             {
-                using (System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
                 {
                     //计算文件的CSC32值
                     Crc32 calculator = new Crc32();
@@ -820,8 +828,9 @@ public static class Hash_Md5_Sha_Crc32
 
     /// <summary>
     /// 提供 CRC32 算法的实现
+    /// 
     /// </summary>
-    public class Crc32 : System.Security.Cryptography.HashAlgorithm
+    public class Crc32 : HashAlgorithm
     {
         public const UInt32 DefaultPolynomial = 0xedb88320;
         public const UInt32 DefaultSeed = 0xffffffff;
@@ -909,5 +918,5 @@ public static class Hash_Md5_Sha_Crc32
             return new byte[] { (byte)((x >> 24) & 0xff), (byte)((x >> 16) & 0xff), (byte)((x >> 8) & 0xff), (byte)(x & 0xff) };
         }
     }
-}
 
+}

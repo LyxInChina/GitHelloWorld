@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
 [assembly: Guid("df475759-2c65-48ac-8b94-712a3525042f")]
+[assembly: AssemblyDelaySign(true)]
 
 // 程序集的版本信息由下列四个值组成: 
 //

@@ -1,9 +1,39 @@
 ﻿using System;
 
-namespace HelloWorld.Base
+namespace HelloWorld.Algorithm
 {
+    #region 基础知识
+    /* 基础知识
+     * 时间复杂度：
+     * 空间复杂度：
+     *
+     *插入排序
+     * 特点：
+     * 1.原地排序 sorted in place
+     * 
+     */
+    #endregion
+    /// <summary>
+    /// 排序算法
+    /// 选择排序 select sort
+    /// 插入排序 insert sort
+    /// 冒泡排序 bobble sort
+    /// </summary>
     public class SortAlgorithmLib
     {
+        /// <summary>
+        /// 插入排序
+        /// 特点：
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="order"></param>
+        public static void InsertSort<T>(ref T[] source, SortOrder order = SortOrder.ASC)
+            where T : IComparable<T>
+        {
+
+        }
         /// <summary>
         /// 直接插入排序
         /// </summary>
@@ -190,7 +220,7 @@ namespace HelloWorld.Base
         /// </summary>
         ASC=0,
         /// <summary>
-        /// 倒序
+        /// 降序
         /// </summary>
         DESC=1
     }

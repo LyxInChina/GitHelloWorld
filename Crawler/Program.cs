@@ -26,7 +26,8 @@ namespace Crawler
 
         static void Main(string[] args)
         {
-            Console.WriteLine("waiting command...");
+            Console.WriteLine("Program start...");
+            Init();
             do
             {
                 var str = Console.ReadLine().ToLower();

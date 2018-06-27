@@ -10,7 +10,6 @@ namespace UnitTestProject
         public void TestMethod1()
         {
             HelloWorld_Introp.Main();
-
         }
     
     }

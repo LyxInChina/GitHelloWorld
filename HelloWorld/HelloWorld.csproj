@@ -13,6 +13,9 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
     <PublishUrl>F:\Test\01\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,9 +32,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -58,21 +58,21 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>HelloWorld.ProcessAndThread.WinProcess</StartupObject>
+    <StartupObject>HelloWorld.AbstructFactory</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>6889AFA6E7290DD3BE46F13B69A4C966942B4C69</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>DBFB3CBABBD75465C35F8D3FAF7CC34DEB237C5A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>MyPorfile.snk</AssemblyOriginatorKeyFile>
@@ -86,14 +86,11 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="ClearScript, Version=5.5.1.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
       <HintPath>..\packages\ClearScript.V8.5.5.1\lib\net45\ClearScript.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.8.4.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Crawler\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -113,6 +110,7 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Reflection.Context" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
@@ -135,8 +133,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Hash_Md5_Sha_Crc32.cs" />
+    <Compile Include="Base\Program_Base.cs" />
+    <Compile Include="CLR\CompressMemory.cs" />
+    <Compile Include="ProcessAndThread\TaskCall.cs" />
     <Compile Include="Serializable\AbsClass.cs" />
-    <Compile Include="Base\SortAlgorithmLib.cs" />
+    <Compile Include="Algorithm\SortAlgorithmLib.cs" />
     <Compile Include="Web\CookieSession.cs" />
     <Compile Include="ProcessAndThread\Sync.cs" />
     <Compile Include="ProcessAndThread\ThreadSync.cs" />
@@ -176,11 +177,14 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="HelloWorld.manifest">
+    <None Include="exportpfx.pfx" />
+    <None Include="HelloWorld.exe.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HelloWorld_TemporaryKey.pfx" />
     <None Include="MyPorfile.snk" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Redis\Server\ReadMe.md" />
     <None Include="Redis\Server\Redis-x64-3.2.100\dump.rdb" />
     <None Include="Redis\Server\Redis-x64-3.2.100\Redis on Windows Release Notes.docx" />

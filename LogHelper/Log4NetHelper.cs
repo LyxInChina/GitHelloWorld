@@ -33,7 +33,13 @@ namespace LogHelper
 
         public Log4NetHelper()
         {
-            repository = log4net.LogManager.GetRepository(Assembly.GetCallingAssembly());
+            repository = log4net.LogManager.GetRepository(Assembly.GetCallingAssembly());            
+        }
+
+        private void InnerLog(Type type,Level level,string msg,Exception ex)
+        {
+
+            repository.GetLogger(type.FullName).Log(type, level, msg, ex);
         }
 
         public void Info(string msg, Exception ex=null)
@@ -44,7 +50,8 @@ namespace LogHelper
             var type = sf.GetType();
 
             var calling = Assembly.GetCallingAssembly();
-            var type2 = calling.GetType().FullName;            
+            var type2 = calling.GetType();
+            InnerLog(type2, Level.Info, msg, ex);
             logger.Info(msg,ex);
         }
 

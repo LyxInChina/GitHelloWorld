@@ -4,9 +4,11 @@ using System.Text;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using HelloWorld;
+using System.Reflection;
+using System.Threading;
 
 [assembly:CLSCompliant(true)]
-namespace EmitExamples
+namespace HelloWorld.MemoryLayout   
 {
     [StructLayout(LayoutKind.Sequential)]
     public class EmitProgram
@@ -19,8 +21,14 @@ namespace EmitExamples
 
         static void Main(string[] args)
         {
-
-            HelloWorld.Serializable.SerializableHelper.SerializableTest();
+            //12836
+            //11666
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                Console.WriteLine("EEE"+e.ExceptionObject.ToString());
+            };
+            TestStackLenght();
+            //HelloWorld.Serializable.SerializableHelper.SerializableTest();
 
             MakeHelloWorldFunc();
             FCurrentFunction();
@@ -90,13 +98,40 @@ namespace EmitExamples
 
         public static void FCurrentFunction()
         {
-            Console.WriteLine(":@@@@:" + System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Console.WriteLine(":@@@@:" + MethodInfo.GetCurrentMethod().Name);
+        }
+
+        public static void TestStackLenght(int num = 0)
+        {
+            try
+            {
+                Console.WriteLine(num);
+                Thread.Sleep(1);
+                num++;
+                //int c = num;
+                if (true)
+                {
+                    TestStackLenght(num);
+                }
+            }
+            catch (StackOverflowException e)
+            {
+                return;
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
         }
     }
 
+    
 
-         
 
+
+    #region Memory layout
+
+    
     [StructLayout(LayoutKind.Explicit)]
     public class Clacc
     {
@@ -175,4 +210,6 @@ namespace EmitExamples
         public List<int> k { get; set; } 
         private ushort j { get; set; }
     }
+
+    #endregion
 }

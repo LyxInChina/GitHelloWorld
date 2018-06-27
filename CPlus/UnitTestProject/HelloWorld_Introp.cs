@@ -138,17 +138,16 @@ namespace UnitTestProject
             Console.WriteLine("a4:" + a4);
             var a5 = Funcc2();
             Console.WriteLine("a5:" + a5);
-           
-            for (int j = 0; j < int.MaxValue; j++)
-            {
-                for (int i = 0; i < 1024 * 1000; i++)
-                {
-                    Call_Get();
-                    //Call_Set();
-                    System.Threading.Thread.Sleep(1);
-                }
-            }
-            Console.ReadLine();
+            //Call_Get();
+            //Call_Set();
+            //System.Threading.Thread.Sleep(1);
+            //for (int j = 0; j < int.MaxValue; j++)
+            //{
+            //    for (int i = 0; i < 1024 * 1000; i++)
+            //    {
+
+            //    }
+            //}           
         }
     }
 
