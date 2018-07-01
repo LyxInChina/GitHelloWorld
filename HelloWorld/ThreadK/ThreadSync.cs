@@ -9,8 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ThreadSync;
 
-namespace ThreadSync
+namespace  HelloWorld.ThreadSync
 {
     class Program
     {
@@ -457,7 +458,7 @@ namespace ThreadSync
                     var o = objs.Value;
                     o.Str = "s" + i;                    
                     Thread.Sleep(67);
-                    System.Diagnostics.Trace.WriteLine("th1:"+ objs.Value.Str);
+                    Trace.WriteLine("th1:"+ objs.Value.Str);
                 }
             });
             
@@ -473,7 +474,7 @@ namespace ThreadSync
                     var o = objs.Value;
                     o.Str = "s" + i;                    
                     Thread.Sleep(7);
-                    System.Diagnostics.Trace.WriteLine("th2:" + objs.Value.Str);
+                    Trace.WriteLine("th2:" + objs.Value.Str);
                 }
             });
             th1.Start();
@@ -481,7 +482,7 @@ namespace ThreadSync
             th2.Start();
 
             Thread.Sleep(100);
-            System.Diagnostics.Trace.WriteLine("Main:" + objs.Value.Str);
+            Trace.WriteLine("Main:" + objs.Value.Str);
         }
     }
 

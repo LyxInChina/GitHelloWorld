@@ -26,7 +26,7 @@ namespace HelloWorld.CLR
     
     public class CLR
     {
-        public void Main(string[] args)
+        public static void Main(string[] args)
         {
             CompressMemory.TestRuntimeHandle();
             Console.ReadLine();
@@ -118,7 +118,6 @@ namespace HelloWorld.CLR
                 Console.WriteLine("ID1:{0},ID2:{1}", id1, id2);
                 return id1 - id2;
             }
-
    
         }
 
@@ -628,4 +627,21 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
      * 
 
      */
+/*
+    线程基础
+    线程对CPU进行虚拟化
+    线程开销
+        组成：
+        1、线程内核对象Thread kernel object 一个数据结构：线程属性描述；线程上下文（包含CPU寄存器集合，在x86上使用约700byte，x64约1240byte，IA64约2500byte）；
+        2.线程环境块 thread environment block TEB，用户模式下的内存块，消耗一个内存页x86和x64为4K，IA64为8K
+            包含：1.异常处理链首；2.线程本地数据；3.GDI和OpenGL的数据结构；
+        3.用户模式栈 user-mode stack ：存储传递给方法的局部变量和实参，以及方法返回的地址，默认情况分配1MB内存，
+        4.内核模式栈 kernel-mode stack：x86为12K，x64为24K
+        5.DLL线程链接和线程分离通知 attach detach：在线程创建时，会调用进程中加载的所有DLL的DllMain方法，并传递标识DLL_THREAD_ATTACH和DLL_THREAD_DETACH
+        6.上下文切换：将当期CPU寄存器值保存到当期线程内核对象的上下文结构；选择可调度的线程运行，若不同进程需要切换虚拟地址空间；将新线程上下文加载到CPU；windows每30ms进行一次上下文切换；
+        7.执行垃圾回收，会挂起所有线程；
+
+
+ */
+
 }

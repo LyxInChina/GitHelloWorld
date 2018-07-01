@@ -101,7 +101,7 @@ using System.Collections.Concurrent;
  *  
  */
 
-namespace HelloWorld.ProcessAndThread
+namespace HelloWorld.ThreadK
 {
     public class WinProcess
     {
@@ -109,11 +109,13 @@ namespace HelloWorld.ProcessAndThread
 
         public static void Main(string[] args)
         {
-            for (int i = 0; i < 1024; i++)
+            Console.WriteLine("Processor:{0}",ProcessorInfo.GetCPUProcessorNumber());
+            for (int i = 0; i < 9; i++)
             {
-                TaskCall.BeginLoadStubAssembly();
-                Thread.Sleep(300);
-                TaskCall.EndLoadStubAssembly();
+
+                PrintThreadInfo("main before");
+                AsyncHelper.RunAsync(Work, Done);
+                PrintThreadInfo("main after");
             }
             Console.ReadKey();
         }
@@ -141,6 +143,22 @@ namespace HelloWorld.ProcessAndThread
 
         public static Dictionary<string, string> dic = new Dictionary<string, string>();
 
+        public static void PrintThreadInfo(string msg = null)
+        {
+            Console.WriteLine("{0},Current Thread is：{1}",msg,Thread.CurrentThread.ManagedThreadId);
+        }
 
+        public static void Work()
+        {
+            Console.WriteLine("working begin");
+            PrintThreadInfo("work");
+            Thread.Sleep(300);
+            Console.WriteLine("working done");
+        }
+        public static void Done()
+        {
+            PrintThreadInfo("has done");
+            Console.WriteLine("has done");
+        }
     }
 }

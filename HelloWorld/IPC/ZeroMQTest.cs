@@ -3,10 +3,14 @@ using ZeroMQ;
 using System.Threading;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using static MQTest.ZeroMQTest;
-using static HelloWorld.CircuitBreakerPattern;
+using static HelloWorld.DesignPattern.CircuitBreakerPattern;
+using static HelloWorld.IPC.MQTest.ZeroMQTest;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
 
-namespace MQTest
+namespace HelloWorld.IPC.MQTest
 {
     class Program
     {
@@ -156,7 +160,7 @@ namespace MQTest
 
         static void DoVentilator()
         {
-            Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            Console.WriteLine(MethodBase.GetCurrentMethod().Name);
             var v = new Parallel_Pipeline.Ventilator(u1, u2);
             do
             {
@@ -170,14 +174,14 @@ namespace MQTest
 
         static void DoTaskWorker()
         {
-            Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            Console.WriteLine(MethodBase.GetCurrentMethod().Name);
             var t = new Parallel_Pipeline.TaskWorker(u1, u2);
             t.DoWork();
         }
 
         static void DoSink()
         {
-            Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            Console.WriteLine(MethodBase.GetCurrentMethod().Name);
             var s = new Parallel_Pipeline.Sinker(u1);
             s.WaitResult();
         }
@@ -186,16 +190,16 @@ namespace MQTest
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
             var name = AppDomain.CurrentDomain.FriendlyName;
-            var p = new System.Diagnostics.ProcessStartInfo();
-            p.FileName = System.IO.Path.Combine(path, name);
+            var p = new ProcessStartInfo();
+            p.FileName = Path.Combine(path, name);
             p.Verb = "runas";
             p.Arguments = arg;
             p.CreateNoWindow = false;
             //p.RedirectStandardInput = true;
             p.UseShellExecute = false;
-            p.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+            p.WindowStyle = ProcessWindowStyle.Normal;
             p.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            System.Diagnostics.Process.Start(p);
+            Process.Start(p);
             //s.StandardInput.Write("ssss");
         }
     }
@@ -449,7 +453,7 @@ namespace MQTest
                         var res = new byte[4];
                         //获取任务数字
                         receiver.ReceiveBytes(res, 0, res.Length);
-                        System.Threading.Tasks.Task.Run(() =>
+                        Task.Run(() =>
                         {
                             var num = BitConverter.ToInt32(res, 0);
                             Console.WriteLine("Get Task::{0}", num);

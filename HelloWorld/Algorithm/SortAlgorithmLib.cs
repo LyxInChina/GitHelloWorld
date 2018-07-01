@@ -10,6 +10,11 @@ namespace HelloWorld.Algorithm
      *插入排序
      * 特点：
      * 1.原地排序 sorted in place
+     * 循环不变式 loop invariant
+     * 初始化：循环的第一轮迭代开始前，正确
+     * 保持：循环的某一次迭代开始前，正确，下一次迭代开始前也正确
+     * 终止：
+     * 
      * 
      */
     #endregion
@@ -32,7 +37,21 @@ namespace HelloWorld.Algorithm
         public static void InsertSort<T>(ref T[] source, SortOrder order = SortOrder.ASC)
             where T : IComparable<T>
         {
-
+            //ASC
+            for (int i = 1; i < source.Length; i++)
+            {
+                //i=2->N
+                var key = source[i];
+                for (int j = 0; j < i; j++)
+                {
+                    if (key.CompareTo(source[i])<=0)
+                    {
+                        key = source[i];
+                        source[i] = source[j];
+                        source[j] = source[i];
+                    }
+                }
+            }
         }
         /// <summary>
         /// 直接插入排序

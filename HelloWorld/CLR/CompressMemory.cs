@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Threading;
 
 namespace HelloWorld.CLR
 {
@@ -25,6 +26,12 @@ namespace HelloWorld.CLR
 
         public static void TestRuntimeHandle()
         {
+            PrintMemory("Before");
+            var refass = Assembly.GetEntryAssembly().GetReferencedAssemblies();
+            for (int i = 0; i < refass.Length; i++)
+            {
+                Assembly.Load(refass[i]);
+            }
             var assembles = AppDomain.CurrentDomain.GetAssemblies();
             var types = new List<Type>();
             var typesh = new List<RuntimeTypeHandle>();
@@ -32,18 +39,32 @@ namespace HelloWorld.CLR
             var methodsh = new List<RuntimeMethodHandle>();
             var fields = new List<FieldInfo>();
             var fieldsh = new List<RuntimeFieldHandle>();
+            PrintMemory("Before get types");
             for (int i = 0; i < assembles.Length; i++)
             {
-                types = assembles[i].GetTypes().ToList();                
+                types.AddRange(assembles[i].GetExportedTypes().ToList());                
             }
-            GC.KeepAlive(types);
+
+            //for (int i = 0; i < types.Count; i++)
+            //{
+            //    methods.AddRange(types[i].GetRuntimeMethods());
+            //}
+            Console.WriteLine("total Object:{0}", types.Count);
+            //GC.KeepAlive(types);
             PrintMemory("After build type");
             typesh = types.ConvertAll(e => e.TypeHandle);
-            GC.KeepAlive(types);
+            //methodsh = methods?.ConvertAll(e => e.MethodHandle);
+            //GC.KeepAlive(types);
             PrintMemory("After build typehandle");
             types = null;
-            GC.Collect(0);
-            PrintMemory("After Collect type");
+            //methods = null;
+            GC.Collect();
+            Thread.Sleep(200);
+            PrintMemory("After Collect object type");
+            typesh = null;
+            //methodsh = null;
+            GC.Collect();
+            PrintMemory("After Collect object type and handle");
         }
         
     }

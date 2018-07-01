@@ -10,7 +10,7 @@ using System.Security.Principal;
 using System.Threading;
 using System.Reflection;
 
-namespace ThreadSync
+namespace HelloWorld.IPC
 {   
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace ThreadSync
             {
                 var tt = Assembly.GetExecutingAssembly();
                 var g = tt.GetCustomAttribute(typeof(GuidAttribute));
-                AssmGuid = ((System.Runtime.InteropServices.GuidAttribute)g).Value;
+                AssmGuid = ((GuidAttribute)g).Value;
             }
 
             public static IPC Build(eIPC etype,Type type)
@@ -52,7 +52,7 @@ namespace ThreadSync
                     return null;
                 if (type.GetInterface(typeof(IPC).Name) == null)
                     return null;
-                IPC obj = (IPC)AppDomain.CurrentDomain.CreateInstanceAndUnwrap(type.Assembly.FullName, type.FullName, false, System.Reflection.BindingFlags.CreateInstance, null,
+                IPC obj = (IPC)AppDomain.CurrentDomain.CreateInstanceAndUnwrap(type.Assembly.FullName, type.FullName, false, BindingFlags.CreateInstance, null,
                     null, null, null);
                 obj.Init(etype);
                 return obj;
@@ -215,7 +215,7 @@ namespace ThreadSync
                         ((NamedPipeClientStream)npine).Connect(500);
                     }
                     var p = new StreamWriter(npine);
-                    p.WriteLine(System.Text.Encoding.UTF8.GetString(msg));
+                    p.WriteLine(Encoding.UTF8.GetString(msg));
                     p.Flush();
                 }
                 catch (Exception ex)
