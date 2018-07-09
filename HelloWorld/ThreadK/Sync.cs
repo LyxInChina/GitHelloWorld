@@ -114,7 +114,7 @@ namespace HelloWorld.ThreadK
             {
 
                 PrintThreadInfo("main before");
-                AsyncHelper.RunAsync(Work, Done);
+                //AsyncHelper.RunAsync(Work, Done);
                 PrintThreadInfo("main after");
             }
             Console.ReadKey();

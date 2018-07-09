@@ -29,3 +29,14 @@ E:\WorkSpace\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.Ge
 E:\WorkSpace\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.CoreCompileInputs.cache
 E:\WorkSpace\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.exe
 E:\WorkSpace\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.pdb
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\bin\Debug\Process.txt
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\bin\Debug\WService.exe.config
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\bin\Debug\WService.exe
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\bin\Debug\WService.pdb
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csprojAssemblyReference.cache
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.ProjectInstaller.resources
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.WServiceTest.resources
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.GenerateResource.cache
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.CoreCompileInputs.cache
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.exe
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.pdb

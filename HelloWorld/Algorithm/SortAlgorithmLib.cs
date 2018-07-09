@@ -13,8 +13,11 @@ namespace HelloWorld.Algorithm
      * 循环不变式 loop invariant
      * 初始化：循环的第一轮迭代开始前，正确
      * 保持：循环的某一次迭代开始前，正确，下一次迭代开始前也正确
-     * 终止：
+     * 终止：循环终止时，循环不变式提供有用的性质
      * 
+     分析算法
+     RAM模型
+     1.
      * 
      */
     #endregion

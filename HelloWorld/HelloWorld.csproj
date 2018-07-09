@@ -130,13 +130,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\LZW.cs" />
     <Compile Include="Base\Hash_Md5_Sha_Crc32.cs" />
+    <Compile Include="Base\CallInfo.cs" />
     <Compile Include="Base\Program_Base.cs" />
     <Compile Include="CLR\CompressMemory.cs" />
     <Compile Include="DesignPattern\ActionPattern.cs" />
     <Compile Include="DesignPattern\CreatePattern.cs" />
     <Compile Include="DesignPattern\SpecialPattern.cs" />
     <Compile Include="DesignPattern\StructPattern.cs" />
+    <Compile Include="IPC\Renci.SshNet.cs" />
+    <Compile Include="IPC\Thrift.cs" />
     <Compile Include="SyncException\SyncException.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="Serializable\AbsClass.cs" />
@@ -179,6 +183,7 @@
     <Compile Include="Zip\ZipHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Algorithm\Algorithm.md" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
@@ -217,6 +222,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="IPC\Thrift\Thrift.dll" />
+    <Content Include="IPC\Thrift\Thrift.pdb" />
+    <Content Include="IPC\Thrift\Thrift45.dll" />
+    <Content Include="IPC\Thrift\Thrift45.pdb" />
     <Content Include="Redis\Server\Redis-x64-3.2.100\EventLog.dll" />
     <Content Include="Redis\Server\Redis-x64-3.2.100\redis-benchmark.exe" />
     <Content Include="Redis\Server\Redis-x64-3.2.100\redis-benchmark.pdb" />
@@ -247,7 +256,8 @@ xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.4.9\tools\native\amd64\*.*"
 if not exist "$(TargetDir)" md "$(TargetDir)"
 xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.5.1\tools\native\x86\*.*" "$(TargetDir)"
 if not exist "$(TargetDir)" md "$(TargetDir)"
-xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.5.1\tools\native\amd64\*.*" "$(TargetDir)"</PostBuildEvent>
+xcopy /s /y "$(SolutionDir)packages\ClearScript.V8.5.5.1\tools\native\amd64\*.*" "$(TargetDir)"
+</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\ZeroMQ.4.1.0.26\build\net40\ZeroMQ.targets" Condition="Exists('..\packages\ZeroMQ.4.1.0.26\build\net40\ZeroMQ.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

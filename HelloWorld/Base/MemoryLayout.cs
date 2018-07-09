@@ -93,7 +93,7 @@ namespace HelloWorld.MemoryLayout
 
         public static void PrintTypeInfo()
         {
-            Console.WriteLine("")
+            Console.WriteLine("");
         }
 
         public static void PrintInstanceInfo(object obj)

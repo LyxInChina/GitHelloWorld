@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Security.AccessControl;
 
 namespace ThreadSync
 {
@@ -29,6 +30,85 @@ namespace ThreadSync
             }
         }
     }
+
+    #region File Security
+    public class IOSecurityHelper
+    {
+        /// <summary>
+        /// 创建具有完全访问权限的文件夹
+        /// </summary>
+        /// <param name="dirPath"></param>
+        /// <returns></returns>
+        public static void CreateFullControlFolder(string dirPath)
+        {
+            try
+            {
+                if (!Directory.Exists(dirPath))
+                {
+                    Directory.CreateDirectory(dirPath).Attributes = FileAttributes.Normal;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine("Create Folder Error:{0}", ex.Message);
+            }
+        }
+
+        /// <summary>
+        ///为文件夹添加users，everyone用户组的完全控制权限
+        /// </summary>
+        /// <param name="dirPath"></param>
+        public static void AddSecurityControllFolder(string dirPath)
+        {
+            if (!Directory.Exists(dirPath))
+            {
+                return;
+            }
+            //获取文件夹信息
+            DirectoryInfo dir = new DirectoryInfo(dirPath);
+            //获得该文件夹的所有访问权限
+            System.Security.AccessControl.DirectorySecurity dirSecurity = dir.GetAccessControl(AccessControlSections.All);
+            //设定文件ACL继承
+            //InheritanceFlags inherits = InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit;
+            ////添加ereryone用户组的访问权限规则 完全控制权限
+            //FileSystemAccessRule everyoneFileSystemAccessRule = new FileSystemAccessRule("Everyone", FileSystemRights.FullControl, inherits, PropagationFlags.None, AccessControlType.Allow);
+            ////添加Users用户组的访问权限规则 完全控制权限
+            //FileSystemAccessRule usersFileSystemAccessRule = new FileSystemAccessRule("Users", FileSystemRights.FullControl, inherits, PropagationFlags.None, AccessControlType.Allow);
+            //bool isModified = false;
+            //dirSecurity.ModifyAccessRule(AccessControlModification.Add, everyoneFileSystemAccessRule, out isModified); 
+            //dirSecurity.ModifyAccessRule(AccessControlModification.Add, usersFileSystemAccessRule, out isModified);
+            //设置访问权限
+            dir.SetAccessControl(dirSecurity);
+        }
+
+        public static bool HasRWAccessControl(string dirPath)
+        {
+            if (!Directory.Exists(dirPath))
+            {
+                return false;
+            }
+            bool hasR = false;
+            bool hasW = false;
+            var acc = Directory.GetAccessControl(dirPath,AccessControlSections.All);
+            var collection = acc.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
+            foreach (var rule in collection)
+	        {
+                if (rule is FileSystemAccessRule)
+                {
+                    if ((rule as FileSystemAccessRule).FileSystemRights == FileSystemRights.Read)
+                    {
+                        hasR = true;
+                    }
+                    else if ((rule as FileSystemAccessRule).FileSystemRights == FileSystemRights.Write)
+                    {
+                        hasW = true;
+                    }
+                }
+	        }
+            return hasR && hasW;
+        }
+    }
+    #endregion
 
     /*  Chapter 11 文件系统实现
 

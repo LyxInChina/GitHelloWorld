@@ -34,14 +34,12 @@
   <PropertyGroup>
     <StartupObject>Crawler.Program</StartupObject>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.8.4.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\HelloWorld\Crawler\HtmlAgilityPack.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,7 +52,7 @@
     <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, PublicKeyToken=47d7877cb3620160">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\HelloWorld\Crawler\zlib.net.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -73,18 +71,18 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <EmbeddedResource Include="DLL\Crawler.exe.manifest" />
+    <None Include="DLL\Crawler.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Crawler.config" />
     <None Include="DLL\HtmlAgilityPack.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="DLL\HtmlAgilityPack.pdb" />
-    <EmbeddedResource Include="DLL\HtmlAgilityPack.xml">
+    <None Include="DLL\HtmlAgilityPack.pdb" />
+    <None Include="DLL\HtmlAgilityPack.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DLL\sxs.dll" />
+    </None>
+    <None Include="DLL\sxs.dll" />
     <None Include="DLL\zlib.net.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
