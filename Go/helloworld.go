@@ -28,6 +28,6 @@ func add(num1 int,num2 int) int{
 	return num1+num2;
 }
 func complex(num1 int,str string)(int,string){
-	return num1++,str+"00";
+	return num1,str+"00";
 }
 

@@ -2,7 +2,7 @@
 
 ***
 
-- [ ] Git tool learn & test
+- [x] Git tool learn & test
 - [ ] VS2017
 - [ ] 部分项目C#语言版本：7.2
 - [ ] .net 4.5.2
