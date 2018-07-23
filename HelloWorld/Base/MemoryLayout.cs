@@ -86,7 +86,8 @@ namespace HelloWorld.MemoryLayout
                     var obj = AppDomain.CurrentDomain.CreateInstance(e.Assembly.FullName, e.FullName, true, BindingFlags.Default, null, null, null, null);
                     instances.Add(obj);
                 });
-                //Console.WriteLine(Marshal.SizeOf(b));
+
+                Console.WriteLine(Marshal.SizeOf(new object()));
                 Console.WriteLine(sizeof(bool));
             }
         }
