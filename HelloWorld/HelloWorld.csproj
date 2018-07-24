@@ -9,13 +9,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HelloWorld</RootNamespace>
     <AssemblyName>HelloWorld</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <PublishUrl>F:\Test\01\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -45,6 +46,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
     <LangVersion>7.2</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -56,6 +58,7 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>7.2</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>HelloWorld.ThreadK.WinProcess</StartupObject>
@@ -147,6 +150,7 @@
     <Compile Include="DesignPattern\CreatePattern.cs" />
     <Compile Include="DesignPattern\SpecialPattern.cs" />
     <Compile Include="DesignPattern\StructPattern.cs" />
+    <Compile Include="Introp\IntropHelper.cs" />
     <Compile Include="IPC\Renci.SshNet.cs" />
     <Compile Include="IPC\ThriftHelper.cs" />
     <Compile Include="SyncException\SyncException.cs" />
@@ -155,6 +159,7 @@
     <Compile Include="Algorithm\SortAlgorithmLib.cs" />
     <Compile Include="ThreadK\AsyncHelper.cs" />
     <Compile Include="ThreadK\Sync.cs" />
+    <Compile Include="ThreadK\SystemInfo.cs" />
     <Compile Include="ThreadK\TaskCall.cs" />
     <Compile Include="ThreadK\ThreadSync.cs" />
     <Compile Include="Web\CookieSession.cs" />
@@ -204,12 +209,24 @@
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Redis\Server\ReadMe.md" />
-    <None Include="Redis\Server\Redis-x64-3.2.100\dump.rdb" />
-    <None Include="Redis\Server\Redis-x64-3.2.100\Redis on Windows Release Notes.docx" />
-    <None Include="Redis\Server\Redis-x64-3.2.100\Redis on Windows.docx" />
-    <None Include="Redis\Server\Redis-x64-3.2.100\redis.windows-service.conf" />
-    <None Include="Redis\Server\Redis-x64-3.2.100\redis.windows.conf" />
-    <None Include="Redis\Server\Redis-x64-3.2.100\Windows Service Documentation.docx" />
+    <None Include="Redis\Server\Redis-x64-3.2.100\dump.rdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Redis\Server\Redis-x64-3.2.100\Redis on Windows Release Notes.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Redis\Server\Redis-x64-3.2.100\Redis on Windows.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Redis\Server\Redis-x64-3.2.100\redis.windows-service.conf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Redis\Server\Redis-x64-3.2.100\redis.windows.conf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Redis\Server\Redis-x64-3.2.100\Windows Service Documentation.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -230,20 +247,48 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="IPC\Thrift\thrift-0.11.0.exe" />
-    <Content Include="IPC\Thrift\Thrift.dll" />
-    <Content Include="IPC\Thrift\Thrift.pdb" />
-    <Content Include="IPC\Thrift\Thrift45.dll" />
-    <Content Include="IPC\Thrift\Thrift45.pdb" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\EventLog.dll" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-benchmark.exe" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-benchmark.pdb" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-check-aof.exe" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-check-aof.pdb" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-cli.exe" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-cli.pdb" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-server.exe" />
-    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-server.pdb" />
+    <Content Include="IPC\Thrift\thrift-0.11.0.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="IPC\Thrift\Thrift.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="IPC\Thrift\Thrift.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="IPC\Thrift\Thrift45.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="IPC\Thrift\Thrift45.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\EventLog.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-benchmark.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-benchmark.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-check-aof.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-check-aof.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-cli.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-cli.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-server.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Redis\Server\Redis-x64-3.2.100\redis-server.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Zip\ICSharpCode.SharpZipLib.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -251,6 +296,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

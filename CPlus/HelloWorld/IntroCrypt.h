@@ -8,7 +8,7 @@
 #endif
 #endif
 
-typedef struct MyIntroStruct
+typedef struct IntroStruct
 {	
 	const char* charsA;
 	const char* charsB;

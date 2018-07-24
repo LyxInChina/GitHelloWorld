@@ -29,6 +29,15 @@ namespace HelloWorld
                 Console.WriteLine("Imm status:{0}",true);
             }
         }
+
+        static void PrintCurrentAsssemblyInfo()
+        {
+            var a = Assembly.GetCallingAssembly().GetCustomAttribute(typeof(AssemblyVersionAttribute));
+            if(a!=null && a is AssemblyVersionAttribute)
+            {
+                Console.WriteLine((a as AssemblyVersionAttribute).Version);
+            }
+        }
         //https://docs.microsoft.com/en-us/windows/desktop/api/Imm/
         [DllImport("imm32.dll")]
         public static extern IntPtr ImmGetContext(IntPtr hWnd); //获取当前正在输入的窗口的输入法句柄

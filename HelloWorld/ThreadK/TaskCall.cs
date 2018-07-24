@@ -188,16 +188,20 @@ namespace HelloWorld.ThreadK
         /// <summary>
         /// 已过时为保持兼容性留下的结构体
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Explicit)]
         public struct OemId
         {
+            [FieldOffset(0)]
+            UInt32 dwOemId;
             /// <summary>
             /// 安装系统处理器架构
             /// </summary>
+            [FieldOffset(0)]
             UInt16 wProcessArchitecture;
             /// <summary>
             /// 将来预留字段
             /// </summary>
+            [FieldOffset(16)]
             UInt16 wReserved;
         }
 
