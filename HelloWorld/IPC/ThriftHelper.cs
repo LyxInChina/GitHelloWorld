@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Reflection;
-using Thrift;
-using Thrift.Protocol;
+//using Thrift;
+//using Thrift.Protocol;
 
 namespace HelloWorld.IPC
 {

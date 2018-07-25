@@ -106,6 +106,37 @@ namespace HelloWorld.ThreadK
     /// </summary>
     public static class ProcessorInfo
     {
+        //x86 url:https://msdn.microsoft.com/en-us/library/ms724381(v=VS.85).aspx
+        //x64 url:https://msdn.microsoft.com/en-us/library/ms724340(v=vs.85).aspx
+        /*
+void WINAPI GetSystemInfo(
+_Out_ LPSYSTEM_INFO lpSystemInfo
+);
+
+void WINAPI GetNativeSystemInfo(
+_Out_ LPSYSTEM_INFO lpSystemInfo
+);
+
+typedef struct _SYSTEM_INFO {
+  union {
+    DWORD  dwOemId;
+    struct {
+      WORD wProcessorArchitecture;
+      WORD wReserved;
+    };
+  };
+  DWORD     dwPageSize;
+  LPVOID    lpMinimumApplicationAddress;
+  LPVOID    lpMaximumApplicationAddress;
+  DWORD_PTR dwActiveProcessorMask;
+  DWORD     dwNumberOfProcessors;
+  DWORD     dwProcessorType;
+  DWORD     dwAllocationGranularity;
+  WORD      wProcessorLevel;
+  WORD      wProcessorRevision;
+} SYSTEM_INFO;
+
+         */
         #region 获取硬件信息 CPU
 
         public static uint GetCPUProcessorNumber()
@@ -121,7 +152,8 @@ namespace HelloWorld.ThreadK
             }
             return info.dwNumberOfProcessors;
         }
-
+        /*https://msdn.microsoft.com/en-us/library/ms724381(v=VS.85).aspx
+         */
         /// <summary>
         /// x86下调用
         /// </summary>
@@ -129,25 +161,46 @@ namespace HelloWorld.ThreadK
         [DllImport("Kernel32.dll")]
         private static extern void GetSystemInfo(out System_Info info);
 
+        /*https://msdn.microsoft.com/en-us/library/ms724340(v=vs.85).aspx
+         */
         /// <summary>
         /// wow64下，64位应用程序调用
         /// </summary>
         [DllImport("kernel32.dll")]
         private static extern void GetNativeSystemInfo(out System_Info info);
 
+        /*https://msdn.microsoft.com/en-us/library/ms683194(v=vs.85).aspx
+         */
+        /// <summary>
+        /// 获取逻辑处理器和相关硬件的信息
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="ReturnLength"></param>
+        [DllImport("kernel32.dll")]
+        private static extern void GetLogicalProcessorInformation(out IntPtr Buffer, ref IntPtr ReturnLength);
+
+        /*https://msdn.microsoft.com/en-us/library/dd405488(v=vs.85).aspx
+         */
+        [DllImport("kernel32.dll")]
+        private static extern void GetLogicalProcessorInformationEx(LOGICAL_PROCESSOR_RELATIONSHIP lpr, out IntPtr ptr, ref IntPtr ReturnLength);
+
         [DllImport("Kernel32.dll")]
         public static extern UInt32 GetLastError();
-
+        /*https://msdn.microsoft.com/en-us/library/ms724958(d=printer,v=vs.85).aspx
+         */
         [StructLayout(LayoutKind.Sequential)]
         public struct System_Info
         {
             /// <summary>
             /// 已过时为保持兼容性留下的结构体
             /// </summary>
-            [Obsolete("已过时为保持兼容性留下的结构体")]
-            public OemId oemId;
+            //[Obsolete("已过时为保持兼容性留下的结构体")]
+            //public OemId oemId;
+
+            public UnionOem oemId;
+
             /// <summary>
-            /// 
+            /// 页保护和提交的页大小和颗粒度
             /// </summary>
             public UInt32 dwPageSize;
             /// <summary>
@@ -205,6 +258,23 @@ namespace HelloWorld.ThreadK
             UInt16 wReserved;
         }
 
+        [StructLayout(LayoutKind.Explicit)]
+        public struct UnionOem
+        {
+            [FieldOffset(0)]
+            UInt16 OemId;
+
+            [FieldOffset(0)]
+            ProcessorArchitectureInfo ProcessorArchitecture;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ProcessorArchitectureInfo
+        {
+            UInt16 wProcessArchitecture;
+            UInt16 wReserved;
+        }
+
         public enum ProcessArchitecture
         {
             /// <summary>
@@ -223,6 +293,125 @@ namespace HelloWorld.ThreadK
             PROCESSOR_ARCHITECTURE_INTEL = 0,
             PROCESSOR_ARCHITECTURE_UNKNOWN = 0xffff,
         }
+
+        public enum LOGICAL_PROCESSOR_RELATIONSHIP
+        {
+            RelationProcessorCore=0,
+            RelationNumaNode=1,
+            RelationCache=2,
+            RelationProcessorPackage=3,
+            RelationGroup=4,
+            RelationAll=0xffff,
+        }
+
+        /*https://docs.microsoft.com/zh-cn/windows/desktop/api/winnt/ns-winnt-_system_logical_processor_information_ex
+typedef struct _SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX {
+  LOGICAL_PROCESSOR_RELATIONSHIP Relationship;
+  DWORD                          Size;
+  union {
+    PROCESSOR_RELATIONSHIP Processor;
+    NUMA_NODE_RELATIONSHIP NumaNode;
+    CACHE_RELATIONSHIP     Cache;
+    GROUP_RELATIONSHIP     Group;
+  } DUMMYUNIONNAME;
+} SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX, *PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX;
+*/
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX
+        {
+            LOGICAL_PROCESSOR_RELATIONSHIP Relationship;
+            UInt16 Size;
+            DUMMYUNIONNAME dUMMYUNIONNAME;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct DUMMYUNIONNAME
+        {
+            [FieldOffset(0)]
+            PROCESSOR_RELATIONSHIP pROCESSOR_RELATIONSHIP;
+            [FieldOffset(0)]
+            NUMA_NODE_RELATIONSHIP nUMA_NODE_RELATIONSHIP;
+
+
+        }
+
+        /*https://docs.microsoft.com/zh-cn/windows/desktop/api/winnt/ns-winnt-_processor_relationship
+         * typedef struct _PROCESSOR_RELATIONSHIP {
+  BYTE           Flags;
+  BYTE           EfficiencyClass;
+  BYTE           Reserved[20];
+  WORD           GroupCount;
+  GROUP_AFFINITY GroupMask[ANYSIZE_ARRAY];
+} PROCESSOR_RELATIONSHIP, *PPROCESSOR_RELATIONSHIP;*/
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PROCESSOR_RELATIONSHIP
+        {
+            byte Flags;
+            byte EfficiencyClass;
+            byte Reserved_20;
+            Int32 GroupCount;
+            GROUP_AFFINITY[] GroupMask;
+        }
+
+        /*https://docs.microsoft.com/zh-cn/windows/desktop/api/winnt/ns-winnt-_numa_node_relationship
+         * typedef struct _NUMA_NODE_RELATIONSHIP {
+  DWORD          NodeNumber;
+  BYTE           Reserved[20];
+  GROUP_AFFINITY GroupMask;
+} NUMA_NODE_RELATIONSHIP, *PNUMA_NODE_RELATIONSHIP;*/
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct NUMA_NODE_RELATIONSHIP
+        {
+            UInt16 NodeNumber;
+            byte Reserved_20;
+            GROUP_AFFINITY GroupMask;
+        }
+
+        /*https://docs.microsoft.com/zh-cn/windows/desktop/api/winnt/ns-winnt-_cache_relationship
+         * typedef struct _CACHE_RELATIONSHIP {
+  BYTE                 Level;
+  BYTE                 Associativity;
+  WORD                 LineSize;
+  DWORD                CacheSize;
+  PROCESSOR_CACHE_TYPE Type;
+  BYTE                 Reserved[20];
+  GROUP_AFFINITY       GroupMask;
+} CACHE_RELATIONSHIP, *PCACHE_RELATIONSHIP;*/
+
+        public struct CACHE_RELATIONSHIP
+        {
+
+        }
+
+        /*https://docs.microsoft.com/zh-cn/windows/desktop/api/winnt/ns-winnt-_group_relationship
+         * typedef struct _GROUP_RELATIONSHIP {
+  WORD                 MaximumGroupCount;
+  WORD                 ActiveGroupCount;
+  BYTE                 Reserved[20];
+  PROCESSOR_GROUP_INFO GroupInfo[ANYSIZE_ARRAY];
+} GROUP_RELATIONSHIP, *PGROUP_RELATIONSHIP;*/
+        public struct GROUP_RELATIONSHIP
+        {
+
+        }
+
+        /*https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/miniport/ns-miniport-_group_affinity
+         * typedef struct _GROUP_AFFINITY {
+  KAFFINITY Mask;
+  USHORT    Group;
+  USHORT    Reserved[3];
+} GROUP_AFFINITY, *PGROUP_AFFINITY;*/
+
+        public struct GROUP_AFFINITY
+        {
+            IntPtr Mask;
+            UInt16 Group;
+            UInt16 Reserved_3;
+
+        }
+
         #endregion
     }
 
