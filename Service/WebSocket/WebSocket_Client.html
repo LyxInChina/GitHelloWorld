@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <title>Web Socket client</title>
+</head>
+<script>
+    var socket;
+
+    function Test() {
+        if (typeof (WebSocket) == "undefined") {
+            return false;
+        }
+        return true;
+    }
+
+    function Connect(url) {
+        socket = new WebSocket(url);
+
+        socket.onopen = function () {
+            console.info("socket open!");
+        }
+        socket.onmessage = function (msg) {
+            console.debug("Msg:" + msg.data);
+        }
+        socket.onclose = function () {
+            console.info("socket close!");
+        }
+        socket.onerror = function () {
+            console.error("socket error!");
+        }
+    }
+
+    function Close() {
+        if (socket != null) {
+            socket.Close();
+        }
+    }
+
+    function send(msg) {
+        if (socket != null) {
+            socket.send(msg);
+        }
+    }
+
+    function Connect() {
+
+    }
+</script>
+
+<body>
+    <form item-width="400">
+        Url:
+        <br>
+        <input type="text" name="firstname" width="500">
+    </form>
+    <button onclick="Connect()" style="width: 100px; height: 100px;"> Connect</button>
+
+    <button onclick="Close()" style="width: 100px; height: 100px;"> Close</button>
+</body>
+
+</html>
