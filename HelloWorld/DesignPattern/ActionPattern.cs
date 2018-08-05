@@ -10,6 +10,11 @@ namespace HelloWorld.DesignPattern
 
     /// <summary>
     /// 责任链模式
+    /// 某个请求需要多个对象对其进行处理，避免请求发送者和接收之间的耦合关系
+    /// 处理方式，将对象连城一个链，并沿着该链进行传递该请求，直到有对象处理为止
+    /// 需要：
+    /// 1.抽象请求处理者-定义处理请求的接口，内含自身的单向链表，包含下一个具体处理者引用
+    /// 2.具体请求处理者-接收到请求后，进行判断处理，然后交给下一个处理者或者直接输出结果
     /// </summary>
     public class ChainOfResponsibilityPattern
     {
@@ -47,7 +52,6 @@ namespace HelloWorld.DesignPattern
                 }
             }
         }
-
         public class ConcreteHandler2 : Handler
         {
             public override void Process(Request request)
@@ -77,50 +81,83 @@ namespace HelloWorld.DesignPattern
             }
         }
 
+        public static void Test_ChainOfResponsibility()
+        {
+            var handle1 = new ConcreteHandler1();
+            var handle2 = new ConcreteHandler2();
+            var handle3 = new ConcreteHandler3();
+            handle1.NextHandler = handle2;
+            handle2.NextHandler = handle3;
+
+            handle1.Process(new Request());
+
+
+        }
 
 
     }
 
     /// <summary>
     /// 命令模式
+    /// 高内聚的模式
+    /// 将一个请求封装成一个对象
+    /// 解决命令的请求者和命令的实现者之间的耦合
+    /// 需要：
+    /// 1.抽象命令-cmd
+    /// 2.具体命令-ccmd
+    /// 3.抽象执行者-invoker
+    /// 4.具体执行者-cinvoker 执行具体的命令
+    /// 5.抽象接收者-receiver
+    /// 6.具体接收者-creceiver 接收命令，分派命令到之下者；
     /// </summary>
     public class CommandPattern
     {
+        /// <summary>
+        /// 抽象命令
+        /// </summary>
         public abstract class Command
         {
             public string Cmd { get; set; }
-            public Invoker Invoke { get; set; }
             protected Command(string str)
             {
                 Cmd = str;
             }
-            public abstract void Process();
-            public override string ToString()
-            {
-                return Cmd;
-            }
+            public abstract void Execute();
+            public abstract void Undo();
         }
 
-        public class ConcreteCmd1 : Command
+        public class Select : Command
         {
-            public ConcreteCmd1(string str) : base(str)
+            public Select(string str) : base(str)
             {
 
             }
-            public override void Process()
+
+            public override void Execute()
             {
-                Invoke?.Execute(this);
+                throw new NotImplementedException();
+            }
+
+            public override void Undo()
+            {
+                throw new NotImplementedException();
             }
         }
-        public class ConcreteCmd2 : Command
+        public class Update : Command
         {
-            public ConcreteCmd2(string str) : base(str)
+            public Update(string str) : base(str)
             {
 
             }
-            public override void Process()
+
+            public override void Execute()
             {
-                Invoke?.Execute(this);
+                throw new NotImplementedException();
+            }
+
+            public override void Undo()
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -145,7 +182,7 @@ namespace HelloWorld.DesignPattern
             }
         }
 
-        public class Receiver
+        public abstract class Receiver
         {
             private Invoker _invoker;
             public Receiver(Invoker invoker)
@@ -153,16 +190,35 @@ namespace HelloWorld.DesignPattern
                 _invoker = invoker;
             }
 
-            public void ReceiveCmd(Command cmd)
+            public abstract void ReceiveCmd(Command cmd);
+        }
+
+        public class Receiver01 : Receiver
+        {
+            public Receiver01(Invoker invoker) : base(invoker)
             {
-                //命令绑定执行者 命令执行
-                cmd.Invoke = _invoker;
-                cmd.Process();
-                //或者 执行者执行命令
-                _invoker.Execute(cmd);
+
+            }
+            public override void ReceiveCmd(Command cmd)
+            {
             }
         }
 
+        public class Receiver02 : Receiver
+        {
+            public Receiver02(Invoker invoker) : base(invoker)
+            {
+
+            }
+            public override void ReceiveCmd(Command cmd)
+            {
+            }
+        }
+
+        public static void Test_Command()
+        {
+
+        }
 
     }
 

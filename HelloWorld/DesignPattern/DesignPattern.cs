@@ -187,8 +187,8 @@ namespace HelloWorld
             //指定命令接受者
             var receiver1 = new Receiver(invoker1);
             //创建命令
-            var cmd1 = new ConcreteCmd1("cmd1");
-            var cmd2 = new ConcreteCmd2("cmd2");
+            var cmd1 = new Select("cmd1");
+            var cmd2 = new Update("cmd2");
             //发给接受者执行
             receiver1.ReceiveCmd(cmd1);
             receiver1.ReceiveCmd(cmd2);
