@@ -105,7 +105,8 @@
 - VS SDK中的Microsoft.VisualStudio*系列
 - MPF中的Shell系列
 
-#### VSCT文件
+### VSCT文件
+
 #### VSCT文件
 
 > [VSCT XML架构参考]:(https://docs.microsoft.com/zh-cn/visualstudio/extensibility/vsct-xml-schema-reference)
@@ -167,6 +168,8 @@
 ##### Include
 
 - 指定了要插入当前文件的位于支持路径下的文件，其中所有的元素和定义类型都将成为编译结果的一部分
+- VS2010头文件位置：C:\Program Files (x86)\Microsoft Visual Studio 2010 SDK\VisualStudioIntegration\Common\Inc
+- VS2017头文件位置：C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Common\Inc
 ```xml
 <Include href="stdidcmd.h" />  
 ```
@@ -197,7 +200,7 @@
 - 特性
 > package 标识提供命令的VSPackage的GUID
 
-- Menus 
+###### Menus 
 > 定义所有菜单和工具栏的VSPackage实现
 ``` xml
 <Menus>  
@@ -219,8 +222,25 @@
 >> priority 可选，指定菜单相对位置的数字值
 >> ToolbarPriorityInBand 可选 指定工具栏停靠时工具栏条上相对位置
 >> type 可选 指定元素类型，默认值为Menu，
->>> COntext 窗口右键菜单；
-- Groups
+>>> Context 窗口右键菜单；
+
+- Parent 父节点 用于指定菜单位置
+- 对于VS中的显示位置的设置
+- guid：应该从include中的头文件中进行查找
+- ID：也应该从include中的头文件中进行查找，该值指定具体位置
+- 对于VS一般从 vsshlids.h头文件中进行查找
+  ```xml
+  <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_BUILDDEBUGRUN" />
+  ```
+  |GUID|ID|位置|
+  |----|----|----|
+  |guidSHLMainMenu|IDG_VS_MM_BUILDDEBUGRUN|主菜单|
+  |guidSHLMainMenu|IDG_VS_TOOLS_OPTIONS|工具菜单下拉列表|
+  |guidSHLMainMenu|IDG_VS_CTXT_SOLUTION_BUILD|解决方案右键菜单|
+  |guidSHLMainMenu|IDG_VS_CTXT_PROJECT_ADD|工程右键菜单|
+
+
+###### Groups
 > 包含VSPackage命令组入口
 ``` xml
 <Groups>  
@@ -235,7 +255,7 @@
   <Parent>... </Parent>  
 </Group>  
 ```
-- Buttons
+###### Buttons
 > 表示单个Button元素的组
 ``` xml
 <Buttons>  
