@@ -799,6 +799,8 @@ namespace HelloWorld.DesignPattern
 
     /// <summary>
     /// 访问者模式
+    /// 封装某些作用于某种数据结构的操作
+    /// 用于在不改变数据结构的情况下定义作用于元素的操作
     /// </summary>
     public class VisitorPattern
     {
@@ -807,22 +809,12 @@ namespace HelloWorld.DesignPattern
         /// </summary>
         public abstract class Visitor
         {
+            /// <summary>
+            /// 指定访问的元素
+            /// 具体访问元素的方法
+            /// </summary>
+            /// <param name="element"></param>
             public abstract void Visit(Element element);
-        }
-
-        public class ConcreteVisotor1 : Visitor
-        {
-            public override void Visit(Element element)
-            {
-                element.Func();
-            }
-        }
-        public class ConcreteVisotor2 : Visitor
-        {
-            public override void Visit(Element element)
-            {
-                element.Func();
-            }
         }
 
         /// <summary>
@@ -830,9 +822,33 @@ namespace HelloWorld.DesignPattern
         /// </summary>
         public abstract class Element
         {
+            /// <summary>
+            /// 指定接收的访问者，对访问者进行过滤
+            /// </summary>
+            /// <param name="vistor"></param>
             public abstract void Accept(Visitor vistor);
+            /// <summary>
+            /// 元素内方法
+            /// </summary>
             public abstract void Func();
         }
+
+        /// <summary>
+        /// 具体访问者
+        /// </summary>
+        public class ConcreteVisotor1 : Visitor
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="e"></param>
+            public override void Visit(Element e)
+            {
+                e.Func();
+            }
+        }
+
+
 
         public class ConcreteElement1 : Element
         {
@@ -841,17 +857,6 @@ namespace HelloWorld.DesignPattern
                 vistor.Visit(this);
             }
 
-            public override void Func()
-            {
-                //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-        }
-        public class ConcreteElement2 : Element
-        {
-            public override void Accept(Visitor vistor)
-            {
-                vistor.Visit(this);
-            }
             public override void Func()
             {
                 //Console.WriteLine(this.GetType().ToString() + "::" + System.Reflection.MethodBase.GetCurrentMethod().Name);

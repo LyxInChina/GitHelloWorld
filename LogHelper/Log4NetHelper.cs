@@ -24,45 +24,51 @@ using System.Threading;
 
 namespace LogHelper
 {
-    public class Log4NetHelper:ILogHelper
+    public class Log4NetHelper : ILogHelper
     {
         public static readonly ILogHelper Log = new Log4NetHelper();
 
-        private readonly ILog logger;
         private readonly ILoggerRepository repository;
 
-        public Log4NetHelper()
+        private Log4NetHelper()
         {
-            repository = log4net.LogManager.GetRepository(Assembly.GetCallingAssembly());            
+            repository = log4net.LogManager.GetRepository(Assembly.GetCallingAssembly());
         }
 
-        private void InnerLog(Type type,Level level,string msg,Exception ex)
+        private void InnerLog(Type type, Level level, string msg, Exception ex)
         {
 
             repository.GetLogger(type.FullName).Log(type, level, msg, ex);
         }
 
-        public void Info(string msg, Exception ex=null)
+        private Type GetCallingType()
         {
             StackTrace st = new StackTrace(true);
-            StackFrame sf = st.GetFrame(1);
+            StackFrame sf = st.GetFrame(2);
             var tid = Thread.CurrentThread.ManagedThreadId;
             var type = sf.GetType();
-
+            var func = sf.GetMethod().Name;
             var calling = Assembly.GetCallingAssembly();
             var type2 = calling.GetType();
-            InnerLog(type2, Level.Info, msg, ex);
-            logger.Info(msg,ex);
+            return type;
         }
 
-        public void Warn(string msg, Exception ex=null)
+        public void Info(string msg, Exception ex = null)
         {
-            logger.Warn(msg, ex);
+            var type = GetCallingType();
+            repository.GetLogger(type.FullName).Log(type, Level.Info, msg, ex);
+        }
+
+        public void Warn(string msg, Exception ex = null)
+        {
+            var type = GetCallingType();
+            repository.GetLogger(type.FullName).Log(type, Level.Warn, msg, ex);
         }
 
         public void Error(string msg, Exception ex = null)
         {
-            logger.Error(msg, ex);
+            var type = GetCallingType();
+            repository.GetLogger(type.FullName).Log(type, Level.Error, msg, ex);
         }
     }
 }

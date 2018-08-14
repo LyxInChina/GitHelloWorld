@@ -238,6 +238,8 @@
   |guidSHLMainMenu|IDG_VS_TOOLS_OPTIONS|工具菜单下拉列表|
   |guidSHLMainMenu|IDG_VS_CTXT_SOLUTION_BUILD|解决方案右键菜单|
   |guidSHLMainMenu|IDG_VS_CTXT_PROJECT_ADD|工程右键菜单|
+  |guidSHLMainMenu|IDM_VS_CTXT_REFERENCE|工程引用右键菜单|
+  |guidSHLMainMenu|IDM_VS_CTXT_CODEWIN|代码菜单|
 
 
 ###### Groups

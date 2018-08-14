@@ -143,7 +143,9 @@ namespace HelloWorld
 
             Console.ReadLine();
         }
-
+        /// <summary>
+        /// 享元模式
+        /// </summary>
         public static void Main_Flyweight()
         {
             var list = new List<Flyweight>();
@@ -159,6 +161,9 @@ namespace HelloWorld
 
             Console.ReadLine();
         }
+        /// <summary>
+        /// 代理模式
+        /// </summary>
         public static void Main_Proxy()
         {
             var proxy = new SubjectProxy();
@@ -166,6 +171,9 @@ namespace HelloWorld
 
             Console.ReadLine();
         }
+        /// <summary>
+        /// 责任链模式
+        /// </summary>
         public static void Main_ChainOfResponsibility()
         {
             var c1 = new ConcreteHandler1();
@@ -180,12 +188,15 @@ namespace HelloWorld
 
             Console.ReadLine();
         }
+        /// <summary>
+        /// 命令模式
+        /// </summary>
         public static void Main_Command()
         {
             //指定命令执行者
             var invoker1 = new ConcreteInvoker1();
             //指定命令接受者
-            var receiver1 = new Receiver(invoker1);
+            var receiver1 = new Receiver01(invoker1);
             //创建命令
             var cmd1 = new Select("cmd1");
             var cmd2 = new Update("cmd2");
@@ -292,14 +303,10 @@ namespace HelloWorld
         {
             var os = new ObjectStruct();
             os.AddElement(new ConcreteElement1());
-            os.AddElement(new ConcreteElement2());
             os.AddElement(new ConcreteElement1());
-            os.AddElement(new ConcreteElement2());
 
             var vis1 = new ConcreteVisotor1();
-            var vis2 = new ConcreteVisotor2();
             os.Accept(vis1);
-            os.Accept(vis2);
 
             Console.ReadLine();
         }

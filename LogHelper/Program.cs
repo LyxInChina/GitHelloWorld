@@ -16,8 +16,8 @@ namespace LogHelper
         }
         static void TestLog4Net()
         {
-            new Thread(() =>
-            {
+            //new Thread(() =>
+            //{
                 while (true)
                 {
                     try
@@ -26,12 +26,13 @@ namespace LogHelper
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine(ex.Message);
                         Log4NetHelper.Log.Error("", ex);
                     }
                     Thread.Sleep(200);
                 }
-            })
-            { IsBackground = true }.Start();
+            //})
+            //{ IsBackground = true }.Start();
 
         }
     }

@@ -40,6 +40,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>log4net\log4net.Tests.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ELogging\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>nlog\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>log4net\nunit.framework.dll</HintPath>
@@ -61,18 +69,44 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="log4net.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ELogging\Microsoft.Practices.EnterpriseLibrary.Common.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ELogging\Microsoft.Practices.EnterpriseLibrary.Common.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ELogging\Microsoft.Practices.EnterpriseLibrary.Common.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ELogging\Microsoft.Practices.EnterpriseLibrary.Logging.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ELogging\Microsoft.Practices.EnterpriseLibrary.Logging.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ELogging\Microsoft.Practices.EnterpriseLibrary.Logging.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ELogging\Newtonsoft.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ELogging\Newtonsoft.Json.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="log4net\log4net.dll" />
     <Content Include="log4net\log4net.Tests.dll" />
     <Content Include="log4net\log4net.xml" />
     <Content Include="log4net\nunit.framework.dll" />
     <Content Include="log4net\nunit.framework.xml" />
+    <Content Include="nlog\NLog.dll" />
+    <Content Include="nlog\NLog.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ELogging\" />
-    <Folder Include="nlog\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
