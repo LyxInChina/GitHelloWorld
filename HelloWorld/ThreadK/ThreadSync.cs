@@ -11,52 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using ThreadSync;
 
-namespace  HelloWorld.ThreadSync
+namespace  HelloWorld.ThreadK
 {
-    class Program
-    {
-
-        static void Main(string[] args)
-        {
-            //var p = new ProcessStartInfo();
-            //p.FileName = "F://Test//FileAssociation.exe";
-            //p.Verb = "runas";
-            //Process.Start(p);
-            //C.EntryMethodEx();
-
-            ThreadLocalT.Run();
-            Console.WriteLine("wait exit...");
-            do
-            {
-                if (Console.ReadLine().ToLower()=="exit")
-                {
-                    break;
-                }
-                Thread.Sleep(50);
-            } while (true);
-        }
-
-        static void Rename()
-        {
-            var f = "test.txt";
-            var p = "E:\\";
-            var fn = Path.Combine(p, f);
-            if (!File.Exists(fn))
-            {
-                File.Create(fn).Close();
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                if (!File.Exists(fn))
-                {
-                    File.Create(fn).Close(); ;
-                }
-                FileSystem.ReNameFile(fn);
-            }
-        }
-    }
-
-    public static class C
+    public static class ResetEvent_Semaphore_SpinLock
     {
         public static bool[] Flag = new bool[2];
         public static int Turn;
@@ -380,48 +337,52 @@ namespace  HelloWorld.ThreadSync
 
         }
 
-        /// <summary>
-        /// Dekker 互斥算法
-        /// </summary>
-        public class Dekker
-        {
-            /// <summary>
-            /// 共享数据项 Flag turn 
-            /// </summary>
-            private bool[] Flag=new bool[2]{false,false};
-            private int turn;
-            private void ThreadD(int i,int j)
-            {
-                do
-                {
-                    //Try enter cirtical section
-                    Flag[i] = true;
-                    while (Flag[j])
-                    {
-                        if (turn==j)
-                        {
-                            Flag[i] = false;
-                            while (turn==j)
-                            {
-                                
-                            }
-                            Flag[i] = true;
-                        }
-                    }
-                    //Critical section
-
-                    turn = j;
-                    Flag[i] = false;
-
-                    //Remainder section
-                    //TOOD: wroking
-                    Thread.Sleep(2000);
-                } while (true);
-            }
-
-        }        
     }
 
+    /// <summary>
+    /// Dekker 互斥算法
+    /// </summary>
+    public class Dekker
+    {
+        /// <summary>
+        /// 共享数据项 Flag turn 
+        /// </summary>
+        private bool[] Flag = new bool[2] { false, false };
+        private int turn;
+        private void ThreadD(int i, int j)
+        {
+            do
+            {
+                //Try enter cirtical section
+                Flag[i] = true;
+                while (Flag[j])
+                {
+                    if (turn == j)
+                    {
+                        Flag[i] = false;
+                        while (turn == j)
+                        {
+
+                        }
+                        Flag[i] = true;
+                    }
+                }
+                //Critical section
+
+                turn = j;
+                Flag[i] = false;
+
+                //Remainder section
+                //TOOD: wroking
+                Thread.Sleep(2000);
+            } while (true);
+        }
+
+    }
+
+    /// <summary>
+    /// 数据的线程本地存储
+    /// </summary>
     public static class ThreadLocalT
     {
         public struct struct1

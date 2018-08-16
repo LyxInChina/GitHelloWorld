@@ -31,7 +31,6 @@ namespace ThreadSync
         }
     }
 
-    #region File Security
     public class IOSecurityHelper
     {
         /// <summary>
@@ -108,7 +107,6 @@ namespace ThreadSync
             return hasR && hasW;
         }
     }
-    #endregion
 
     /*  Chapter 11 文件系统实现
 

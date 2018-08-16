@@ -10,18 +10,15 @@ using System.Net;
 
 namespace HelloWorld.Base
 {
+    /// <summary>
+    /// 测试Hash算法
+    /// </summary>
     class Program_Base
     {
-        static void Main()
-        {
-            ComparePerformance_Dictionary();
-            Console.ReadLine();
-        }
-
         static Dictionary<string, Type> sdic = new Dictionary<string, Type>();
         static Dictionary<string, RuntimeTypeHandle> shdic = new Dictionary<string, RuntimeTypeHandle>();
         static Dictionary<long, Type> idic = new Dictionary<long, Type>();
-        static void ComparePerformance_Dictionary()
+        public static void ComparePerformance_Dictionary()
         {
             var ass = AppDomain.CurrentDomain.GetAssemblies();
             Type[] types;

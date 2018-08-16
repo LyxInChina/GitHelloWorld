@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections.Concurrent;
+using static HelloWorld.ThreadK.SystemInfo;
 
 /*  进程和线程
  * 进程---执行中的代码，活动实体

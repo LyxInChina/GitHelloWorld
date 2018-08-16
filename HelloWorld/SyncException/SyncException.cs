@@ -17,7 +17,7 @@ namespace HelloWorld.SyncException
 
         public static async Task<int> GetVAsync()
         {
-            await Task.Run(()=> { Work(); });
+            await Task.Run(() => { Work(); });
             return 0;
         }
 
@@ -90,7 +90,8 @@ namespace HelloWorld.SyncException
             if (task.IsFaulted)
             {
                 Console.WriteLine(task.Exception.InnerException.Message);
-            }else if (task.IsCanceled)
+            }
+            else if (task.IsCanceled)
             {
                 Console.WriteLine(task.Exception.InnerException.Message);
             }
@@ -101,7 +102,7 @@ namespace HelloWorld.SyncException
             var t = new Thread(Work);
             t.Start();
             var e = t.ExecutionContext;
-            
+
         }
 
         public static void ThreadPoolTest()

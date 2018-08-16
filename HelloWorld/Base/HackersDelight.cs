@@ -3,19 +3,24 @@ using System.Diagnostics.Contracts;
 
 namespace HelloWorld
 {
-    class HackersDelight
+    /// <summary>
+    /// 高效编程的奥秘
+    /// 位操作技巧
+    /// </summary>
+    internal class HackersDelight
     {
-        static void Out(dynamic value,int intbase=2)
+        private static void Out(dynamic value, int intbase = 2)
         {
+            //前置条件判断
             Contract.Requires(intbase == 2 || intbase == 8 || intbase == 10 || intbase == 16);
-            if(value is string)
+            if (value is string)
             {
-                Console.WriteLine(value);
+                Console.Write(value);
             }
-            else if(value is byte|| value is short
-                || value is UInt16||value is Int16
-                || value is UInt32 || value is Int32
-                || value is UInt64 || value is Int64)
+            else if (value is byte || value is short
+                || value is ushort || value is short
+                || value is uint || value is int
+                || value is ulong || value is long)
             {
                 Console.WriteLine(Convert.ToString(value, intbase));
             }
@@ -25,63 +30,55 @@ namespace HelloWorld
             }
         }
 
-        static void Main()
+        private static void Print(string msg, dynamic value = null, int intBase = 2)
+        {
+            if (value != null)
+            {
+                Out(msg);
+                Out(value, intBase);
+            }
+            else
+            {
+                Out(msg+"\n");
+            }
+        }
+
+        private static void Main()
         {
             ushort x = ushort.Parse("6086");
-            Out(x.ToString());
-            Out("Original Value:");
-            Out(x);
-            Out("~x");
-            Out(~x);
-            Out("-x");
-            Out(-x);
-            Out(~(-x)+1);
-            Out("Turn Off Rightmost 1-bit to 0");
-            Out(x & (x - 1));
-            Out("Turn Off Rightmost 0-bit to 1");
-            Out(x | (x + 1));
-            Out("Turn Off Rightmost Trailing 1-bits to 0");
-            Out(x & (x + 1));
-            Out("Turn Off Rightmost Trailing 0-bits to 1");
-            Out(x | (x - 1));
-            Out("Signal the Rightmost 0-bit with 1");
-            Out(~x & (x + 1));
-            Out("Signal the Rightmost 1-bit with 0");
-            Out(~x | (x - 1));
-            Out("Signal the Rightmost Trailing 0-bit with 1");
-            Out(~x & (x - 1));
-            Out(~(x | -x));
-            Out(~x & ~(-x));
-            Out((x & -x)-1);
-            Out("Signal the Rightmost Trailing 1-bit with 0");
-            Out(~x | (x + 1));
-            Out("Isolate the Rightmost 1-bit ");
-            Out(x & (-x));
-            Out("Singal the Rightmost 1-bit and Trailing 0-bits with 1");
-            Out(x ^ (x - 1));
-            Out("Singal the Rightmost 0-bit and Trailing 1-bits with 1");
-            Out(x ^ (x + 1));
-            Out("Turn Off the Rightmost Contiguous 1‘s");//check x form 2^j - 2^k by take 0-test
-            Out(((x | (x - 1)) + 1) & x);
-            Out(((x & -x) + x) & x);
-            Out("De Morgan Laws Extended");
-            Out("~(x & y) = ~x | ~y");
-            Out("~(x | y) = ~x & ~y");
-            Out("~(x + y) = ~x - y");
-            Out("~(x - y) = ~x + y");
-            Out("~(x + 1) = ~x - 1");
-            Out("~(x - 1) = ~x + 1");
-            Out("~-x  = x - 1");
-            Out("~(x ^ y) = ~x ^ y = x E y");
-            Out("~(x E y) = ~x E y = x ^ y");
-
-            //a= --a ~~a = ~(-a)+1          
+            Print(string.Format("初始数字:{0},二进制数字:", x), x);
+            Print("取反:~x:", ~x);
+            Print("取负:-x:",-x);
+            Print("~(-x)+1:", ~(-x) + 1);
+            Print("反转最右侧的1:", x & (x - 1));
+            Print("反转最右侧的0:", x | (x + 1));
+            Print("反转最右侧尾部的1:", x & (x + 1));
+            Print("反转最右侧尾部的0:", x | (x - 1));
+            Print("用1标记最右侧的0:", ~x & (x + 1));
+            Print("用0标记最右侧的1:", ~x | (x - 1));
+            Print("用1标记最右侧尾部的0:", ~x & (x - 1));
+            Print("用1标记最右侧尾部的0:", ~(x | -x));
+            Print("用1标记最右侧尾部的0:", ~x & ~(-x));
+            Print("用1标记最右侧尾部的0:", (x & -x) - 1);
+            Print("用0标记最右侧尾部的1:", ~x | (x + 1));
+            Print("析出最右侧的1:", x & (-x));
+            Print("标记最右侧的1并将尾部0填充为1:", x ^ (x - 1));
+            Print("标记最右侧的0并将尾部1填充为0:", x ^ (x + 1));
+            Print("反转最右侧连续的1:", ((x | (x - 1)) + 1) & x);
+            Print("反转最右侧连续的1:", ((x & -x) + x) & x);
+            Print("De Morgan Laws Extended\n");
+            Print("~(x & y) = ~x | ~y");
+            Print("~(x | y) = ~x & ~y");
+            Print("~(x + y) = ~x - y");
+            Print("~(x - y) = ~x + y");
+            Print("~(x + 1) = ~x - 1");
+            Print("~(x - 1) = ~x + 1");
+            Print("~-x  = x - 1");
+            Print("~(x ^ y) = ~x ^ y = x E y");
+            Print("~(x E y) = ~x E y = x ^ y");
+            //a= --a
+            //~~a = ~(-a)+1          
             //a-1 = ~(-a)-> -a = ~(a-1)
-            Out(x - 1);
-            Out(~(-x));
-
-            int aaa = 255;
-            Out(aaa);            
         }
 
     }
@@ -106,6 +103,7 @@ namespace HelloWorld
             n |= n >> 32;
             return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY_Int) ? MAXIMUM_CAPACITY_Int : n + 1;
         }
+
         public static int tableSizeFor(int c)
         {
             int n = c - 1;
@@ -116,9 +114,10 @@ namespace HelloWorld
             }
             return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY_Int) ? MAXIMUM_CAPACITY_Int : n + 1;
         }
+
         public static ulong tableSizeFor(ulong c)
         {
-            var n = c - 1;
+            ulong n = c - 1;
             int s = sizeof(ulong);
             for (int i = 0; i < s; i++)
             {

@@ -10,6 +10,9 @@ using System.Runtime.CompilerServices;
 
 namespace HelloWorld.Base
 {
+    /// <summary>
+    /// 函数调用信息
+    /// </summary>
     public class CallInfo
     {
         public static string RecordMethodInfo()

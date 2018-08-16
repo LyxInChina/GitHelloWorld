@@ -13,7 +13,7 @@ const (
 //定义函数 main
 func main(){	
 	//调用fmt包中的方法Printf
-	fmt.Printf("hello world! \n")
+	fmt.Printf("hello world! main \n")
 	fmt.Println(CInt,CBoolen,CStr,CInt2,CInt3,CInt4)
 	var a,b = 11,22
 	var c int
@@ -22,7 +22,7 @@ func main(){
 }
 //先调用init 函数 然后再调用main函数
 func init(){
-	fmt.Printf("hello ! \n")
+	fmt.Printf("hello init ! \n")
 }
 func add(num1 int,num2 int) int{
 	return num1+num2;

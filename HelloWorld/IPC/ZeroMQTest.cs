@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.IPC.MQTest
 {
-    class Program
+    public class ZeroMQTestMain
     {
-        static void Main(string[] args)
+        static void MainTest(string[] args)
         {
             string arg = "";
             if (args.Length > 0)
