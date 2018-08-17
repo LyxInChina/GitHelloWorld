@@ -121,7 +121,6 @@ ___
 
 ## 链接
 
-- 这里`you`网址：[baidu]:(https://www.baidu.com/) "百度"
 - 这里`you`网址：[baidu](https://www.baidu.com/) "百度"
 
 ## 强调
@@ -132,11 +131,11 @@ ___
 
 ## 代码
 
-> 这是一小段代码`code`啊
+> 这是一小段代码`C#code`
 
 ```C#
 printf("helloworld");
 ```
 
 ## 图片
-![代替文字](/leaf.png)
+![代替文字](leaf.png)

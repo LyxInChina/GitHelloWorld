@@ -78,6 +78,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSX", "VSX\VSX\VSX.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSIX", "VSX\VSIX\VSIX.csproj", "{CDE71FF0-7FCE-45AB-B858-8D3AD02376B8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebSocket", "WebSocket", "{B153CD02-2D88-4507-9110-CF5C5482AF1C}"
+	ProjectSection(SolutionItems) = preProject
+		Service\WebSocket\WebSocketClient.html = Service\WebSocket\WebSocketClient.html
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -314,6 +319,7 @@ Global
 		{D63D4652-CBB7-4280-A244-9505EA7C96C1} = {0D9DCDA5-4ADD-4A78-A7A2-93960737D159}
 		{C177D428-B97B-400B-B930-73BAF5B04EB1} = {A5EB2A7F-AC11-4273-90A8-14212C00E99F}
 		{CDE71FF0-7FCE-45AB-B858-8D3AD02376B8} = {A5EB2A7F-AC11-4273-90A8-14212C00E99F}
+		{B153CD02-2D88-4507-9110-CF5C5482AF1C} = {790EDF5F-C307-42F7-8227-CF1F3AE72501}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F255F2E8-C1F7-400B-BE64-60202D36778F}
