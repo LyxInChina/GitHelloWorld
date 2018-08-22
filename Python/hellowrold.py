@@ -1,4 +1,4 @@
-#! note
+# note
 """
 eg
 """
@@ -9,6 +9,10 @@ import time
 import itchat
 from itchat.content import *
 
+# 程序入口点
+
+if __name__ == '__main__':
+    main()
 
 def main():
     a = 10
@@ -17,8 +21,6 @@ def main():
     print(a)
     print(b)
     print(os.getcwd())
-    testOs()
-    # fib(100)
     # start_itchat()
 
 # 基础知识
@@ -56,28 +58,32 @@ def baseKnowledge():
         break
         else:
             print('while else')
+
     for i in range(10):
         print('rang in'+i)
         else:
             print('for in else')
             pass:
-                # 导入模块
+
+    # 导入模块
     import os
-    # 变量类型
-    # 整形 int，long（python2中特有）
+# 变量类型
+# 整形 int，long（python2中特有）
     x = 1
     print(type(x))
-    # 虚数型 j
+# 虚数型 j
     x1 = 1 + 2j
     print(type(x1))
-    # bytes p2中bytes与字符串一样 p3中不一样
+# bytes p2中bytes与字符串一样 p3中不一样
     b = 'abcd'
     c = b.encode()  # 转化为比特型
     print(type(b))
     print(type(c))
     d = c.decode()  # 转化为字符型
     print(type(d))
-    # 列表
+
+def ListType():
+# 列表
     lis = [1, 2, 3, 4, 5]
     # 切片 顾头不顾尾
     print(lis[2:2])
@@ -114,7 +120,7 @@ def baseKnowledge():
     return
 
 # 字符操作
-def bytesOperation():
+def CharType():
     x = 'who are you'
     xcap = x.capitalize()
     xupp = x.upper()
@@ -151,7 +157,7 @@ def bytesOperation():
     return
 
 # 字典类型
-def dictionaryOperation():
+def DictionaryType():
     dic = { '1':'aa','2':'bb','3':'cc'}
     dic['2']='ee'
     # 删除
@@ -166,7 +172,7 @@ def dictionaryOperation():
     return
 
 # 集合类型
-def testSet():
+def SetType():
     sets = set([1, 2])
     lists = [1, 2, 3, 1, 2]
     # 去掉重复项
@@ -250,33 +256,9 @@ def testOs():
     print(sep)
 
 
-def fib(max):
-    a, b = 0, 1
-    while a < max:
-        a = a+1
-    yield
 
 
-@itchat.msg_register([TEXT])
-def text_reply(msg):
-    res = re.search('ok', msg['Text'])
-    if res:
-        itchat.send(('fine thanks'), msg['FromUserName'])
-    else:
-        itchat.send(('are you ok?'), msg['FromUserName'])
 
 
-@itchat.msg_register([PICTURE, RECORDING, VIDEO, SHARING])
-def other_msg(msg):
-    itchat.send(('hello?'), msg['FromUserName'])
-
-
-def start_itchat():
-    itchat.auto_login(enableCmdQR=True, hotReload=True)
-    itchat.run()
-
-
-if __name__ == '__main__':
-    main()
 
 # this is mark

@@ -46,6 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{7DBC74
 		Python\hellowrold.py = Python\hellowrold.py
 		Python\itchat.pkl = Python\itchat.pkl
 		Python\testnumpy.py = Python\testnumpy.py
+		WeChat.py = WeChat.py
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroService", "MicroService", "{D8DEE4A4-A4CB-4B97-9CD0-DC17FC3E850C}"
@@ -71,7 +72,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleWeb_Docker", "Docker\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VSX", "VSX", "{A5EB2A7F-AC11-4273-90A8-14212C00E99F}"
 	ProjectSection(SolutionItems) = preProject
-		VSX\MSDoc.md = VSX\MSDoc.md
+		VSX\EnvDTE接口说明.md = VSX\EnvDTE接口说明.md
+		VSX\NuGet.Config = VSX\NuGet.Config
+		VSX\Nuget.md = VSX\Nuget.md
+		VSX\Proj文件和Sln文件.md = VSX\Proj文件和Sln文件.md
+		VSX\VSCT文件.md = VSX\VSCT文件.md
+		VSX\VSIX打包.md = VSX\VSIX打包.md
+		VSX\VSX基础.md = VSX\VSX基础.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSX", "VSX\VSX\VSX.csproj", "{C177D428-B97B-400B-B930-73BAF5B04EB1}"

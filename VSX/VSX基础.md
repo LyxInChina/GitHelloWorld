@@ -6,6 +6,13 @@
 - 每个Package必须被PLK签名
 - 实现了IVsPackage接口的类型
 
+## VS调试
+
+- 选择启动类型未类库
+- 调试选项中-启动外部程序，选择VS程序：C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe
+- 附加启动参数：/rootsuffix Exp
+- 若调试启动的VS新实例为：实验实例，则进入正确的插件调试模式；
+
 ## 服务
 
 - Package之间或者与Package相关对象的契约
@@ -26,7 +33,7 @@
 
 - Package定义类添加特性：ProvideServiceAttribute
 
-#### Interoperability程序集和Managed Package Framework
+### Interoperability程序集和Managed Package Framework
 
 - Interoperability程序集：使用.net类型包装了com类型，
 - 使用VSX中com对象方法：1.使用非托管代码；2.使用Introp程序集；

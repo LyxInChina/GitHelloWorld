@@ -16,24 +16,19 @@ namespace LogHelper
         }
         static void TestLog4Net()
         {
-            //new Thread(() =>
-            //{
-                while (true)
+            while (true)
+            {
+                try
                 {
-                    try
-                    {
-                        Convert.ToInt32("sss");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        Log4NetHelper.Log.Error("", ex);
-                    }
-                    Thread.Sleep(200);
+                    Convert.ToInt32("sss");
                 }
-            //})
-            //{ IsBackground = true }.Start();
-
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    NLogHelper.Log.Error(ex, "");
+                }
+                Thread.Sleep(200);
+            }
         }
     }
 }

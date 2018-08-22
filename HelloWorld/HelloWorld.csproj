@@ -146,7 +146,6 @@
     <Compile Include="Base\CallInfo.cs" />
     <Compile Include="Base\Program_Base.cs" />
     <Compile Include="Base\SpecialFunctionInvoke.cs" />
-    <Compile Include="CLR\CompressMemory.cs" />
     <Compile Include="DesignPattern\ActionPattern.cs" />
     <Compile Include="DesignPattern\CreatePattern.cs" />
     <Compile Include="DesignPattern\SpecialPattern.cs" />
@@ -200,6 +199,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="CLR\IL.md" />
     <None Include="exportpfx.pfx" />
     <None Include="HelloWorld.exe.manifest">
       <SubType>Designer</SubType>

@@ -160,23 +160,8 @@ namespace HelloWorld.CLR
         }
 
         #endregion
-
-        /// <summary>
-        /// 显示指定结构体内成员分布
-        /// </summary>
-        [StructLayout(LayoutKind.Explicit)]
-        internal struct MyStruct
-        {
-            [FieldOffset(0)]
-            public string Str;
-
-            [FieldOffset(2)]
-            public int ms;
-        }
-
-
     }
-    /* CLR基础
+/* CLR基础
 1.如何检测系统是否安装.NET Framework？
 　　检查%SystemRoot%\System32目录下是否存在文件MSCorEE.dll。
 2.如何确定已安装的.NET Framework版本？
@@ -184,8 +169,13 @@ namespace HelloWorld.CLR
 3.关于x86和x64环境：
 　　若只有类型安全的托管代码，则在x86和x64都可以正常运行；
 　　若含有不安全代码，则需要制定平台和CPU架构；
-4.Windows x64为何能运行x86程序？
+4.Windows x64平台为何能运行x86程序？
 　　win64提供了WoW64（windows on windows64）技术，该技术模拟x86指令集，但会影响性能；
+    Wow64.dll：管理进程和线程的创建，勾住异常分发和Ntoskrnl.exe导出的基本系统调用。它也实现了文件重定向以及注册表重定向。
+    Wow64Cpu.dll：位每个正在Wow64内部运行的线程，管理他们的32位的CPU环境，针对从32位到64位或者从64位到32位的CPU模式切换，提供了与处理器体系结构相关的支持。
+    Wow64Win.dll：截取了Win32k.sys导出的GUI系统调用
+    IA64系统上的IA32Exec.bin和Wow32ia32x.dll：包含了IA-32软件仿真器和它的接口库，因为Itanium处理器不能以原生方式高效地执行x86的32位指令，所以通过这两个额外的组件来实现软件仿真（通过二进制翻译）
+    
 5.Windows运行Exe过程？
 　　a.检测Exe文件头，确定PE32还是PE32+，确定地址空间（32位还是64位或者WoW64），检查CPU架构信息；
 　　b.加载MSCorEE.dll对应版本(x86在C:\Windows\System32下，x64的x86版本在C:\Windows\SysWoW64下)；
@@ -235,12 +225,12 @@ Mark：使用非托管程序加载托管程序集，Windows会自动加载并初
 16.托管PE文件结构：
 
 　　托管PE文件构成：PE32（+）头、CLR头、元数据、IL代码；
-PE32（+）头：Windows要求的标准信息；
-CLR头：小的信息块（托管模块特有），包含CLR版本号、标志flag、一个MethodDef Token；可选的强名称数字签名；模块内部元数据表的大小和偏移量；
-元数据：二进制数据块，3个类别的多个表（源代码中所有定义都会在元数据中的某个表中创建一个记录项，可以使用ILDasm.exe查看元数据）：
-定义表（definition table）：ModuleDef、TypeDef、MethodDef、FieldDef、ParaDef、PropertyDef、EventDef等；
-引用表（reference table）：AssemblyRef、ModuleRef、TypeRef、MemberRef等；
-清单表（manifest table）：AssemblyDef、FileDef、ManifestDef、ExportedTypesDef；
+        PE32（+）头：Windows要求的标准信息；
+        CLR头：小的信息块（托管模块特有），包含CLR版本号、标志flag、一个MethodDef Token；可选的强名称数字签名；模块内部元数据表的大小和偏移量；
+        元数据：二进制数据块，3个类别的多个表（源代码中所有定义都会在元数据中的某个表中创建一个记录项，可以使用ILDasm.exe查看元数据）：
+        定义表（definition table）：ModuleDef、TypeDef、MethodDef、FieldDef、ParaDef、PropertyDef、EventDef等；
+        引用表（reference table）：AssemblyRef、ModuleRef、TypeRef、MemberRef等；
+        清单表（manifest table）：AssemblyDef、FileDef、ManifestDef、ExportedTypesDef；
     17.使用程序集连接器 al.exe
 
     18.强命名程序集
@@ -291,7 +281,7 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
             d.方法回溯，若当前类型没有调用的方法，则JIT回溯类层次结构直到object，在沿途查找方法；
             f.虚实例方法调用：JIT在虚方法中添加额外代码，检查发出调用的变量，找到调用的对象，根据对象的类型对象指针获取实际类型，
                 在该类型的方法中查找要本地化的方法；
-                */
+*/
 
     public class ValueClass
     {
@@ -407,7 +397,7 @@ CLR头：小的信息块（托管模块特有），包含CLR版本号、标志fl
         }
     }
 
-    /*Chapter 5 基元类型 引用类型 值类型
+/*Chapter 5 基元类型 引用类型 值类型
 
         24.什么是基元类型
             编译器直接支持的数据类型，基元类型直接映射FCL中存在的类型

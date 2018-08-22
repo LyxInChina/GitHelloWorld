@@ -24,51 +24,41 @@ using System.Threading;
 
 namespace LogHelper
 {
-    public class Log4NetHelper : ILogHelper
+    public class Log4NetHelper : ILog
     {
-        public static readonly ILogHelper Log = new Log4NetHelper();
+        public static ILog Log { get; private set; }
 
-        private readonly ILoggerRepository repository;
+        static Log4NetHelper()
+        {
+            Log = new Log4NetHelper();
+        }
 
         private Log4NetHelper()
         {
-            repository = log4net.LogManager.GetRepository(Assembly.GetCallingAssembly());
         }
 
-        private void InnerLog(Type type, Level level, string msg, Exception ex)
+        public void Info(Exception ex,string msg)
         {
-
-            repository.GetLogger(type.FullName).Log(type, level, msg, ex);
+            var type = StackInfo.GetCallingType();
+            log4net.LogManager.GetLogger(type.FullName).Info(msg, ex);
         }
 
-        private Type GetCallingType()
+        public void Debug(Exception ex, string msg)
         {
-            StackTrace st = new StackTrace(true);
-            StackFrame sf = st.GetFrame(2);
-            var tid = Thread.CurrentThread.ManagedThreadId;
-            var type = sf.GetType();
-            var func = sf.GetMethod().Name;
-            var calling = Assembly.GetCallingAssembly();
-            var type2 = calling.GetType();
-            return type;
+            var type = StackInfo.GetCallingType();
+            log4net.LogManager.GetLogger(type.FullName).Debug(msg, ex);
         }
 
-        public void Info(string msg, Exception ex = null)
+        public void Warn(Exception ex, string msg)
         {
-            var type = GetCallingType();
-            repository.GetLogger(type.FullName).Log(type, Level.Info, msg, ex);
+            var type = StackInfo.GetCallingType();
+            log4net.LogManager.GetLogger(type.FullName).Warn(msg, ex);
         }
 
-        public void Warn(string msg, Exception ex = null)
+        public void Error(Exception ex, string msg)
         {
-            var type = GetCallingType();
-            repository.GetLogger(type.FullName).Log(type, Level.Warn, msg, ex);
-        }
-
-        public void Error(string msg, Exception ex = null)
-        {
-            var type = GetCallingType();
-            repository.GetLogger(type.FullName).Log(type, Level.Error, msg, ex);
+            var type = StackInfo.GetCallingType();
+            log4net.LogManager.GetLogger(type.FullName).Error(msg, ex);
         }
     }
 }
