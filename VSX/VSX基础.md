@@ -22,6 +22,7 @@
 
 - 服务是隐藏的，即必须通过名字进行调用，即查找服务提供文档，
 - 使用服务必须知道的信息：服务的名字，接口的名字
+- [可用服务列表](https://docs.microsoft.com/zh-cn/visualstudio/extensibility/internals/list-of-available-services)
 
 ### 加载Package和访问服务
 
