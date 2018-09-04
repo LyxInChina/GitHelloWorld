@@ -40,7 +40,7 @@
             </Path.Data>
         </Path>
         <Label Name="lab1" Width="200" Height="100" FontSize="20" FontStyle="Normal">this is a label</Label>
-        <Canvas Width="400" Height="400" Background="LightGray" ButtonBase.Click="Canvas_Click">
+        <Canvas Width="369" Height="388" Background="LightGray" ButtonBase.Click="Canvas_Click" Canvas.Left="103" Canvas.Top="61">
             <x:Code>
                 <![CDATA[
                 private void Canvas_Click(object sender,RoutedEventArgs e)

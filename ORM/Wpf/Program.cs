@@ -15,8 +15,16 @@ namespace Wpf
             Application app = new Application();
             app.ShutdownMode = ShutdownMode.OnLastWindowClose;
             //Func1(app);
-            Func2(app);
+            //Func2(app);
             //Func3(app);
+            ShowModelWindow(app);
+        }
+
+        static void ShowModelWindow(Application app)
+        {
+            MainWindow main = new MainWindow();
+            main.Content = new Model.StudentInformationControl();
+            app.Run(main);
         }
 
         static void Func1(Application app)

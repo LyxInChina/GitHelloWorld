@@ -166,3 +166,4 @@
   <Strings>... </Strings>  
 </Button>  
 ```
+-  CommandFlag 命令标记用于控制命令的行为

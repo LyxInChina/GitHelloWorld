@@ -65,8 +65,8 @@ def baseKnowledge():
             print('for in else')
             pass:
 
-    # 导入模块
-    import os
+# 导入模块
+import os
 # 变量类型
 # 整形 int，long（python2中特有）
     x = 1
@@ -254,11 +254,5 @@ def testOs():
     print(dirs)
     print(files)
     print(sep)
-
-
-
-
-
-
 
 # this is mark

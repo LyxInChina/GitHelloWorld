@@ -13,4 +13,99 @@
 
 ### 构造工程 - 脚本文件
 
-- 
+### 编辑工程的调试项属性
+
+- 1.找到接口VSLangProj.ProjectConfigurationProperties；
+- 2.使用工程的EnvDTE.Project.ConfigurationManager.ActiveConfiguration.Properties
+- 3.[参考文件](https://msdn.microsoft.com/en-us/6323383a-43ee-4a60-be4e-9d7f0b53b168)
+```C#
+public static void SetProjectDebugProp(EnvDTE.Project proj, string startProgrm,Enum.StartActionType startActiconType = Enum.StartActionType.Program, string startArgs = null, string startWorkingDirectory = null)
+{
+    if (proj != null && proj.Object is VSLangProj.VSProject)
+    {
+        var log = OperationCenter.MLogger;
+        EnvDTE.Configuration activeConf = proj.ConfigurationManager.ActiveConfiguration;
+        EnvDTE.Property startProp = activeConf.Properties.Item("StartProgram");
+        EnvDTE.Property startActionProp = activeConf.ConfigurationManager.ActiveConfiguration.Item("StartAction");
+        EnvDTE.Property startArguments = activeConf.Properties.Item("StartArguments");
+        EnvDTE.Property startWorkingDirProp = activeConf.Properties.Item("StartWorkingDirectory");
+        log.Info("开始设置工程:[{0}]调试配置项", proj.Name);
+        string oldValue = startProp.Value;
+        startProp.Value = startProgrm;
+        log.Info("[{0}]:OldValue:[{1}],NewValue:[{2}]",startProp.Name, oldValue, startProp.Value.ToString());
+        int oldValue2 = startActionProp.Value;
+        startActionProp.Value = (int)startActiconType;
+        log.Info("[{0}]:OldValue:[{1}],NewValue:[{2}]",startActionProp.Name, oldValue2.ToString(), startActionProp.Value.ToString());
+        if (startArgs != null)
+        {
+            oldValue = startArguments.Value;
+            startArguments.Value = startArgs;
+            log.Info("[{0}]:OldValue:[{1}],NewValue:[{2}]", startArguments.Name,oldValue, startArguments.Value.ToString());
+        }
+        if (startWorkingDirectory != null)
+        {
+            oldValue = startArguments.Value;
+            startWorkingDirProp.Value = startWorkingDirectory;
+            log.Info("[{0}]:OldValue:[{1}],NewValue:[{2}]", startWorkingDirProp.Name, oldValue, startWorkingDirProp.Value.ToString());
+        }
+        proj.Save();
+        log.Info("设置工程:[{0}]调试配置项完成.", proj.Name);
+    }
+}
+```
+
+## sln文件
+
+### 编辑解决方案中工程间的生成依赖
+
+- 1.使用接口BuildDependency
+- 2.在解决方案中找到接口对象BuildDependency
+```C#
+public static bool FindBuildDependencyByProjID(string projID, out BuildDependency build)
+{
+    var result = false;
+    build = null;
+    if (OperationCenter.MDTE != null)
+    {
+        var bd = OperationCenter.MDTE.Solution.SolutionBuild.BuildDependencies;
+        foreach (BuildDependency bdy in bd)
+        {
+            if (bdy.Project.FullName.Equals(projID, StringComparison.OrdinalIgnoreCase))
+            {
+                build = bdy;
+                result = true;
+                break;
+            }
+        }
+    }
+    return result;
+}
+```
+- 3.编辑BuildDependency新增工程依赖
+```C#
+public static void AddSlnBuildDependency(string projID, string[] projAddIDs)
+{
+    if (OperationCenter.MDTE != null)
+    {
+        BuildDependency build;
+        if (FindBuildDependencyByProjID(projID, out build))
+        {
+            if (projAddIDs != null)
+            {
+                for (int i = 0; i < projAddIDs.Length; i++)
+                {
+                    try
+                    {
+                        build.AddProject(projAddIDs[i]);
+                    }
+                    catch (Exception ex)
+                    {
+                        OperationCenter.MLogger.Error("添加工程依赖-AddSlnBuildDependency Msg:{0}，Source:{1},Stack:{2}", ex.Message, ex.Source, ex.StackTrace);
+                    }
+                }
+            }
+            SolutionSave();
+        }
+    }
+}
+```

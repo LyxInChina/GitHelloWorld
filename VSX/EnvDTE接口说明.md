@@ -1,17 +1,23 @@
 # MS VSX doc
+
 * VS2017 SDK
  
 ## 参考资料
+
  - http://dotneteers.net/blogs/tags/VSX/default.aspx
  - https://blog.csdn.net/liuruxin/article/details/18258749
 
 ## EnvDTE接口说明
+
 > [EnvDTE]:(https://docs.microsoft.com/zh-cn/dotnet/api/?redirectedfrom=MSDN&view=visualstudiosdk-2017)
+
 ### 接口DTE
+
 - DLL:EnvDTE.dll
 - NP:EnvDTE
 - VS顶级自动化对象模型
 - 获取：GetService<typeof(DTE)>
+  
 ### 接口IVsSolutionEvents
 
 - Dll:Microsoft.VisualStudio.Shell.Interop.dll
@@ -20,14 +26,15 @@
 - 解决方案和项的，打开，关闭，加载，卸载有本质的不同
 - 使用 查询SVsSolution对象为IVsSolution接口，调用AdviseSolutionEvents方法，返回一个指向IVsSolutionEvents的指针；
 - 使用
-```
+```C#
     //服务提供者
-    IServiceProvider provider = Instance of Implement to Package(一般为一个package示例)
+    IServiceProvider provider;// = Instance of Implement to Package(一般为一个package示例)
     //获取IVsSolution接口示例
-    IVsSolution solution = IServiceProvider.GetService(typeof(SVsSolution));
+    IVsSolution solution = provider.GetService(typeof(SVsSolution));
     //
     solution.AdviseSolutionEvents(ptr_IVsSolution,out uint)
 ```
+
 ### 接口IVsHierarchy
 
 - Dll:Microsoft.VisualStudio.Shell.Interop.dll
@@ -37,7 +44,6 @@
 - VSITEMID 是一个dword类型的唯一标识
 - 要获得Project，需要调用GetProperty(uint32,int,object)方法
 - 即GetProperty(VSConstants.VSITEMID_ROOT,VSHPROPID_ExtObject,out object)
-- 
 
 ### 接口Soulutio
 
@@ -53,7 +59,6 @@
 - 特定的工程对象在其他程序集内， VB和VC#在VSLangProj命名空间
 - 类似于抽象类型，提供所有其他具体工程的通用信息
 
-### 接口VSProject
 ### 接口VSProject
 
 - DLL:VSLangProj

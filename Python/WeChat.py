@@ -19,9 +19,6 @@ def LogIn():
     itchat.auto_login()
     itchat.send('Hello, filehelper', toUserName='filehelper')
 
-# ΢�ſͻ����Զ���¼
-
-
 @itchat.msg_register([TEXT])
 def text_reply(msg):
     res = re.search('ok', msg['Text'])
@@ -30,11 +27,9 @@ def text_reply(msg):
     else:
         itchat.send(('are you ok?'), msg['FromUserName'])
 
-
 @itchat.msg_register([PICTURE, RECORDING, VIDEO, SHARING])
 def other_msg(msg):
     itchat.send(('hello?'), msg['FromUserName'])
-
 
 def start_itchat():
     itchat.auto_login(enableCmdQR=True, hotReload=True)
