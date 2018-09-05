@@ -50,6 +50,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{7DBC74
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroService", "MicroService", "{D8DEE4A4-A4CB-4B97-9CD0-DC17FC3E850C}"
+	ProjectSection(SolutionItems) = preProject
+		MicroService\MicroService.md = MicroService\MicroService.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log", "Log", "{3D3639E6-24A7-4120-B217-FFA3A70C29CF}"
 EndProject
@@ -80,11 +83,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VSX", "VSX", "{A5EB2A7F-AC1
 		VSX\VSX基础.md = VSX\VSX基础.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSX", "VSX\VSX\VSX.csproj", "{C177D428-B97B-400B-B930-73BAF5B04EB1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebSocket", "WebSocket", "{B153CD02-2D88-4507-9110-CF5C5482AF1C}"
 	ProjectSection(SolutionItems) = preProject
 		Service\WebSocket\WebSocketClient.html = Service\WebSocket\WebSocketClient.html
+		WebSocket介绍.md = WebSocket介绍.md
 	EndProjectSection
 EndProject
 Global
@@ -275,22 +277,6 @@ Global
 		{D63D4652-CBB7-4280-A244-9505EA7C96C1}.Release|x64.Build.0 = Release|Any CPU
 		{D63D4652-CBB7-4280-A244-9505EA7C96C1}.Release|x86.ActiveCfg = Release|Any CPU
 		{D63D4652-CBB7-4280-A244-9505EA7C96C1}.Release|x86.Build.0 = Release|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Debug|ARM.Build.0 = Debug|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Debug|x64.Build.0 = Debug|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Debug|x86.Build.0 = Debug|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Release|ARM.ActiveCfg = Release|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Release|ARM.Build.0 = Release|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Release|x64.ActiveCfg = Release|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Release|x64.Build.0 = Release|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Release|x86.ActiveCfg = Release|Any CPU
-		{C177D428-B97B-400B-B930-73BAF5B04EB1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -305,7 +291,6 @@ Global
 		{15CDDD93-30C9-4845-AA27-147D4552070D} = {3D3639E6-24A7-4120-B217-FFA3A70C29CF}
 		{E276DFF2-3A0E-4806-A125-CD8E784F7223} = {911A6667-4E8B-4845-9A83-8ACDFAC18028}
 		{D63D4652-CBB7-4280-A244-9505EA7C96C1} = {0D9DCDA5-4ADD-4A78-A7A2-93960737D159}
-		{C177D428-B97B-400B-B930-73BAF5B04EB1} = {A5EB2A7F-AC11-4273-90A8-14212C00E99F}
 		{B153CD02-2D88-4507-9110-CF5C5482AF1C} = {790EDF5F-C307-42F7-8227-CF1F3AE72501}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -28,7 +28,7 @@ namespace HelloWorld.CLR
     {
         public static void Main(string[] args)
         {
-            CompressMemory.TestRuntimeHandle();
+            //CompressMemory.TestRuntimeHandle();
             Console.ReadLine();
         }
     }
