@@ -78,6 +78,7 @@ namespace HelloWorld.Zip
                 ZipFile.Close();
             }
         }
+
         /// <summary>
         /// ZIP：压缩文件夹
         /// </summary>
@@ -110,6 +111,7 @@ namespace HelloWorld.Zip
                 }
             }
         }
+
         /// <summary>
         /// 递归遍历目录
         /// </summary>

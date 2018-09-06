@@ -33,7 +33,6 @@ D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\bin\Debug\Process.txt
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\bin\Debug\WService.exe.config
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\bin\Debug\WService.exe
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\bin\Debug\WService.pdb
-D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csprojAssemblyReference.cache
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.ProjectInstaller.resources
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.WServiceTest.resources
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.GenerateResource.cache

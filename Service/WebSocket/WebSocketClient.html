@@ -1,9 +1,10 @@
-<html>
+﻿<html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>WebSocket客户端</title>
 </head>
+
 <script>
     var socket;
     // var M_Web_Socket_Url = "ws://10.3.1.243:80/portal/websocket?appName=MSG_PUSH&userId=0001Z8100000000LVJQQ";
@@ -26,7 +27,6 @@
             }
         }
     }
-
 
     function Test() {
         if (typeof (WebSocket) == "undefined") {
@@ -101,8 +101,8 @@
     }
 
     function OnError(error) {
-        console.debug("websocket error!");
-        AppendTextToDiv("websocket error!" + error);
+        console.debug("websocket 错误!");
+        AppendTextToDiv("websocket 错误!" + error);
     }
 
     function Connect() {
@@ -198,7 +198,9 @@
         }
     }
 </script>
+
 <style>
+
     /* button.ButtonSytle {
         background-color: green;
         width: 100px;
@@ -244,7 +246,7 @@
         <li>
             <button onclick="Connect()">连接</button>
             <input type="checkbox" id="checkbox_autoConnect" />
-            <label>断开自动重连</label>
+            <label>自动重连</label>
             <button onclick="CloseWS()">关闭</button>
             <button onclick="CheckStatus()">检测WS状态</button>
         </li>
@@ -258,6 +260,6 @@
     </ul>
     <div id="contentDiv" class="ContentStyle">
     </div>
-
+</body>
 
 </html>

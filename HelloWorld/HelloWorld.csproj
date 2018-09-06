@@ -61,7 +61,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>HelloWorld.WCF.WcfServiceHost.Program</StartupObject>
+    <StartupObject>HelloWorld.MEF.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -153,6 +153,9 @@
     <Compile Include="Introp\IntropHelper.cs" />
     <Compile Include="IPC\Renci.SshNet.cs" />
     <Compile Include="IPC\ThriftHelper.cs" />
+    <Compile Include="MEF\CalImpl.cs" />
+    <Compile Include="MEF\ICal.cs" />
+    <Compile Include="MEF\MEFClient.cs" />
     <Compile Include="SyncException\SyncException.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="Serializable\AbsClass.cs" />
@@ -185,10 +188,10 @@
     <Compile Include="RegexTest.cs" />
     <Compile Include="IPC\IPC.cs" />
     <Compile Include="IPC\ZeroMQTest.cs" />
-    <Compile Include="System\BankerAligorithmcs.cs" />
-    <Compile Include="System\FileAssociation.cs" />
-    <Compile Include="System\FileSystem.cs" />
-    <Compile Include="System\PhilosopherEatingProblem.cs" />
+    <Compile Include="SystemE\BankerAligorithmcs.cs" />
+    <Compile Include="SystemE\FileAssociation.cs" />
+    <Compile Include="SystemE\FileSystem.cs" />
+    <Compile Include="SystemE\PhilosopherEatingProblem.cs" />
     <Compile Include="WCF\WCF.cs" />
     <Compile Include="Zip\AutoZipClass.cs" />
     <Compile Include="Zip\ProgramEx.cs" />
