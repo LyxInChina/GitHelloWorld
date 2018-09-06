@@ -72,13 +72,13 @@ namespace RedisHelper
         {
             if(db==null)
             {
-                value = default;
+                value = default(T);
                 return;
             }
             var tempv = db.StringGet(key);
             if(!tempv.HasValue)
             {
-                value = default;
+                value = default(T);
                 return;
             }
             try

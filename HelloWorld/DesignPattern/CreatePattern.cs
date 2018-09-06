@@ -323,10 +323,6 @@ namespace HelloWorld.DesignPattern
                 if (this.GetType().IsSerializable)
                 {
                     //序列化与反序列化方法 进行对象的深复制   
-                    if (this is null)
-                    {
-                        return null;
-                    }
                     //二进制序列化
                     IFormatter formatter = new BinaryFormatter();
                     Stream stream = new MemoryStream();

@@ -233,12 +233,12 @@ namespace HelloWorld.ThreadK
             {
                 try
                 {
-                    TResult result = default;
+                    TResult result;
                     if (func != null)
                     {
                         result = func.Invoke();
+                        taskc.SetResult(result);
                     }
-                    taskc.SetResult(result);
                 }
                 catch (Exception ex)
                 {

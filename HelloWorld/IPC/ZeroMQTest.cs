@@ -229,7 +229,8 @@ namespace HelloWorld.IPC.MQTest
         /// <returns></returns>
         public static string GetZeroMQVersion()
         {
-            ZeroMQ.lib.zmq.version(out int major, out int minor, out int patch);
+            int major, minor, patch;
+            ZeroMQ.lib.zmq.version(out major, out minor, out patch);
             return string.Format("{0}.{1}.{2}", major, minor, patch);
         }
 

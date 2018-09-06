@@ -180,10 +180,7 @@ namespace HelloWorld.IPC
                             _mutexs = new Mutex(true, _msname, out cn);
                             if (cn)
                             {
-                                npine = new NamedPipeServerStream(MServerName,
-                                 PipeDirection.InOut, maxNumberOfServerInstances: 1,
-                                 PipeTransmissionMode.Message,
-                                 PipeOptions.Asynchronous);
+                                npine = new NamedPipeServerStream(MServerName,PipeDirection.InOut, 1, PipeTransmissionMode.Message,PipeOptions.Asynchronous);
                                 _ready = true;
                             }
                             else
