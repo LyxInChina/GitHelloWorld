@@ -43,10 +43,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService", "Service\WebSe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{7DBC7458-4FB6-4450-9A48-90A3A695778C}"
 	ProjectSection(SolutionItems) = preProject
+		Python\flower.py = Python\flower.py
 		Python\hellowrold.py = Python\hellowrold.py
 		Python\itchat.pkl = Python\itchat.pkl
+		Python\rouse.py = Python\rouse.py
 		Python\testnumpy.py = Python\testnumpy.py
-		WeChat.py = WeChat.py
+		Python\WeChat.py = Python\WeChat.py
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroService", "MicroService", "{D8DEE4A4-A4CB-4B97-9CD0-DC17FC3E850C}"
