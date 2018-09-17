@@ -172,4 +172,33 @@ namespace UnitTestProject
         public bool A;
         public bool BB;
     }
+
+    /*
+     URL:
+    https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.shell.interop.ivsmonitorselection.getcurrentselection?view=visualstudiosdk-2017#Microsoft_VisualStudio_Shell_Interop_IVsMonitorSelection_GetCurrentSelection_System_IntPtr__System_UInt32__Microsoft_VisualStudio_Shell_Interop_IVsMultiItemSelect__System_IntPtr__
+     
+                proj = null;
+            var monitor = OperationCenter.GetService<IVsMonitorSelection>() as IVsMonitorSelection;
+            if (monitor != null)
+            {
+                IVsHierarchy hierarchy = null;
+                IntPtr ppHier, ppSC;
+                uint pitemid;
+                IVsMultiItemSelect ppMIS;
+                var res = monitor.GetCurrentSelection(out ppHier, out pitemid, out ppMIS, out ppSC);
+                if (res == VSConstants.S_OK)
+                {
+                    if (ppHier != null)
+                    {
+                        hierarchy = (IVsHierarchy)Marshal.GetUniqueObjectForIUnknown(ppHier);
+                        var proj2 = GetProjFromIVsHierarchy(hierarchy);
+                        proj = proj2;
+                    }
+                    //if (pitemid == Microsoft.VisualStudio.VSConstants.VSITEMID_SELECTION)
+                    //{
+                    //    //Get mutiple ites by ppMIS
+                    //}
+                }
+            }
+     */
 }

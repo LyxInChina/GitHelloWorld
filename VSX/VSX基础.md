@@ -121,3 +121,8 @@ foreach(Command cmd in DTE.Commands)
 - 托管对象：CommandID - 托管命令对象，通过GUID和ID构建
 - 托管对象：MenuCommand - 命令菜单项，可以更改部分命令外观属性
 - 托管对象：OleMenuCommand - 命令菜单项，可以更改命令外观属性
+
+
+#### 引用管理器扩展性
+
+- [参考资料](https://msdn.microsoft.com/zh-cn/library/hh873125(v=vs.110).aspx)

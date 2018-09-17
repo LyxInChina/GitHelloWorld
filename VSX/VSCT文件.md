@@ -123,14 +123,16 @@
   ```xml
   <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_BUILDDEBUGRUN" />
   ```
-  |GUID|ID|位置|
-  |----|----|----|
-  |guidSHLMainMenu|IDG_VS_MM_BUILDDEBUGRUN|主菜单|
-  |guidSHLMainMenu|IDG_VS_TOOLS_OPTIONS|工具菜单下拉列表|
-  |guidSHLMainMenu|IDG_VS_CTXT_SOLUTION_BUILD|解决方案右键菜单|
-  |guidSHLMainMenu|IDG_VS_CTXT_PROJECT_ADD|工程右键菜单|
+  |GUID|ID|位置|应用类型|
+  |----|----|----|---|
+  |guidSHLMainMenu|IDG_VS_MM_BUILDDEBUGRUN|主菜单|Menu|
+  |guidSHLMainMenu|IDG_VS_TOOLS_OPTIONS|工具菜单下拉列表|Group/Menu|
+  |guidSHLMainMenu|IDG_VS_CTXT_SOLUTION_BUILD|解决方案右键菜单|Menu|
+  |guidSHLMainMenu|IDG_VS_CTXT_PROJECT_ADD|工程右键菜单|Menu|
   |guidSHLMainMenu|IDM_VS_CTXT_REFERENCE|工程引用右键菜单|
-  |guidSHLMainMenu|IDM_VS_CTXT_CODEWIN|代码菜单|
+  |guidSHLMainMenu|IDM_VS_CTXT_CODEWIN|代码菜单|Group|
+  |guidSHLMainMenu|IDM_VS_CTXT_REFERENCEROOT|引用|Group|
+  |guidSHLMainMenu|IDM_VS_CTXT_REFERENCE|引用下的自节点引用|Group|
 
 
 ### Groups
@@ -167,3 +169,17 @@
 </Button>  
 ```
 -  CommandFlag 命令标记用于控制命令的行为
+
+
+
+### 控制菜单和名字位置
+
+- 1.定义GUID和ID
+  - 所有的元素都必须在Symbols下定义GUID和ID方可使用包括：
+  - 1.Button Menu Group Bitmap 
+- 2.定义Button位置
+  - Button=》Group=》Group。。。=》Menu=>VS IDE中的GUID和ID定义位置
+  - 命令组重用
+- IDE中定义位置：Menu Group只能定义Menu元素，Menus中才能定义Group元素
+- 即：Menus的parent元素定义应该是MenusGroup类型的，Group的Parent元素应该是Menus类型的 具体应该看IDE说明
+- vsshlids.h
