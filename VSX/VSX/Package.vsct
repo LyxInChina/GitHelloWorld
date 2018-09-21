@@ -15,10 +15,10 @@
         defining some of the constants that we will use inside the file. -->
 
   <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
-  <Extern href="stdidcmd.h"/>
+  <Extern href="stdidcmd.h" />
 
   <!--This header contains the command ids for the menus provided by the shell. -->
-  <Extern href="vsshlids.h"/>
+  <Extern href="vsshlids.h" />
 
   <!--The Commands section is where commands, menus, and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
@@ -37,7 +37,11 @@
          must be a menu. -->
     <Groups>
       <Group guid="guidPackageCmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_REFERENCEROOT"/>
+        <!--<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_REFERENCEROOT"/>-->
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
+      </Group>
+      <Group guid="guidPackageCmdSet1" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
       </Group>
     </Groups>
 
@@ -59,6 +63,13 @@
           <ButtonText>显示信息</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidPackageCmdSet1" id="cmdidCmd02" priority="0x0100" type="Button">
+        <Parent guid="guidPackageCmdSet1" id="MyMenuGroup" />
+        <Icon guid="guidImages1" id="bmpPic1" />
+        <Strings>
+          <ButtonText>命令2</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -68,7 +79,8 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\CmdShowInfo.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
+      <Bitmap guid="guidImages" href="Resources\CmdShowInfo.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages1" href="Resources\Cmd02.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
@@ -79,19 +91,37 @@
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_REFERENCE" />
     </CommandPlacement>
     
+    <CommandPlacement guid="guidPackageCmdSet" id="MyMenuGroup" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_XPROJ_PROJITEM" />
+    </CommandPlacement>
+  
   </CommandPlacements>
 
   <Symbols>
     <!-- This is the package guid. -->
     <GuidSymbol name="guidPackage" value="{d15e6211-9718-44ec-b82a-1f58668507ac}" />
 
-    <!-- This is the guid used to group the menu commands together -->
+    <!-- This is the guid used to group the menu commands together d00ac0f5-02bf-4b36-8e52-50f63ec20235 -->
     <GuidSymbol name="guidPackageCmdSet" value="{d00ac0f5-02bf-4b36-8e52-50f63ec20235}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
       <IDSymbol name="CmdShowInfoId" value="0x0100" />
     </GuidSymbol>
 
-    <GuidSymbol name="guidImages" value="{b1567cee-d492-4a1b-ac3a-b47b09a619a2}" >
+    <GuidSymbol name="guidImages" value="{b1567cee-d492-4a1b-ac3a-b47b09a619a2}">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{c54ed5a2-dd21-4d00-b296-c39cb45ff0d7}" name="guidPackageCmdSet1">
+      <IDSymbol value="4128" name="MyMenuGroup" />
+      <IDSymbol value="256" name="cmdidCmd02" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{ff17c49d-998a-4e15-b270-ad47ecda94f0}" name="guidImages1">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

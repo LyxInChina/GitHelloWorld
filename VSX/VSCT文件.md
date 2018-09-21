@@ -133,6 +133,8 @@
   |guidSHLMainMenu|IDM_VS_CTXT_CODEWIN|代码菜单|Group|
   |guidSHLMainMenu|IDM_VS_CTXT_REFERENCEROOT|引用|Group|
   |guidSHLMainMenu|IDM_VS_CTXT_REFERENCE|引用下的自节点引用|Group|
+  |guidSHLMainMenu|IDM_VS_CTXT_PROJNODE|工程节点|Group|
+  |guidSHLMainMenu|IDM_VS_CTXT_SOLNNODE|解决方案节点|Group|
 
 
 ### Groups
@@ -180,6 +182,9 @@
 - 2.定义Button位置
   - Button=》Group=》Group。。。=》Menu=>VS IDE中的GUID和ID定义位置
   - 命令组重用
+  - 在CommandPlacements组下新建节点CommandPlacement GUID和ID为要重用的位置的Gruop项，不能直接设置button只能设置group
+  - Parent下定义重用出现的位置
+  - 在CommandPlacements可以添加多个相同的GUID和ID的CommandPlacement元素
 - IDE中定义位置：Menu Group只能定义Menu元素，Menus中才能定义Group元素
 - 即：Menus的parent元素定义应该是MenusGroup类型的，Group的Parent元素应该是Menus类型的 具体应该看IDE说明
 - vsshlids.h

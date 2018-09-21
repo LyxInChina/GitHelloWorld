@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Wpf.Model
 {
-    public class StudentModel:INotifyPropertyChanged
+    public class StudentModel : INotifyPropertyChanged
     {
         private string name;
         public string Name
