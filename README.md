@@ -1,7 +1,7 @@
 # HelloWorld
 
 [![GitHub issues](https://img.shields.io/github/issues/zlzcn/GitHelloWorld.svg)](https://github.com/zlzcn/GitHelloWorld/issues)
-[![GitHub forks](https://img.shields.io/github/issues/zlzcn/GitHelloWorld.svg)](https://github.com/zlzcn/GitHelloWorld/network)
+[![GitHub forks](https://img.shields.io/github/forks/zlzcn/GitHelloWorld.svg)](https://github.com/zlzcn/GitHelloWorld/network)
 [![GitHub stars](https://img.shields.io/github/stars/zlzcn/GitHelloWorld.svg)](https://github.com/zlzcn/GitHelloWorld/stargazers)
 [![GitHub license](https://img.shields.io/github/license/zlzcn/GitHelloWorld.svg)](https://github.com/zlzcn/GitHelloWorld/blob/master/LICENSE)
 
