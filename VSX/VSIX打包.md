@@ -49,3 +49,15 @@
     </Content>
 </Vsix>
 ```
+
+### 如何将个别文件打包到VSIX中
+
+1.修改工程中的vsixmannifest文件：
+在Content节点下新增CustomExtension节点，并设置Type，内容设置为要添加的文件的相对路径；
+```XML
+<Content>
+    <!-- ... -->
+    <CustomExtension Type="nuget">dlls\nuget.exe</CustomExtension>
+  </Content>
+  ```
+2.VS2010好像有专门的可视化工具可以对vsixmannifest文件进行修改；

@@ -2,6 +2,77 @@
 
 ## CSProj文件
 
+```XML
+<?xml version="1.0" encoding="utf-16"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{31AC3873-B1D5-4825-BA9D-282A8FAB0E90}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LibN</RootNamespace>
+    <AssemblyName>LibN</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\repo\EntityFramework.6.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\repo\EntityFramework.6.0.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config.transform" />
+    <Content Include="Web.config.transform" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Import Condition="Exists('..\..\..\..\..\repo\Fody.1.28.3\build\Fody.targets')" Project="..\..\..\..\..\repo\Fody.1.28.3\build\Fody.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+  </Target>
+</Project>
+```
+
 ### MSBuild与csproj文件
 
 - MSBuild（Microsoft Build Engine）是Miscrosoft和Visual Studio的构建应用程序的平台，提供XML架构的的工程文件来控制如何构建平台过程和构建软件，VS使用MSBuild但是MSBuild不依赖VS的安装。通过在工程文件或者sln文件中调用MSBuild，可以在不安装VS时进行编排和构建工程。主要包含三部分内容：执行引擎、构造工程、任务；
@@ -53,8 +124,77 @@ public static void SetProjectDebugProp(EnvDTE.Project proj, string startProgrm,E
     }
 }
 ```
+- 4.
 
 ## sln文件
+
+```TXT
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib_A", "..\..\Test\SolutionB\Lib_A\Lib_A.csproj", "{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{53D0EA4C-F0B0-4117-828E-F33A14889796}"
+	ProjectSection(SolutionItems) = preProject
+		client.LibN.xml = client.LibN.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib", "Lib\Lib.csproj", "{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9} = {EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A} = {8F2407A8-96CF-422D-98D1-CE7EBAC6848A}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NO", "LibN5\NO.csproj", "{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A} = {8F2407A8-96CF-422D-98D1-CE7EBAC6848A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8F2407A8-96CF-422D-98D1-CE7EBAC6848A}.Release|x86.ActiveCfg = Release|Any CPU
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Debug|x86.ActiveCfg = Debug|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Debug|x86.Build.0 = Debug|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Release|Any CPU.ActiveCfg = Release|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Release|Mixed Platforms.Build.0 = Release|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Release|x86.ActiveCfg = Release|x86
+		{E374DFAF-95DB-4783-AC2C-6DBAB2C65F51}.Release|x86.Build.0 = Release|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Debug|x86.ActiveCfg = Debug|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Debug|x86.Build.0 = Debug|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Release|Any CPU.ActiveCfg = Release|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Release|Mixed Platforms.Build.0 = Release|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Release|x86.ActiveCfg = Release|x86
+		{EDF6BEA2-1D2C-45D5-B88B-41CB30F57FD9}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+```
 
 ### 编辑解决方案中工程间的生成依赖
 
@@ -109,3 +249,4 @@ public static void AddSlnBuildDependency(string projID, string[] projAddIDs)
     }
 }
 ```
+- 4.此时查看解决方案的依赖项顺序 就会按照之前写入的工程依赖项，自动生成；

@@ -126,3 +126,38 @@ foreach(Command cmd in DTE.Commands)
 #### 引用管理器扩展性
 
 - [参考资料](https://msdn.microsoft.com/zh-cn/library/hh873125(v=vs.110).aspx)
+
+
+#### 事件监听
+
+1.获取事件监听实例对象:IVsSolution
+```C#
+IVsSolution solution = provider.GetService(typeof(SVsSolution)) as IVsSolution;
+```
+2.定义实现事件接口的类：
+```C#
+public class VsSolutionEventListener: IVsSolutionEvents, IVsSolutionEvents4
+```
+3.添加事件监听到实例中：
+```C#
+solution.AdviseSolutionEvents(this, out pdwCookie);
+```
+4.从接口IVsHierarchy获取EnvDTE.Project实例的方法：
+```C#
+private static EnvDTE.Project GetProjFromIVsHierarchy(IVsHierarchy hierarchy)
+{
+    if (hierarchy == null)
+        throw new ArgumentNullException("hierarchy");
+    object obj;
+    var res= hierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out obj);
+    if(res== VSConstants.S_OK)
+    {
+        return obj as EnvDTE.Project;
+    }
+    return null;
+}
+```
+5.监听方法返回值遵循SDK参数规定：
+```C#
+Microsoft.VisualStudio.VSConstants.S_OK
+```
