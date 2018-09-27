@@ -1,4 +1,12 @@
-# CMake¹¤¾ß Ñ§Ï°
+# CMakeå·¥å…· å­¦ä¹ 
+
 ***
-## CMake½éÉÜ
-* 
+
+## CMakeä»‹ç»
+
+- 0
+
+## ç¼–è¯‘C/C++
+
+- Cygwin [ä¸‹è½½](https://cygwin.com/install.html)
+- MinGw [ä¸‹è½½](http://www.mingw.org/)

@@ -1,8 +1,7 @@
-﻿# English Words
+# English Words
 
 * infrastructure 基础设施
 * where there is a will there is a way
-* 
 * despite  尽管
 * incremental  增长
 * compatible   兼容
