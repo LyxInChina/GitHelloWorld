@@ -36,6 +36,7 @@ namespace Crawler
             }
             sw = new StreamWriter(fn, true, Encoding.GetEncoding("utf-8"), 1024 * 1024 * 10);
         }
+
         public static void Dispose()
         {
             sw?.Flush();

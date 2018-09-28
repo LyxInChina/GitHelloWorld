@@ -53,7 +53,7 @@
 #### 监听命令的执行
 
 - 1.查询命令列表：EnvDTE.DTE.Commands
-  
+
 ```C#
 foreach(Command cmd in DTE.Commands)
 {
@@ -68,44 +68,49 @@ foreach(Command cmd in DTE.Commands)
 #### 插件运行过程中动态修改菜单项显示内容
 
 - 1.在Package初始化加载命令是 使用OleMenuCommand包装命令CommandID
-```C#
-	OleMenuCommand ocmd = new OleMenuCommand(UpdateRuntimeEnvironmentMenuItemClick, updateRuntimeEnvironmentCommandID);
-    ocmd.BeforeQueryStatus += new EventHandler(ocmd_BeforeQueryStatus);
-    mcs.AddCommand(ocmd);
-```
-- 2.订阅OleMenuCommand实例的BeforeQueryStatus事件:
 
-- 3.在订阅的事件参数中：通过sender强转为OleMenuCommand实例，通过该实例即可修改菜单项内容
 ```C#
-   void ocmd_BeforeQueryStatus(object sender, EventArgs e)
-   {
-       var myCommand = sender as OleMenuCommand;
-       if (null != myCommand)
-       {
-           if (mListenCmdEvents)
-           {
-               myCommand.Text = "停止监听事件";
-           }
-           else
-           {
-               myCommand.Text = "开始监听事件";
-           }
-       } 
-   }
+OleMenuCommand ocmd = new OleMenuCommand(UpdateRuntimeEnvironmentMenuItemClick, updateRuntimeEnvironmentCommandID);
+ocmd.BeforeQueryStatus += new EventHandler(ocmd_BeforeQueryStatus);
+mcs.AddCommand(ocmd);
 ```
+
+- 2.订阅OleMenuCommand实例的BeforeQueryStatus事件:
+- 3.在订阅的事件参数中：通过sender强转为OleMenuCommand实例，通过该实例即可修改菜单项内容
+
+```C#
+void ocmd_BeforeQueryStatus(object sender, EventArgs e)
+{
+    var myCommand = sender as OleMenuCommand;
+    if (null != myCommand)
+    {
+        if (mListenCmdEvents)
+        {
+            myCommand.Text = "停止监听事件";
+        }
+        else
+        {
+            myCommand.Text = "开始监听事件";
+        }
+    }
+}
+```
+
 - 4.还需要VSCT文件中针对要修改的Button项，否则会出错，添加参数：<CommandFlag>TextChanges</CommandFlag>
 - [CommandFlag元素说明](https://docs.microsoft.com/zh-cn/visualstudio/extensibility/command-flag-element)
+
 ```XML
-    <Button guid="guidXaptoolsCmdSet" id="cmdidUpdateRuntimeEnv" priority="0x108" type="Button">
-    <Parent guid="guidXaptoolsGroup" id="idXaptoolsOptionsGroup" />
-    <Icon guid="guidImageReload" id="pngReload" />
-    <CommandFlag>TextChanges</CommandFlag>
-    <Strings>
-        <CommandName>cmdidUpdateRuntimeEnvironment</CommandName>
-        <ButtonText>开始监听事件</ButtonText>
-    </Strings>
-    </Button>
+<Button guid="guidXaptoolsCmdSet" id="cmdidUpdateRuntimeEnv" priority="0x108" type="Button">
+<Parent guid="guidXaptoolsGroup" id="idXaptoolsOptionsGroup" />
+<Icon guid="guidImageReload" id="pngReload" />
+<CommandFlag>TextChanges</CommandFlag>
+<Strings>
+    <CommandName>cmdidUpdateRuntimeEnvironment</CommandName>
+    <ButtonText>开始监听事件</ButtonText>
+</Strings>
+</Button>
 ```
+
 #### 命令执行
 
 - 通过代码的方式执行命令
@@ -117,32 +122,38 @@ foreach(Command cmd in DTE.Commands)
 - 2.调用IOleCommandTarget中的Exec方法；
 
 #### 命令对象说明
+
 - COM接口：Command - 基础命令对象，仅有GUID，ID，通过接口获得
 - 托管对象：CommandID - 托管命令对象，通过GUID和ID构建
 - 托管对象：MenuCommand - 命令菜单项，可以更改部分命令外观属性
 - 托管对象：OleMenuCommand - 命令菜单项，可以更改命令外观属性
 
-
 #### 引用管理器扩展性
 
 - [参考资料](https://msdn.microsoft.com/zh-cn/library/hh873125(v=vs.110).aspx)
 
-
 #### 事件监听
 
 1.获取事件监听实例对象:IVsSolution
+
 ```C#
 IVsSolution solution = provider.GetService(typeof(SVsSolution)) as IVsSolution;
 ```
+
 2.定义实现事件接口的类：
+
 ```C#
 public class VsSolutionEventListener: IVsSolutionEvents, IVsSolutionEvents4
 ```
+
 3.添加事件监听到实例中：
+
 ```C#
 solution.AdviseSolutionEvents(this, out pdwCookie);
 ```
+
 4.从接口IVsHierarchy获取EnvDTE.Project实例的方法：
+
 ```C#
 private static EnvDTE.Project GetProjFromIVsHierarchy(IVsHierarchy hierarchy)
 {
@@ -157,7 +168,46 @@ private static EnvDTE.Project GetProjFromIVsHierarchy(IVsHierarchy hierarchy)
     return null;
 }
 ```
+
 5.监听方法返回值遵循SDK参数规定：
+
 ```C#
 Microsoft.VisualStudio.VSConstants.S_OK
 ```
+
+#### 获取当前选择项的所在的工程
+
+- 1.使用全局服务IVsMonitorSelection，调用方法GetCurrentSelection
+
+```C#
+public static void GetCurrentSelectProj(out EnvDTE.Project proj)
+{
+    proj = null;
+    var monitor = OperationCenter.GetService<IVsMonitorSelection>() as IVsMonitorSelection;
+    if (monitor != null)
+    {
+        IVsHierarchy hierarchy = null;
+        IntPtr ppHier, ppSC;
+        uint pitemid;
+        IVsMultiItemSelect ppMIS;
+        var res = monitor.GetCurrentSelection(out ppHier, out pitemid, out ppMIS, out ppSC);
+        if (res == VSConstants.S_OK)
+        {
+            if (ppHier != null)
+            {
+                hierarchy = (IVsHierarchy)Marshal.GetUniqueObjectForIUnknown(ppHier);
+                var proj2 = GetProjFromIVsHierarchy(hierarchy);
+                proj = proj2;
+            }
+            //if (pitemid == Microsoft.VisualStudio.VSConstants.VSITEMID_SELECTION)
+            //{
+            //    //Get mutiple ites by ppMIS
+            //}
+        }
+    }
+}
+```
+#### 加载Package
+
+- 参考资料：[查看](https://docs.microsoft.com/zh-cn/visualstudio/extensibility/loading-vspackages?view=vs-2017)
+- 

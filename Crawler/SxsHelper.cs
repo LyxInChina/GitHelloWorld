@@ -10,6 +10,7 @@ namespace Crawler
     public class SxsHelper
     {
         public const string Dll = "DLL\\sxs.dll";
+
         [DllImport(Dll,BestFitMapping =true,CallingConvention = CallingConvention.StdCall,
             CharSet = CharSet.Unicode, EntryPoint = "CreateAssemblyByCache", ExactSpelling = true,PreserveSig = false,
             SetLastError = true, ThrowOnUnmappableChar = true)]
