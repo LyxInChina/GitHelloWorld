@@ -23,45 +23,40 @@ namespace HelloWorld.Base
         /// <param name="str"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public static byte charAt(this string str, int index)
+        public static byte CharAt(this string str, int index)
         {
-            return str.GetCharbyIndex(index).ToByte_ASCII();
-        }
-
-        public static byte ToByte_ASCII(this char c)
-        {
-            Contract.Requires(true);
-            return Encoding.ASCII.GetBytes(c.ToString())[0];
-        }
-
-        public static byte ToByte_Unicode(this char c)
-        {
-            Contract.Requires(true);
-            return Encoding.Unicode.GetBytes(c.ToString())[0];
-        }
-
-        /// <summary>
-        /// 扩展方法-获取指定字符串指定位置的字符
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public static char GetCharbyIndex(this string str, int index)
-        {
-            Contract.Requires(index > 0 && !string.IsNullOrEmpty(str));
+            Contract.Requires(index >= 0 && str!=null && index < str.Length);
+            char c='\0';
             try
             {
                 if (index < str.ToCharArray().Length)
                 {
-                    return str.ToCharArray()[index];
+                    c = str.ToCharArray()[index];
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return '\0';
+            byte b = c.ToByte_ASCII();
+            return b;
         }
+
+        public static byte ToByte_ASCII(this char c)
+        {
+            return Encoding.ASCII.GetBytes(c.ToString())[0];
+        }
+
+        public static byte ToByte_Unicode(this char c)
+        {
+            return Encoding.Unicode.GetBytes(c.ToString())[0];
+        }
+
+        public static byte ToByte_UTF8(this char c)
+        {
+            return Encoding.UTF8.GetBytes(c.ToString())[0];
+        }
+
         /// <summary>
         /// 获取字符串的MD5值
         /// </summary>
@@ -97,28 +92,34 @@ namespace HelloWorld.Base
     public static class GeneralHashAlgorithm
     {
         /*RSHash*/
-        public static long RSHash(String str)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static long RSHash(string str)
         {
             int b = 378551;
             int a = 63689;
             long hash = 0;
             for (int i = 0; i < str.Length; i++)
             {
-                hash = hash * a + str.charAt(i);
+                hash = hash * a + str.CharAt(i);
                 a = a * b;
             }
             return hash;
         }
+
         /*JSHash*/
-        public static long JSHash(String str)
+        public static long JSHash(string str)
         {
             long hash = 1315423911;
             for (int i = 0; i < str.Length; i++)
-                hash ^= ((hash << 5) + str.charAt(i) + (hash >> 2));
+                hash ^= ((hash << 5) + str.CharAt(i) + (hash >> 2));
             return hash;
         }
         /*PJWHash*/
-        public static long PJWHash(String str)
+        public static long PJWHash(string str)
         {
             int BitsInUnsignedInt = (int)(4 * 8);
             int ThreeQuarters = (int)Math.Ceiling((decimal)((BitsInUnsignedInt * 3) / 4)) + 1;
@@ -128,20 +129,20 @@ namespace HelloWorld.Base
             long test = 0;
             for (int i = 0; i < str.Length; i++)
             {
-                hash = (hash << OneEighth) + str.charAt(i);
+                hash = (hash << OneEighth) + str.CharAt(i);
                 if ((test = hash & HighBits) != 0)
                     hash = ((hash ^ (test >> ThreeQuarters)) & (~HighBits));
             }
             return hash;
         }
         /*ELFHash*/
-        public static long ELFHash(String str)
+        public static long ELFHash(string str)
         {
             long hash = 0;
             long x = 0;
             for (int i = 0; i < str.Length; i++)
             {
-                hash = (hash << 4) + str.charAt(i);
+                hash = (hash << 4) + str.CharAt(i);
                 if ((x = hash & 0xF0000000L) != 0)
                     hash ^= (x >> 24);
                 hash &= ~x;
@@ -149,68 +150,68 @@ namespace HelloWorld.Base
             return hash;
         }
         /*BKDRHash*/
-        public static long BKDRHash(String str)
+        public static long BKDRHash(string str)
         {
             long seed = 131;//31131131313131131313etc..
             long hash = 0;
             for (int i = 0; i < str.Length; i++)
-                hash = (hash * seed) + str.charAt(i);
+                hash = (hash * seed) + str.CharAt(i);
             return hash;
         }
         /*SDBMHash*/
-        public static long SDBMHash(String str)
+        public static long SDBMHash(string str)
         {
             long hash = 0;
             for (int i = 0; i < str.Length; i++)
-                hash = str.charAt(i) + (hash << 6) + (hash << 16) - hash;
+                hash = str.CharAt(i) + (hash << 6) + (hash << 16) - hash;
             return hash;
         }
         /*DJBHash*/
-        public static long DJBHash(String str)
+        public static long DJBHash(string str)
         {
             long hash = 5381;
             for (int i = 0; i < str.Length; i++)
-                hash = ((hash << 5) + hash) + str.charAt(i);
+                hash = ((hash << 5) + hash) + str.CharAt(i);
             return hash;
         }
         /*DEKHash*/
-        public static long DEKHash(String str)
+        public static long DEKHash(string str)
         {
             long hash = str.Length;
             for (int i = 0; i < str.Length; i++)
-                hash = ((hash << 5) ^ (hash >> 27)) ^ str.charAt(i);
+                hash = ((hash << 5) ^ (hash >> 27)) ^ str.CharAt(i);
             return hash;
         }
         /*BPHash*/
-        public static long BPHash(String str)
+        public static long BPHash(string str)
         {
             long hash = 0;
             for (int i = 0; i < str.Length; i++)
-                hash = hash << 7 ^ str.charAt(i);
+                hash = hash << 7 ^ str.CharAt(i);
             return hash;
         }
         /*FNVHash*/
-        public static long FNVHash(String str)
+        public static long FNVHash(string str)
         {
             long fnv_prime = 0x811C9DC5;
             long hash = 0;
             for (int i = 0; i < str.Length; i++)
             {
                 hash *= fnv_prime;
-                hash ^= str.charAt(i);
+                hash ^= str.CharAt(i);
             }
             return hash;
         }
         /*APHash*/
-        public static long APHash(String str)
+        public static long APHash(string str)
         {
             long hash = 0xAAAAAAAA;
             for (int i = 0; i < str.Length; i++)
             {
                 if ((i & 1) == 0)
-                    hash ^= ((hash << 7) ^ str.charAt(i) ^ (hash >> 3));
+                    hash ^= ((hash << 7) ^ str.CharAt(i) ^ (hash >> 3));
                 else
-                    hash ^= (~((hash << 11) ^ str.charAt(i) ^ (hash >> 5)));
+                    hash ^= (~((hash << 11) ^ str.CharAt(i) ^ (hash >> 5)));
             }
             return hash;
         }
@@ -256,11 +257,9 @@ namespace HelloWorld.Base
             {
                MD5CryptoServiceProvider MD5CSP
                     = new MD5CryptoServiceProvider();
-
                 byte[] bytValue = Encoding.UTF8.GetBytes(word);
                 byte[] bytHash = MD5CSP.ComputeHash(bytValue);
                 MD5CSP.Clear();
-
                 //根据计算得到的Hash码翻译为MD5码
                 string sHash = "", sTemp = "";
                 for (int counter = 0; counter < bytHash.Length; counter++)
@@ -285,13 +284,12 @@ namespace HelloWorld.Base
                     }
                     sHash += sTemp;
                 }
-
                 //根据大小写规则决定返回的字符串
                 return toUpper ? sHash : sHash.ToLower();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
         }
         /// <summary>
@@ -832,19 +830,19 @@ namespace HelloWorld.Base
     /// </summary>
     public class Crc32 : HashAlgorithm
     {
-        public const UInt32 DefaultPolynomial = 0xedb88320;
-        public const UInt32 DefaultSeed = 0xffffffff;
-        private UInt32 hash;
-        private UInt32 seed;
-        private UInt32[] table;
-        private static UInt32[] defaultTable;
+        public const uint DefaultPolynomial = 0xedb88320;
+        public const uint DefaultSeed = 0xffffffff;
+        private uint hash;
+        private uint seed;
+        private uint[] table;
+        private static uint[] defaultTable;
         public Crc32()
         {
             table = InitializeTable(DefaultPolynomial);
             seed = DefaultSeed;
             Initialize();
         }
-        public Crc32(UInt32 polynomial, UInt32 seed)
+        public Crc32(uint polynomial, uint seed)
         {
             table = InitializeTable(polynomial);
             this.seed = seed;

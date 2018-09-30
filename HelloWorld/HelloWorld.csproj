@@ -101,6 +101,9 @@
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.1.2.6\lib\net45\StackExchange.Redis.dll</HintPath>
     </Reference>
@@ -142,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm\LZW.cs" />
+    <Compile Include="Base\CSharp7.0.cs" />
     <Compile Include="Base\Hash_Md5_Sha_Crc32.cs" />
     <Compile Include="Base\CallInfo.cs" />
     <Compile Include="Base\Program_Base.cs" />
@@ -151,7 +155,7 @@
     <Compile Include="DesignPattern\SpecialPattern.cs" />
     <Compile Include="DesignPattern\StructPattern.cs" />
     <Compile Include="Introp\IntropHelper.cs" />
-    <Compile Include="IPC\Renci.SshNet.cs" />
+    <Compile Include="IPC\RenciSshNetHelper.cs" />
     <Compile Include="IPC\ThriftHelper.cs" />
     <Compile Include="MEF\CalImpl.cs" />
     <Compile Include="MEF\ICal.cs" />
@@ -250,6 +254,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="IPC\SSH\freeFTPd.exe" />
+    <Content Include="IPC\SSH\freeSSHd.exe" />
+    <Content Include="IPC\SSH\freeUserImport.exe" />
     <Content Include="IPC\Thrift\thrift-0.11.0.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
