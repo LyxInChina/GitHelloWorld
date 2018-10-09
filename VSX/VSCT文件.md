@@ -7,7 +7,7 @@
 - 可选元素
 - 有些VSCT元素是可选的。如果一个Parent参数没有指定，将会暗指Group_Undefined:0。
 - 若Icon参数没有指定，则默认为guidOfficeIcon:msotcidNoIcon
-- 所有的GUID和ID值都必须使用符号化的名称。这些名称可以定义在头文件中或者vsct文件的Symbols区域内。这些符号名称必须是本都额包含<Include>元素。
+- 所有的GUID和ID值都必须使用符号化的名称。这些名称可以定义在头文件中或者vsct文件的Symbols区域内。这些符号名称必须是本都额包含<Include> 元素。
 - 根元素：CommandTable，指定namespace和xml架构
 - 对象标识：guid+数字
 - 头文件：*.h 允许从外部加载对象标识
@@ -20,7 +20,8 @@
 
 - vsct根元素
 - 结构
-```xml
+
+```XML
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema" >  
   <Extern>... </Extern>  
   <Include>... </Include>  
@@ -31,8 +32,9 @@
   <KeyBindings>... </KeyBindings>  
   <UsedCommands... </UsedCommands>  
   <Symbols>... </Symbols>  
-</CommandTable> 
+</CommandTable>
 ```
+
 - 特性:xmlns - 必须的 language- 可选
 - Extern 编译器预处理指令，编译时需要合并的外部头文件，该头文件路径必须再Include指定或者VSCT编译器的指定路径，文件可以是其他vsct文件或者C++头文件
 - Include 包含在编译的文件路径
@@ -47,10 +49,12 @@
 ### Extern
 
 - 定义格式必须为
+
 ```C++
  #define [符号] [值]
  //值也可能是其他符号
 ```
+
 - 特性：
 > href 必须  头文件路径
 > Condition 可选
@@ -61,9 +65,11 @@
 - 指定了要插入当前文件的位于支持路径下的文件，其中所有的元素和定义类型都将成为编译结果的一部分
 - VS2010头文件位置：C:\Program Files (x86)\Microsoft Visual Studio 2010 SDK\VisualStudioIntegration\Common\Inc
 - VS2017头文件位置：C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VSSDK\VisualStudioIntegration\Common\Inc
+
 ```xml
 <Include href="stdidcmd.h" />  
 ```
+
 - 特性:
 > href 必须 头文件路径
 > Condition 可选
@@ -71,6 +77,7 @@
 ## Define
 
 - 定义具有名称和值的符号
+
 ```xml
 <Define name="Mode" value="Standard" />
 ```
@@ -79,6 +86,7 @@
 
 - 工具栏上命令的集合：菜单、组、按钮、组合、位图
 - 每个子元素由命令ID标识：GUID和数字标识对
+
 ```xml
 <Commands package="GuidMyPackage" >  
   <Menus>... </Menus>  
@@ -88,19 +96,24 @@
   <Bitmaps>... </Bitmaps>  
 </Commands>  
 ```
+
 - 特性
 > package 标识提供命令的VSPackage的GUID
 
 ### Menus 
+
 > 定义所有菜单和工具栏的VSPackage实现
+
 ``` xml
 <Menus>  
   <Menu>... </Menu>  
   <Menu>... </Menu>  
 </Menus>  
 ```
+
 - Menu
 > 定义一个菜单项，有6种菜单：Context，Menu，MenuControler，ToolBar,ToolWindowToolBar
+
 ``` xml
 <Menu guid="guidMyCommandSet" id="MyCommand" priority="0x100" type="button">  
   <Parent>... </Parent>  
@@ -108,6 +121,7 @@
   <Strings>... </Strings>  
 </Menu>  
 ```
+
 > 特性
 >> GUID 必须，ID 必须
 >> priority 可选，指定菜单相对位置的数字值
@@ -120,9 +134,11 @@
 - guid：应该从include中的头文件中进行查找
 - ID：也应该从include中的头文件中进行查找，该值指定具体位置
 - 对于VS一般从 vsshlids.h头文件中进行查找
-  ```xml
-  <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_BUILDDEBUGRUN" />
-  ```
+
+```xml
+<Parent guid="guidSHLMainMenu" id="IDG_VS_MM_BUILDDEBUGRUN" />
+```
+
   |GUID|ID|位置|应用类型|
   |----|----|----|---|
   |guidSHLMainMenu|IDG_VS_MM_BUILDDEBUGRUN|主菜单|Menu|
@@ -135,32 +151,40 @@
   |guidSHLMainMenu|IDM_VS_CTXT_PROJNODE|工程节点|Group|
   |guidSHLMainMenu|IDM_VS_CTXT_SOLNNODE|解决方案节点|Group|
 
-
 ### Groups
+
 > 包含VSPackage命令组入口
+
 ``` xml
 <Groups>  
   <Group>... </Group>  
   <Group>... </Group>  
 </Groups>  
 ```
+
 - Group
 > 定义VSPackage命令的组
+
 ``` xml
 <Group guid="guidMyCommandSet" id="MyGroup" priority="0x101">  
   <Parent>... </Parent>  
 </Group>  
 ```
+
 ### Buttons
+
 > 表示单个Button元素的组
+
 ``` xml
 <Buttons>  
   <Button>... </Button>  
   <Button>... </Button>  
 </Buttons>  
 ```
+
 - Button
 > 定义按钮相关内容：位置（父节点）、图标、命令、文本内容
+
 ``` xml
 <Button guid="guidMyCommandSet" id="MyCommand" priority="0x102" type="button">  
   <Parent>... </Parent>  
@@ -169,9 +193,8 @@
   <Strings>... </Strings>  
 </Button>  
 ```
--  CommandFlag 命令标记用于控制命令的行为
 
-
+- CommandFlag 命令标记用于控制命令的行为
 
 ### 控制菜单和名字位置
 

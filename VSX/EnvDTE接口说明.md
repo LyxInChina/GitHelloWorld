@@ -1,11 +1,11 @@
 # MS VSX doc
 
 * VS2017 SDK
- 
+
 ## 参考资料
 
- - http://dotneteers.net/blogs/tags/VSX/default.aspx
- - https://blog.csdn.net/liuruxin/article/details/18258749
+- [X]:(http://dotneteers.net/blogs/tags/VSX/default.aspx)
+- https://blog.csdn.net/liuruxin/article/details/18258749
 
 ## EnvDTE接口说明
 
@@ -65,11 +65,8 @@
 - NP:VSLangProj.dll
 - 包含VB或者VC#工程的特定信息，可以从Project.Object强转，若该Object是VSProject类型
 
-### 接口Reference 
+### 接口Reference
 
 - DLL:VSLangProj
 - NP:VSLangProj.dll
 - 标识工程中的一个引用，在工程中可以使用任何引用中包含的公共成员，可以是.Net工程，.Net 程序集，COM对象
-
-
-

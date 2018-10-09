@@ -3,7 +3,6 @@
 ## 手动将扩展打包
 
 - 微软官网[链接](https://msdn.microsoft.com/zh-cn/library/ff407026.aspx)
-- 
 - 创建一个 Visual Studio 扩展，其类型受 VSIX 架构支持。
 - 创建一个 XML 文件，将其命名为 extension.vsixmanifest。
 - 根据 VSIX 架构填写 extension.vsixmanifest 文件。 有关示例清单，请参阅 PackageManifest 元素（根元素，VSX- 构）。
@@ -14,6 +13,7 @@
 - 在其他所有情况下，将 XML 文件放在生成输出所在的目录中。
 - 在 Windows 资源管理器中，右键单击包含扩展内容和这两个 XML 文件的文件夹，单击“发送到”，然后单击“压缩(zipped)- 夹”。
 - 将生成的 .zip 文件重命名为 Filename.vsix，其中 Filename 是用于安装包的可再发行文件的名称。
+
 ```xml
 <Vsix Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
    <Identifier ID="Package ID">
@@ -54,10 +54,12 @@
 
 1.修改工程中的vsixmannifest文件：
 在Content节点下新增CustomExtension节点，并设置Type，内容设置为要添加的文件的相对路径；
+
 ```XML
 <Content>
     <!-- ... -->
     <CustomExtension Type="nuget">dlls\nuget.exe</CustomExtension>
   </Content>
-  ```
+```
+
 2.VS2010好像有专门的可视化工具可以对vsixmannifest文件进行修改；

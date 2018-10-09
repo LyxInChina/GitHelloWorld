@@ -101,6 +101,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implement", "MEF\Implement\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSX", "VSX\VSX\VSX.csproj", "{05A9EDD7-F45A-41CC-90A5-6A5AB0862A34}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{0FC0FFB2-7A3D-4EF9-9251-73E49E04F81C}"
+	ProjectSection(SolutionItems) = preProject
+		Web\ajax.js = Web\ajax.js
+		Web\CSS.md = Web\CSS.md
+		Web\css3.css = Web\css3.css
+		Web\html5.html = Web\html5.html
+		Web\javascript.js = Web\javascript.js
+		Web\jquery-3.3.1.min.js = Web\jquery-3.3.1.min.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Go", "Go", "{2A64860B-7FA1-4E4A-9D97-91D1D55C2927}"
+	ProjectSection(SolutionItems) = preProject
+		Go\Gohelp.md = Go\Gohelp.md
+		Go\helloworld.go = Go\helloworld.go
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{B5E7C254-B569-48CC-96D7-8F25EC9CB2FD}"
+	ProjectSection(SolutionItems) = preProject
+		Other\Contribute vscode.md = Other\Contribute vscode.md
+		Other\Git Doc.md = Other\Git Doc.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

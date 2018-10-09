@@ -89,6 +89,7 @@
 - 1.找到接口VSLangProj.ProjectConfigurationProperties；
 - 2.使用工程的EnvDTE.Project.ConfigurationManager.ActiveConfiguration.Properties
 - 3.[参考文件](https://msdn.microsoft.com/en-us/6323383a-43ee-4a60-be4e-9d7f0b53b168)
+
 ```C#
 public static void SetProjectDebugProp(EnvDTE.Project proj, string startProgrm,Enum.StartActionType startActiconType = Enum.StartActionType.Program, string startArgs = null, string startWorkingDirectory = null)
 {
@@ -124,7 +125,6 @@ public static void SetProjectDebugProp(EnvDTE.Project proj, string startProgrm,E
     }
 }
 ```
-- 4.
 
 ## sln文件
 
@@ -200,6 +200,7 @@ EndGlobal
 
 - 1.使用接口BuildDependency
 - 2.在解决方案中找到接口对象BuildDependency
+
 ```C#
 public static bool FindBuildDependencyByProjID(string projID, out BuildDependency build)
 {
@@ -221,7 +222,9 @@ public static bool FindBuildDependencyByProjID(string projID, out BuildDependenc
     return result;
 }
 ```
+
 - 3.编辑BuildDependency新增工程依赖
+
 ```C#
 public static void AddSlnBuildDependency(string projID, string[] projAddIDs)
 {
@@ -249,4 +252,10 @@ public static void AddSlnBuildDependency(string projID, string[] projAddIDs)
     }
 }
 ```
+
 - 4.此时查看解决方案的依赖项顺序 就会按照之前写入的工程依赖项，自动生成；
+
+### 向已有解决方案中添加解决方案
+
+- 1.VS自身添加现有项时，选择要添加的SLN 会自动添加SLN内所有的工程到当前解决方案中
+- 2.使用Microsoft.Build.BuildEngine.SolutionWrapperProject解析SLN文件，找出所有的Project，然后添加Project，需要从原SLN中获取工程的GUID
