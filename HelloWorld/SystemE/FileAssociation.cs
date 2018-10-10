@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace HelloWorld.SystemE
 {
+    /// <summary>
+    /// 设置或者取消文件关联
+    /// </summary>
     class FileAssociation
     {
         /// <summary> 
@@ -45,8 +48,9 @@ namespace HelloWorld.SystemE
 
 
         }
+
         /// <summary> 
-        /// 删除恢复文件关联 
+        /// 删除文件关联 
         /// </summary> 
         /// <param name="p_FileTypeName">扩展名</param> 
         public static void ResReg(string FileTypeName)

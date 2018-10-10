@@ -139,10 +139,10 @@ namespace  HelloWorld.ThreadK
             Console.WriteLine(Thread.CurrentThread.ManagedThreadId + "_____Had done the Work.");
         }
 
-        public static unsafe bool TestAndSet(bool* target)
+        public static unsafe bool TestAndSet(bool* btarget) 
         {
-            bool res = *target;
-            *target = true;
+            bool res = *btarget;
+            *btarget = true;
             return res;
         }
         
@@ -351,6 +351,9 @@ namespace  HelloWorld.ThreadK
         private int turn;
         private void ThreadD(int i, int j)
         {
+            System.Diagnostics.Contracts.Contract.Requires(i >= 0 && i <= 1);
+            System.Diagnostics.Contracts.Contract.Requires(j >= 0 && j <= 1);
+            System.Diagnostics.Contracts.Contract.Requires(i + j == 1);
             do
             {
                 //Try enter cirtical section
@@ -362,7 +365,8 @@ namespace  HelloWorld.ThreadK
                         Flag[i] = false;
                         while (turn == j)
                         {
-
+                            //防止循环等待时CPU占用过高
+                            Thread.Sleep(10);
                         }
                         Flag[i] = true;
                     }
@@ -374,10 +378,9 @@ namespace  HelloWorld.ThreadK
 
                 //Remainder section
                 //TOOD: wroking
-                Thread.Sleep(2000);
+                Thread.Sleep((Environment.TickCount % 97) * 3);
             } while (true);
         }
-
     }
 
     /// <summary>

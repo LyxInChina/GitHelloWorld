@@ -61,7 +61,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>HelloWorld.MEF.Program</StartupObject>
+    <StartupObject>HelloWorld.Base.BaseKnowledge</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -92,8 +92,8 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="Accessibility" />
-    <Reference Include="ClearScript, Version=5.5.1.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
-      <HintPath>..\packages\ClearScript.V8.5.5.1\lib\net45\ClearScript.dll</HintPath>
+    <Reference Include="ClearScript, Version=5.3.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClearScript.5.3.11.0\lib\net40\ClearScript.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -167,7 +167,6 @@
     <Compile Include="ThreadK\AsyncHelper.cs" />
     <Compile Include="ThreadK\Sync.cs" />
     <Compile Include="ThreadK\SystemInfo.cs" />
-    <Compile Include="ThreadK\TaskCall.cs" />
     <Compile Include="ThreadK\ThreadSync.cs" />
     <Compile Include="Web\CookieSession.cs" />
     <Compile Include="Base\BaseKnowledge.cs" />
@@ -254,6 +253,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Exports\CallbackManager.h" />
+    <Content Include="Exports\VersionSymbols.h" />
     <Content Include="IPC\SSH\freeFTPd.exe" />
     <Content Include="IPC\SSH\freeSSHd.exe" />
     <Content Include="IPC\SSH\freeUserImport.exe" />

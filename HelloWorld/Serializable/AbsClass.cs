@@ -72,6 +72,8 @@ namespace HelloWorld.Serializable
         }
         public static void Serializable<T>(T abs)
         {
+            var ns = new XmlSerializerNamespaces();
+            ns.Add("", "");
             var ser = new XmlSerializer(typeof(T));
             var f = typeof(AbsClass).FullName + ".xml";
             if (File.Exists(f))
@@ -79,7 +81,7 @@ namespace HelloWorld.Serializable
                 File.Delete(f);
             }
             var stream = new FileStream(f,FileMode.OpenOrCreate);
-            ser.Serialize(stream, abs);
+            ser.Serialize(stream, abs, ns);
             stream.Flush();
             stream.Close();            
         }

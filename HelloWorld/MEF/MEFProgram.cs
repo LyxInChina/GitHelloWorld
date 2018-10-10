@@ -113,10 +113,10 @@ namespace HelloWorld.MEF
             cb.AddPart(obj);
             var container = new CompositionContainer(catalog);
             var minc = new MImC();
-            minc.OmImportsStatisied += (s, e) =>
-            {
-                Console.WriteLine(e);
-            };
+            //minc.OmImportsStatisied += (s, e) =>
+            //{
+            //    Console.WriteLine(e);
+            //};
             await Task.Run(() =>
             {
                 container.ComposeParts(minc);

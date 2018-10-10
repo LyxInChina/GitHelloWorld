@@ -257,5 +257,200 @@ public static void AddSlnBuildDependency(string projID, string[] projAddIDs)
 
 ### 向已有解决方案中添加解决方案
 
-- 1.VS自身添加现有项时，选择要添加的SLN 会自动添加SLN内所有的工程到当前解决方案中
-- 2.使用Microsoft.Build.BuildEngine.SolutionWrapperProject解析SLN文件，找出所有的Project，然后添加Project，需要从原SLN中获取工程的GUID
+> 在已打开的解决方案中添加现有的其他SLN到当前的解决方案；
+
+- 1.VS自身添加现有项时，选择要添加的SLN 会自动添加SLN内所有的工程到当前解决方案中;
+> VS命令：
+> 名称：File.AddExistingProject，描述：文件.添加现有项目，
+> GUID：{5EFC7975-14BC-11CF-9B2B-00AA00573819}，ID：773；
+
+- 2.使用Microsoft.Build.BuildEngine.SolutionWrapperProject解析SLN文件，找出所有的Project，然后添加Project，需要从原SLN中获取工程的GUID;
+> 
+- 3.使用内部类Microsoft.Build.Construction.SolutionParser解析SLN文件，找到管理的所有的Project，然后使用Env.DTE.Solution的AddFromFile方法加载工程；
+
+> 首先定义内部类使用方法
+
+```C#
+/// <summary>
+/// 通过反射的方式使用Microsoft.Build中的内部类Microsoft.Build.Construction.SolutionParser
+/// 对sln进行解析
+/// </summary>
+internal sealed class Solution
+{
+    //internal class SolutionParser
+    //Name: Microsoft.Build.Construction.SolutionParser
+    //Assembly: Microsoft.Build, Version=4.0.0.0
+
+    static readonly Type s_SolutionParser;
+    static readonly PropertyInfo s_SolutionParser_solutionReader;
+    static readonly MethodInfo s_SolutionParser_parseSolution;
+    static readonly PropertyInfo s_SolutionParser_projects;
+
+    static Solution()
+    {
+        s_SolutionParser = Type.GetType("Microsoft.Build.Construction.SolutionParser, Microsoft.Build, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", false, false);
+        if (s_SolutionParser != null)
+        {
+            s_SolutionParser_solutionReader = s_SolutionParser.GetProperty("SolutionReader", BindingFlags.NonPublic | BindingFlags.Instance);
+            s_SolutionParser_projects = s_SolutionParser.GetProperty("Projects", BindingFlags.NonPublic | BindingFlags.Instance);
+            s_SolutionParser_parseSolution = s_SolutionParser.GetMethod("ParseSolution", BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+    }
+
+    public List<SolutionProject> Projects { get; private set; }
+
+    public Solution(string solutionFileName)
+    {
+        if (s_SolutionParser == null)
+        {
+            throw new InvalidOperationException("Can not find type 'Microsoft.Build.Construction.SolutionParser' are you missing a assembly reference to 'Microsoft.Build.dll'?");
+        }
+        var solutionParser = s_SolutionParser.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic).First().Invoke(null);
+        using (var streamReader = new StreamReader(solutionFileName))
+        {
+            s_SolutionParser_solutionReader.SetValue(solutionParser, streamReader, null);
+            s_SolutionParser_parseSolution.Invoke(solutionParser, null);
+        }
+        var projects = new List<SolutionProject>();
+        var array = (Array)s_SolutionParser_projects.GetValue(solutionParser, null);
+        for (int i = 0; i < array.Length; i++)
+        {
+            projects.Add(new SolutionProject(array.GetValue(i)));
+        }
+        this.Projects = projects;
+    }
+}
+
+/// <summary>
+/// SLN中解析出的Project类
+/// </summary>
+[DebuggerDisplay("{ProjectName}, {RelativePath}, {ProjectGuid}, {ProjectType}")]
+internal sealed class SolutionProject
+{
+    static readonly Type s_ProjectInSolution;
+    static readonly PropertyInfo s_ProjectInSolution_ProjectName;
+    static readonly PropertyInfo s_ProjectInSolution_RelativePath;
+    static readonly PropertyInfo s_ProjectInSolution_ProjectGuid;
+    static readonly PropertyInfo s_ProjectInSolution_ProjectType;
+    static readonly PropertyInfo s_ProjectInSolution_Dependencies;
+
+    static SolutionProject()
+    {
+        s_ProjectInSolution = Type.GetType("Microsoft.Build.Construction.ProjectInSolution, Microsoft.Build, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", false, false);
+        if (s_ProjectInSolution != null)
+        {
+            s_ProjectInSolution_ProjectName = s_ProjectInSolution.GetProperty("ProjectName", BindingFlags.NonPublic | BindingFlags.Instance);
+            s_ProjectInSolution_RelativePath = s_ProjectInSolution.GetProperty("RelativePath", BindingFlags.NonPublic | BindingFlags.Instance);
+            s_ProjectInSolution_ProjectGuid = s_ProjectInSolution.GetProperty("ProjectGuid", BindingFlags.NonPublic | BindingFlags.Instance);
+            s_ProjectInSolution_ProjectType = s_ProjectInSolution.GetProperty("ProjectType", BindingFlags.NonPublic | BindingFlags.Instance);
+            s_ProjectInSolution_Dependencies = s_ProjectInSolution.GetProperty("Dependencies", BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+    }
+
+    public string ProjectName { get; private set; }
+    public string RelativePath { get; private set; }
+    public string ProjectGuid { get; private set; }
+    public string ProjectType { get; private set; }
+    public ArrayList Dependencies { get; set; }
+
+    public SolutionProject(object solutionProject)
+    {
+        this.ProjectName = s_ProjectInSolution_ProjectName.GetValue(solutionProject, null) as string;
+        this.RelativePath = s_ProjectInSolution_RelativePath.GetValue(solutionProject, null) as string;
+        this.ProjectGuid = s_ProjectInSolution_ProjectGuid.GetValue(solutionProject, null) as string;
+        this.ProjectType = s_ProjectInSolution_ProjectType.GetValue(solutionProject, null).ToString();
+        this.Dependencies = s_ProjectInSolution_Dependencies.GetValue(solutionProject, null) as ArrayList;
+    }
+}
+```
+
+> 解析出Project后使用加载Project
+
+```C#
+/// <summary>
+/// 加载Project到当前解决方案
+/// </summary>
+/// <param name="proj"></param>
+/// <returns></returns>
+public static bool LoadProj(Microsoft.Build.Evaluation.Project proj)
+{
+    if (proj != null && OperationCenter.MDTE != null)
+    {
+        try
+        {
+            OperationCenter.MDTE.Solution.AddFromFile(proj.FullPath, false);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            OperationCenter.NError(ex, "加载工程:{0}异常.", proj.FullPath);
+        }
+    }
+    return false;
+}
+```
+
+### 设置输出面板
+
+- 添加输出源
+
+```C#
+public static void AddLoggerOutputSource(string name)
+{
+    if (MDTE == null)
+        return;
+    var dte = MDTE;
+    EnvDTE.OutputWindow ow = (dte as EnvDTE80.DTE2).ToolWindows.OutputWindow;
+    try
+    {
+        ow.Parent.AutoHides = false;
+        ow.Parent.Activate();
+        bool hasSameName = false;
+        foreach (EnvDTE.OutputWindowPane item in ow.OutputWindowPanes)
+        {
+            if (item.Name.ToLower().Contains(name))
+            {
+                hasSameName = true;
+                break;
+            }
+        }
+        if (!hasSameName)
+        {
+            ow.OutputWindowPanes.Add(name);
+        }
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Trace.TraceError(ex.Message);
+    }
+}
+```
+
+- 设置输出源显示
+
+```C#
+public static void ShowLoggerPane()
+{
+    if (MDTE == null)
+        return;
+    var dte = MDTE;
+    EnvDTE.OutputWindow ow = (dte as EnvDTE80.DTE2).ToolWindows.OutputWindow;
+    try
+    {
+        ow.Parent.AutoHides = false;
+        ow.Parent.Activate();
+        foreach (EnvDTE.OutputWindowPane item in ow.OutputWindowPanes)
+        {
+            if (item.Name.ToLower().Contains("name"))
+            {
+                item.Activate();
+                break;
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Trace.TraceError(ex.Message);
+    }
+}
+```
