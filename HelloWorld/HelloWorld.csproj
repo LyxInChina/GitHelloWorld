@@ -144,7 +144,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\LRU.cs" />
     <Compile Include="Algorithm\LZW.cs" />
+    <Compile Include="Algorithm\RSA.cs" />
     <Compile Include="Base\CSharp7.0.cs" />
     <Compile Include="Base\Hash_Md5_Sha_Crc32.cs" />
     <Compile Include="Base\CallInfo.cs" />

@@ -506,7 +506,51 @@ namespace  HelloWorld.ThreadK
      * 6.互斥体
      * 
      * 原子操作 -   
-     * 
-     * 
+    线程同步
+    1.原子操作：一组能够保证操作原子性的API
+    2.锁：
+        自旋锁：单线程时执行快，但等待锁时浪费CPU；
+        内核锁：系统内核维护的变量，内核管控线程变量访问，单线程时，用户线程需要切换到核心模读取变量，然后返回用户模式进行操作，造成资源浪费；
+        混合锁：混合使用两种锁，先自旋，若资源被释放则不需要调用内核锁，Eg：Monitor是自旋锁，lock是内部调用Monitor；
+
+    原子操作：volatile关键字Interlocked;
+    锁：
+    自旋锁：SpinLock,SimpleSpinLock
+    内核锁：WaitHandle派生类：AutoResetEvent、Semaphore、Mutex；
+    混合锁：Monitor,Lock
+
+    其他：MethodImplAttribute 类和 SynchronizationAttribute 类
+
      */
+
+    public class Atom_Operaion
+    {
+        public volatile int IntAtom = 0;
+        public volatile string StrAtom = "ok";
+        public volatile Atom_Operaion Atom;
+
+        public void Atom_Enter()
+        {
+            double d_org = 2.2d;
+            double d_new =1.1d;
+            double d_old;
+            d_old = Interlocked.Exchange(ref d_org, d_new);
+        }
+    }
+
+    public class Locker
+    {
+        public class SpinLock_T
+        {
+
+        }
+        public class KernalLock
+        {
+            public class MyKernalHandle : WaitHandle
+            {
+
+            }
+        }
+    }
+
 }

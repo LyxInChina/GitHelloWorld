@@ -40,6 +40,7 @@ namespace HelloWorld
                     var s = ass.GetType();
                     var obj = s.InvokeMember("Test", BindingFlags.InvokeMethod, null, null, new object[] { "this ok"});
                     Console.WriteLine("OBJ::"+obj); 
+                    
                     return true;
                 }
                 catch (Exception)
