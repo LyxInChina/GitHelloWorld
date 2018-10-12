@@ -7,292 +7,382 @@ using System.Threading;
 
 namespace HelloWorld.Algorithm
 {
-    
-
-    public interface ICache<TK, TV>
+    public interface ICache<T, TK, TV>
+        where T : IDataItem<TK, TV>
     {
         void Clear();
-        void Push(TK tK, TV tV);
-        bool Pop(TK tK, out TV tV);
-        TV MakeValue(TK tK);
+        void Push(T t);
+        bool Pop(ref T t);
+        void MakeValue(TK tK, out T t);
     }
 
-    public class LRU<TK, TV> : ICache<TK, TV>
+    public interface IDataItem<TK, TV>
     {
-        private LinkedList<Tuple<TK, TV>> mLruLinkedList;
+        TK Key { get; set; }
+        TV Value { get; set; }
+        IDataItem<TK, TV> Make(TK tK, TV tV);
+    }
+
+    public class DataItem<TK, TV> : IDataItem<TK, TV>
+        where TK : class
+    {
+        public DataItem()
+        {
+        }
+        public TK Key { get; set; }
+        public TV Value { get; set; }
+        public IDataItem<TK, TV> Make(TK tK, TV tV)
+        {
+            return new DataItem<TK, TV>() { Key = tK, Value = tV };
+        }
+    }
+
+    public abstract class Cache<T, TK, TV> : ICache<T, TK, TV>
+        where T : IDataItem<TK, TV>
+    {
+        public delegate void MakeValueDelegate<TKD, TVD>(TKD tKd, out TVD tvd);
+        public delegate void MakeValueDelegate<TD, TKD, TVD>(TKD tKd, out TD td)
+            where TD : IDataItem<TKD, TVD>;
+        public MakeValueDelegate<TK, TV> MakeValueCallBack;
+        public MakeValueDelegate<T, TK, TV> MakeDataItemCallBack;
+
+        public abstract void Clear();
+
+        public virtual void MakeValue(TK tK, out T t)
+        {
+            if (MakeDataItemCallBack != null)
+            {
+                MakeDataItemCallBack(tK, out t);
+            }
+            else
+            {
+                t = default(T);
+            }
+        }
+        public abstract bool Pop(ref T t);
+        public abstract void Push(T t);
+
+    }
+
+    public static class LruFunction
+    {
+        public static void Sort<T>(LinkedList<T> link, LinkedListNode<T> rNode)
+        {
+            if (link == null)
+            {
+                link = new LinkedList<T>();
+            }
+            link.Remove(rNode);
+            link.AddFirst(rNode);
+        }
+
+        public static bool SearchData<T, TK, TV>(LinkedList<T> link, TK tK, out LinkedListNode<T> rNode)
+            where T : IDataItem<TK, TV>
+        {
+            if (link.Count > 0)
+            {
+                return SearchData<T, TK, TV>(link.First, tK, out rNode);
+            }
+            else
+            {
+                rNode = null;
+                return false;
+            }
+        }
+
+        public static bool SearchData<T, TK, TV>(LinkedListNode<T> node, TK tK, out LinkedListNode<T> rNode)
+            where T : IDataItem<TK, TV>
+        {
+            if (node != null)
+            {
+                if (node.Value.Key.Equals(tK))
+                {
+                    rNode = node;
+                    return true;
+                }
+                else
+                {
+                    return SearchData<T, TK, TV>(node.Next, tK, out rNode);
+                }
+            }
+            rNode = null;
+            return false;
+        }
+
+        public static bool SearchHistoryData<T, TK, TV>(LinkedListNode<Tuple<T, int>> node, TK tK, out LinkedListNode<Tuple<T, int>> rNode)
+            where T : IDataItem<TK, TV>
+        {
+            if (node != null)
+            {
+                if (node.Value.Item1.Key.Equals(tK))
+                {
+                    rNode = node;
+                    return true;
+                }
+                else
+                {
+                    return SearchHistoryData<T, TK, TV>(node.Next, tK, out rNode);
+                }
+            }
+            rNode = null;
+            return false;
+        }
+        public static bool SearchHistoryData<T, TK, TV>(LinkedList<Tuple<T, int>> link, TK tK, out LinkedListNode<Tuple<T, int>> rNode)
+            where T : IDataItem<TK, TV>
+        {
+            if (link.Count > 0)
+            {
+                return SearchHistoryData<T, TK, TV>(link.First, tK, out rNode);
+            }
+            else
+            {
+                rNode = null;
+                return false;
+            }
+        }
+
+        public static bool SearchQueue<T, TK, TV>(Queue<T> queue, TK tK, out T t)
+            where T : IDataItem<TK, TV>
+        {
+            var result = false;
+            t = default(T);
+            if (queue != null && queue.Count > 0)
+            {
+                var len = queue.Count;
+                for (int i = 0; i < len; i++)
+                {
+                    var temp = queue.Dequeue();
+                    if (temp.Key.Equals(tK))
+                    {
+                        t = temp;
+                        result = true;
+                    }
+                    else
+                    {
+                        queue.Enqueue(temp);
+                    }
+                }
+            }
+            return result;
+        }
+    }
+
+    public class LRU<T, TK, TV> : Cache<T, TK, TV>
+        where T : IDataItem<TK, TV>
+    {
+        private LinkedList<T> mLink;
         private object mLockObj = new object();
-        public uint Capacity { get; private set; }
+        public uint Cap { get; private set; }
 
         public LRU(int capacity)
         {
             System.Diagnostics.Contracts.Contract.Requires(capacity > 0);
-            Capacity = (uint)capacity;
-            mLruLinkedList = new LinkedList<Tuple<TK, TV>>();
+            Cap = (uint)capacity;
+            mLink = new LinkedList<T>();
         }
 
-        public void Clear()
+        public override void Clear()
         {
-            mLruLinkedList.Clear();
-        }
-
-        /// <summary>
-        /// 添加数据项
-        /// </summary>
-        /// <param name="tK"></param>
-        /// <param name="tV"></param>
-        public void Push(TK tK, TV tV)
-        {
-            if (mLruLinkedList.Count >= Capacity)
-            {
-                //TODO:删除末尾的节点
-                mLruLinkedList.RemoveLast();
-                Push(tK, tV);
-            }
-            else
-            {
-                mLruLinkedList.AddFirst(new Tuple<TK, TV>(tK, tV));
-            }
+            mLink.Clear();
         }
 
         /// <summary>
         /// 访问数据项
         /// </summary>
-        /// <param name="tK"></param>
-        /// <param name="tV"></param>
+        /// <param name="t"></param>
         /// <returns></returns>
-        public bool Pop(TK tK, out TV tV)
+        public override bool Pop(ref T t)
         {
-            tV = default(TV);
-            LinkedListNode<Tuple<TK, TV>> rNode;
-            if (SearchData(mLruLinkedList, tK, out rNode))
+            t.Value = default(TV);
+            LinkedListNode<T> rNode;
+            if (LruFunction.SearchData<T, TK, TV>(mLink, t.Key, out rNode))
             {
                 //将查找的节点移动到链表头部
-                Sort(mLruLinkedList, rNode);
+                LruFunction.Sort(mLink, rNode);
                 return true;
             }
             else
             {
                 //若未找到则添加节点到链表头
-                var tv = MakeValue(tK);
-                Push(tK, tv);
-                tV = tv;
+                MakeValue(t.Key, out t);
+                Push(t);
             }
             return false;
         }
 
-        public static void Sort<T>(LinkedList<T> link, LinkedListNode<T> rNode)
+        /// <summary>
+        /// 添加数据项
+        /// </summary>
+        /// <param name="t"></param>
+        public override void Push(T t)
         {
-            if (link == null)
+            while (mLink.Count > Cap)
             {
-                link = new LinkedList<T>();
+                mLink.RemoveLast();
             }
-            link.Remove(rNode);
-            link.AddFirst(rNode);
-        }
-
-        public bool SearchData(LinkedList<Tuple<TK, TV>> link, TK tK, out LinkedListNode<Tuple<TK, TV>> rNode)
-        {
-            if (link.Count > 0)
-            {
-                return SearchData(link.First, tK, out rNode);
-            }
-            else
-            {
-                rNode = null;
-                return false;
-            }
-        }
-
-        public bool SearchData(LinkedListNode<Tuple<TK, TV>> node, TK tK, out LinkedListNode<Tuple<TK, TV>> rNode)
-        {
-            if (node != null)
-            {
-                if (node.Value.Item1.Equals(tK))
-                {
-                    rNode = node;
-                    return true;
-                }
-                else
-                {
-                    return SearchData(node.Next, tK, out rNode);
-                }
-            }
-            rNode = null;
-            return false;
-        }
-
-        public TV MakeValue(TK tK)
-        {
-            return default(TV);
+            mLink.AddFirst(t);
         }
     }
 
-    public class LRU_K<TK, TV> : ICache<TK, TV>
+    public class LRU_K<T, TK, TV> : Cache<T, TK, TV>
+        where T : IDataItem<TK, TV>
     {
-        private LinkedList<Tuple<TK, TV,int>> mLinkedList_his { get; set; }
-        private LinkedList<Tuple<TK,TV>> mLinkedList { get; set; }
+        private LinkedList<Tuple<T, int>> mLinkedList_his { get; set; }
+        private LinkedList<T> mLink { get; set; }
 
         public uint K { get; private set; }
 
-        public uint Capacity { get; private set; }
+        public uint Cap { get; private set; }
 
-        public LRU_K(int capacity,uint k)
+        public uint CapHistory { get; private set; }
+
+        public LRU_K(int cap, int capHistory, uint k)
         {
-            System.Diagnostics.Contracts.Contract.Requires(capacity > 0);
+            System.Diagnostics.Contracts.Contract.Requires(cap > 0);
+            System.Diagnostics.Contracts.Contract.Requires(capHistory > 0);
             System.Diagnostics.Contracts.Contract.Requires(k > 0);
-            Capacity = (uint)capacity;
+            Cap = (uint)cap;
+            CapHistory = (uint)capHistory;
             K = k;
-            mLinkedList_his = new LinkedList<Tuple<TK, TV, int>>();
-            mLinkedList = new LinkedList<Tuple<TK, TV>>();
+            mLinkedList_his = new LinkedList<Tuple<T, int>>();
+            mLink = new LinkedList<T>();
         }
 
-        public void Clear()
+        public override void Clear()
         {
             mLinkedList_his.Clear();
-            mLinkedList.Clear();
+            mLink.Clear();
         }
 
-        public TV MakeValue(TK tK)
+        private void PushHistory(T t)
         {
-            return default(TV);
-        }
-
-        public bool Pop(TK tK, out TV tV)
-        {
-            tV = default(TV);
-            LinkedListNode<Tuple<TK, TV>> rNode;
-            if (SearchData(mLinkedList,tK,out rNode))
-            {
-                Sort(mLinkedList, rNode);
-            }
-            else
-            {
-                LinkedListNode<Tuple<TK, TV,int>> rHisNode;
-                if (SearchHistoryData(mLinkedList_his,tK,out rHisNode))
-                {
-                    var k = rHisNode.Value.Item3 + 1;
-                    if (k >= K)
-                    {
-                        mLinkedList_his.Remove(rHisNode);
-                        Push(rHisNode.Value.Item1, rHisNode.Value.Item2);
-                    }
-                    else
-                    {
-                        rHisNode.Value = new Tuple<TK, TV, int>(rHisNode.Value.Item1, rHisNode.Value.Item2, k);
-                        Sort(mLinkedList_his, rHisNode);
-                    }
-                }
-                else
-                {
-                    TV tv = MakeValue(tK);
-                    PushHistory(tK, tv);
-                    tV = tv;
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void Push(TK tK, TV tV)
-        {
-            if (mLinkedList.Count >= Capacity)
-            {
-                //TODO:删除末尾的节点
-                mLinkedList.RemoveLast();
-                Push(tK, tV);
-            }
-            else
-            {
-                mLinkedList.AddFirst(new Tuple<TK, TV>(tK, tV));
-            }
-        }
-
-        public void PushHistory(TK tK, TV tV)
-        {
-            if (mLinkedList_his.Count >= Capacity)
+            if (mLinkedList_his.Count >= CapHistory)
             {
                 //TODO:删除末尾的节点
                 mLinkedList_his.RemoveLast();
-                PushHistory(tK, tV);
+                PushHistory(t);
             }
             else
             {
-                mLinkedList_his.AddFirst(new Tuple<TK, TV, int>(tK, tV, 0));
+                mLinkedList_his.AddFirst(new Tuple<T, int>(t, 0));
             }
         }
 
-        public static void Sort<T>(LinkedList<T> link, LinkedListNode<T> rNode)
-        {
-            if (link == null)
-            {
-                link = new LinkedList<T>();
-            }
-            link.Remove(rNode);
-            link.AddFirst(rNode);
-        }
 
-        public bool SearchData(LinkedList<Tuple<TK, TV>> link, TK tK, out LinkedListNode<Tuple<TK, TV>> rNode)
+        public override bool Pop(ref T t)
         {
-            if (link.Count > 0)
+            t.Value = default(TV);
+            LinkedListNode<T> rNode;
+            if (LruFunction.SearchData<T, TK, TV>(mLink, t.Key, out rNode))
             {
-                return SearchData(link.First, tK, out rNode);
+                LruFunction.Sort(mLink, rNode);
             }
             else
             {
-                rNode = null;
-                return false;
-            }
-        }
-
-        public bool SearchHistoryData(LinkedList<Tuple<TK, TV, int>> link, TK tK, out LinkedListNode<Tuple<TK, TV, int>> rNode)
-        {
-            if (link.Count > 0)
-            {
-                return SearchHistoryData(link.First, tK, out rNode);
-            }
-            else
-            {
-                rNode = null;
-                return false;
-            }
-        }
-
-        public bool SearchData(LinkedListNode<Tuple<TK, TV>> node, TK tK, out LinkedListNode<Tuple<TK, TV>> rNode)
-        {
-            if (node != null)
-            {
-                if (node.Value.Item1.Equals(tK))
+                LinkedListNode<Tuple<T, int>> rHisNode;
+                if (LruFunction.SearchHistoryData<T, TK, TV>(mLinkedList_his, t.Key, out rHisNode))
                 {
-                    rNode = node;
-                    return true;
+                    var k = rHisNode.Value.Item2 + 1;
+                    if (k >= K)
+                    {
+                        mLinkedList_his.Remove(rHisNode);
+                        Push(rHisNode.Value.Item1);
+                    }
+                    else
+                    {
+                        rHisNode.Value = new Tuple<T, int>(rHisNode.Value.Item1, k);
+                        LruFunction.Sort(mLinkedList_his, rHisNode);
+                    }
                 }
                 else
                 {
-                    return SearchData(node.Next, tK, out rNode);
-                }
-            }
-            rNode = null;
-            return false;
-        }
-
-        public bool SearchHistoryData(LinkedListNode<Tuple<TK, TV, int>> node, TK tK, out LinkedListNode<Tuple<TK, TV, int>> rNode)
-        {
-            if (node != null)
-            {
-                if (node.Value.Item1.Equals(tK))
-                {
-                    rNode = node;
+                    MakeValue(t.Key, out t);
+                    PushHistory(t);
                     return true;
                 }
-                else
-                {
-                    return SearchHistoryData(node.Next, tK, out rNode);
-                }
             }
-            rNode = null;
             return false;
         }
 
+        public override void Push(T t)
+        {
+            while (mLink.Count > Cap)
+            {
+                mLink.RemoveLast();
+            }
+            mLink.AddFirst(t);
+        }
+    }
+
+    public class Two_Queues<T, TK, TV> : Cache<T, TK, TV>
+        where T : IDataItem<TK, TV>
+    {
+        private Queue<T> mHisQueue { get; set; }
+        private LinkedList<T> mLink { get; set; }
+        private int Cap { get; set; }
+        private int CapHistory { get; set; }
+        public Two_Queues(int cap, int capHistory)
+        {
+            Cap = cap;
+            CapHistory = capHistory;
+            mHisQueue = new Queue<T>();
+            mLink = new LinkedList<T>();
+        }
+
+        public override void Clear()
+        {
+            if (mHisQueue != null)
+            {
+                mHisQueue.Clear();
+            }
+            if (mLink != null)
+            {
+                mLink.Clear();
+            }
+        }
+
+        public override bool Pop(ref T t)
+        {
+            t= default(T);
+            LinkedListNode<T> rNode;
+            T temp;
+            if (LruFunction.SearchData<T, TK, TV>(mLink, t.Key, out rNode))
+            {
+                LruFunction.Sort(mLink,rNode);
+            }
+            else if (LruFunction.SearchQueue<T, TK, TV>(mHisQueue, t.Key, out temp))
+            {
+                mHisQueue.Enqueue(temp);
+                t = temp;
+            }
+            else
+            {
+                MakeValue(t.Key,out t);
+                mHisQueue.Enqueue(t);
+            }
+            return false;
+        }
+
+        public override void Push(T t)
+        {
+            T temp;
+            if (LruFunction.SearchQueue<T, TK, TV>(mHisQueue, t.Key, out temp))
+            {
+                while (mLink.Count > Cap)
+                {
+                    mLink.RemoveLast();
+                }
+                mLink.AddFirst(t);
+            }
+            else
+            {
+                while (mHisQueue.Count > CapHistory)
+                {
+                    mHisQueue.Dequeue();
+                }
+                mHisQueue.Enqueue(t);
+            }
+        }
     }
 
 }
