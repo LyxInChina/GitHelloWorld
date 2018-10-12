@@ -1,5 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project InitialTargets="Ta;Tb;SecondTarget" DefaultTargets="Da;Db" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Ta">
+    <Message Text="this is Ta">
+    </Message>
+  </Target>
+  <Target Name="Tb">
+    <Message Text="this is Tb">
+    </Message>
+  </Target>
+
+  <Target Name="Ta" Condition="true" >
+    <Message Text="this is Ta redefined">
+    </Message>
+  </Target>
+
+  <Target Name="Da">
+    <Message Text="this is Da">
+    </Message>
+  </Target>
+  <Target Name="Db">
+    <Message Text="this is Db">
+    </Message>
+  </Target>
+  <Target Name="FirstTarget">
+    <Message Text="this is FirstTarget">
+    </Message>
+  </Target>
+  <Target Name="SecondTarget" DependsOnTargets="FirstDepends;SecondDepends">
+    <Message Text="this is SecondTarget">
+    </Message>
+  </Target>
+
+  <Target Name="FirstDepends">
+    <Message Text="this is FirstDependsTarget">
+    </Message>
+  </Target>
+
+  <Target Name="SecondDepends">
+    <Message Text="this is SecondDependsTarget">
+    </Message>
+  </Target>
+
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -21,6 +62,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
