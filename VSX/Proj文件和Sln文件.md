@@ -226,34 +226,71 @@ public static bool FindBuildDependencyByProjID(string projID, out BuildDependenc
 - 3.编辑BuildDependency新增工程依赖
 
 ```C#
-public static void AddSlnBuildDependency(string projID, string[] projAddIDs)
+/// <summary>
+/// 根据工程FullName添加生成依赖的工程集合FullName
+/// </summary>
+/// <param name="projID"></param>
+/// <param name="projUniqueNames"></param>
+public static void AddSlnBuildDependency(string projID, string[] projUniqueNames)
 {
-    if (OperationCenter.MDTE != null)
+    if (OperationCenter.MDTE == null || projUniqueNames == null || projUniqueNames.Length <= 0)
+        return;
+    BuildDependency build;
+    if (FindBuildDependencyByProjID(projID, out build))
     {
-        BuildDependency build;
-        if (FindBuildDependencyByProjID(projID, out build))
+        for (int i = 0; i < projUniqueNames.Length; i++)
         {
-            if (projAddIDs != null)
+            try
             {
-                for (int i = 0; i < projAddIDs.Length; i++)
+                if (!IsExists(build, projUniqueNames[i]))
                 {
-                    try
-                    {
-                        build.AddProject(projAddIDs[i]);
-                    }
-                    catch (Exception ex)
-                    {
-                        OperationCenter.MLogger.Error("添加工程依赖-AddSlnBuildDependency Msg:{0}，Source:{1},Stack:{2}", ex.Message, ex.Source, ex.StackTrace);
-                    }
+                    build.AddProject(projUniqueNames[i]);
+                    OperationCenter.NInfo("添加生成依赖:{0}到:{1}.", projUniqueNames[i], build.Project.Name);
+                }
+                else
+                {
+                    OperationCenter.NInfo("已存在的生成依赖项:{0},于:{1}.", projUniqueNames[i], build.Project.Name);
                 }
             }
-            SolutionSave();
+            catch (Exception ex)
+            {
+                OperationCenter.NError(ex, "添加工程依赖异常:{0} {1}.", build.Project.Name, projUniqueNames[i]);
+            }
         }
+        SolutionSave();
     }
 }
 ```
 
-- 4.此时查看解决方案的依赖项顺序 就会按照之前写入的工程依赖项，自动生成；
+- 4.添加前应检测 该工程的依赖项中是否已存在对要添加的工程的依赖，否则在SLN文件中会出现重复的工程依赖项
+
+```c#
+/// <summary>
+/// 判断构建依赖项中是否已存在对指定工程的依赖
+/// </summary>
+/// <param name="build"></param>
+/// <param name="uniqueName">工程的UniqueName</param>
+/// <returns></returns>
+public static bool IsExists(BuildDependency build, string uniqueName)
+{
+    if (build != null && build.Collection != null && !string.IsNullOrEmpty(uniqueName))
+    {
+        foreach (BuildDependency item in build.Collection)
+        {
+            if (item != null && item.Project != null)
+            {
+                if (string.Equals(item.Project.UniqueName, uniqueName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+```
+
+- 5.此时查看解决方案的依赖项顺序 就会按照之前写入的工程依赖项，自动生成；
 
 ### 向已有解决方案中添加解决方案
 

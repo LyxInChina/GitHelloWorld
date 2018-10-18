@@ -7,7 +7,6 @@ using Microsoft.JScript;
 using System.IO;
 using System.CodeDom.Compiler;
 using Microsoft.ClearScript;
-using Microsoft.ClearScript.JavaScript;
 using Microsoft.ClearScript.V8;
 using System.Reflection;
 

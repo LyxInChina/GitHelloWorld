@@ -11,9 +11,9 @@ namespace HelloWorld.Algorithm
         where T : IDataItem<TK, TV>
     {
         void Clear();
-        void Push(T t);
-        bool Pop(ref T t);
-        void MakeValue(TK tK, out T t);
+
+        void Set(T t);
+        bool Get(ref T t);
     }
 
     public interface IDataItem<TK, TV>
@@ -40,28 +40,9 @@ namespace HelloWorld.Algorithm
     public abstract class Cache<T, TK, TV> : ICache<T, TK, TV>
         where T : IDataItem<TK, TV>
     {
-        public delegate void MakeValueDelegate<TKD, TVD>(TKD tKd, out TVD tvd);
-        public delegate void MakeValueDelegate<TD, TKD, TVD>(TKD tKd, out TD td)
-            where TD : IDataItem<TKD, TVD>;
-        public MakeValueDelegate<TK, TV> MakeValueCallBack;
-        public MakeValueDelegate<T, TK, TV> MakeDataItemCallBack;
-
         public abstract void Clear();
-
-        public virtual void MakeValue(TK tK, out T t)
-        {
-            if (MakeDataItemCallBack != null)
-            {
-                MakeDataItemCallBack(tK, out t);
-            }
-            else
-            {
-                t = default(T);
-            }
-        }
-        public abstract bool Pop(ref T t);
-        public abstract void Push(T t);
-
+        public abstract bool Get(ref T t);
+        public abstract void Set(T t);
     }
 
     public static class LruFunction
@@ -171,7 +152,6 @@ namespace HelloWorld.Algorithm
         where T : IDataItem<TK, TV>
     {
         private LinkedList<T> mLink;
-        private object mLockObj = new object();
         public uint Cap { get; private set; }
 
         public LRU(int capacity)
@@ -191,7 +171,7 @@ namespace HelloWorld.Algorithm
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public override bool Pop(ref T t)
+        public override bool Get(ref T t)
         {
             t.Value = default(TV);
             LinkedListNode<T> rNode;
@@ -201,12 +181,6 @@ namespace HelloWorld.Algorithm
                 LruFunction.Sort(mLink, rNode);
                 return true;
             }
-            else
-            {
-                //若未找到则添加节点到链表头
-                MakeValue(t.Key, out t);
-                Push(t);
-            }
             return false;
         }
 
@@ -214,13 +188,23 @@ namespace HelloWorld.Algorithm
         /// 添加数据项
         /// </summary>
         /// <param name="t"></param>
-        public override void Push(T t)
+        public override void Set(T t)
         {
             while (mLink.Count > Cap)
             {
                 mLink.RemoveLast();
             }
-            mLink.AddFirst(t);
+            LinkedListNode<T> rNode;
+            if (LruFunction.SearchData<T, TK, TV>(mLink, t.Key, out rNode))
+            {
+                //将查找的节点移动到链表头部
+                LruFunction.Sort(mLink, rNode);
+            }
+            else
+            {
+                mLink.RemoveLast();
+                mLink.AddFirst(t);
+            }
         }
     }
 
@@ -256,6 +240,11 @@ namespace HelloWorld.Algorithm
 
         private void PushHistory(T t)
         {
+            while (mLinkedList_his.Count>=CapHistory)
+            {
+                mLinkedList_his.RemoveLast();
+            }
+
             if (mLinkedList_his.Count >= CapHistory)
             {
                 //TODO:删除末尾的节点
@@ -268,14 +257,15 @@ namespace HelloWorld.Algorithm
             }
         }
 
-
-        public override bool Pop(ref T t)
+        public override bool Get(ref T t)
         {
+            var result = false;
             t.Value = default(TV);
             LinkedListNode<T> rNode;
             if (LruFunction.SearchData<T, TK, TV>(mLink, t.Key, out rNode))
             {
                 LruFunction.Sort(mLink, rNode);
+                result = true;
             }
             else
             {
@@ -286,25 +276,20 @@ namespace HelloWorld.Algorithm
                     if (k >= K)
                     {
                         mLinkedList_his.Remove(rHisNode);
-                        Push(rHisNode.Value.Item1);
+                        Set(rHisNode.Value.Item1);
                     }
                     else
                     {
                         rHisNode.Value = new Tuple<T, int>(rHisNode.Value.Item1, k);
                         LruFunction.Sort(mLinkedList_his, rHisNode);
                     }
-                }
-                else
-                {
-                    MakeValue(t.Key, out t);
-                    PushHistory(t);
-                    return true;
+                    result = true;
                 }
             }
-            return false;
+            return result;
         }
 
-        public override void Push(T t)
+        public override void Set(T t)
         {
             while (mLink.Count > Cap)
             {
@@ -341,29 +326,26 @@ namespace HelloWorld.Algorithm
             }
         }
 
-        public override bool Pop(ref T t)
+        public override bool Get(ref T t)
         {
-            t= default(T);
+            var result = false;
             LinkedListNode<T> rNode;
             T temp;
             if (LruFunction.SearchData<T, TK, TV>(mLink, t.Key, out rNode))
             {
-                LruFunction.Sort(mLink,rNode);
+                LruFunction.Sort(mLink, rNode);
+                result = true;
             }
             else if (LruFunction.SearchQueue<T, TK, TV>(mHisQueue, t.Key, out temp))
             {
                 mHisQueue.Enqueue(temp);
                 t = temp;
+                result = true;
             }
-            else
-            {
-                MakeValue(t.Key,out t);
-                mHisQueue.Enqueue(t);
-            }
-            return false;
+            return result;
         }
 
-        public override void Push(T t)
+        public override void Set(T t)
         {
             T temp;
             if (LruFunction.SearchQueue<T, TK, TV>(mHisQueue, t.Key, out temp))
@@ -382,6 +364,65 @@ namespace HelloWorld.Algorithm
                 }
                 mHisQueue.Enqueue(t);
             }
+        }
+    }
+
+    public class Multi_Queue<T, TK, TV> : Cache<T, TK, TV>
+        where T : IDataItem<TK, TV>
+    {
+        private int Priority { get; set; }
+
+        private int K { get; set; }
+
+        public int Cap { get; set; }
+
+        public int CapHistory { get; set; }
+
+        public LinkedList<T>[] mListLinks { get; set; }
+
+        public LinkedList<Tuple<T,int>> mLink_History { get; set; }
+
+
+        public Multi_Queue(int k, int cap, int capHistory)
+        {
+            System.Diagnostics.Contracts.Contract.Requires(k > 0);
+            System.Diagnostics.Contracts.Contract.Requires(cap > 0);
+            System.Diagnostics.Contracts.Contract.Requires(capHistory > 0);
+            K = k;
+            Cap = cap;
+            CapHistory = capHistory;
+            mLink_History = new LinkedList<Tuple<T, int>>();
+            mListLinks =new LinkedList<T>[K];
+            for (int i = 0; i < K; i++)
+            {
+                mListLinks[i] = new LinkedList<T>();
+            }
+        }
+
+        public override void Clear()
+        {
+            mLink_History.Clear();
+            for (int i = 0; i < mListLinks.Length; i++)
+            {
+                if (mListLinks != null)
+                {
+                    mListLinks[i].Clear();
+                }
+            }
+        }
+
+        public override bool Get(ref T t)
+        {
+            var result = false;
+
+
+
+            return result;
+        }
+
+        public override void Set(T t)
+        {
+
         }
     }
 

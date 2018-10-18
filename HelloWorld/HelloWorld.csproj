@@ -204,6 +204,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Algorithm\Algorithm.md" />
+    <None Include="Algorithm\LFU.md" />
+    <None Include="Algorithm\LRU.md" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>

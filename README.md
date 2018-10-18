@@ -9,7 +9,7 @@
 
 - [x] Git tool learn & test
 - [ ] VS2017
-- [ ] 部分项目C#语言版本：7.2
+- [ ] C#语言版本：7.2
 - [ ] .net 4.5.2
 
 ***
@@ -57,6 +57,14 @@
 
 - 日志模块研究
 
+### MEF
+
+- MEF框架示例
+
+### MicroService
+
+- 微服务笔记
+
 ### Modbus4
 
 - Modbus协议封装研究和使用
@@ -64,6 +72,11 @@
 ### ORM
 
 - 主流ORM框架研究和使用
+
+### Other
+
+- Git命令学习
+- 本地编译VS code
 
 ### packages
 
@@ -75,8 +88,13 @@
 
 ### Service
 
-- WebService示例
+- WebService示例；
 - Windows服务示例以及测试；
+- WebSocket使用示例；
+
+### VSX
+
+- Visual Studio扩展研究示例
 
 ### Web
 
@@ -91,8 +109,6 @@
 
 ## markdown 语法介绍
 
-***
-
 ## 分割线
 
 ***
@@ -104,7 +120,6 @@ ___
 ### 三级标题
 > 区块引用
 >> 区块引用内的引用
->>> 区块引用内的引用的引用
 
 ## 列表
 
@@ -130,15 +145,14 @@ ___
 
 ## 强调
 
-- The Markdown `markup language`is designed to be easy to read, write, and understand
-- The Markdown **markup language** is designed to be easy to read, write, and understand
-- The Markdown __markup language__ is designed to be easy to read, write, and understand
+- The Markdown **markup language** is designed to be easy to read, write, and understand.
+- The Markdown __markup language__ is designed to be easy to read, write, and understand.
 
 ## 代码
 
-> 这是一小段代码`C#code`
+> 这是一小段代码C代码 `printf("helloworld");`
 
-```C#
+```C
 printf("helloworld");
 ```
 
