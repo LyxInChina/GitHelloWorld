@@ -22,9 +22,11 @@ namespace HelloWorld.Serializable
         [DataMember]
         public int IntValue { get; set; }
 
-        [DataMember]
+        [DataMember(EmitDefaultValue =false,IsRequired =true,Name ="string",Order =0)]
         public string StrValue { get; set; }
 
+        [DataMember(EmitDefaultValue = false, IsRequired = true, Name = "list<string>", Order = 1)]
+        public List<string> StrValues { get; set; }
     }
 
     public class JSonSerializationHelper

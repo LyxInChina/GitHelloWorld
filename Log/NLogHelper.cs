@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NLog;
 
-namespace LogHelper
+namespace Log
 {
     public class NLogHelper: ILog
     {
@@ -21,7 +21,7 @@ namespace LogHelper
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
             NLog.LogManager.Configuration = config;
         }
-
+        public bool IsErrorLog { get; private set; }
         public static ILog Log { get; private set; }
 
         static NLogHelper()

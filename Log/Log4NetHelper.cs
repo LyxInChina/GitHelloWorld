@@ -22,12 +22,12 @@ using System.Threading;
  * step 5: 使用
  */
 
-namespace LogHelper
+namespace Log
 {
     public class Log4NetHelper : ILog
     {
         public static ILog Log { get; private set; }
-
+        public bool IsErrorLog { get; private set; }
         static Log4NetHelper()
         {
             Log = new Log4NetHelper();

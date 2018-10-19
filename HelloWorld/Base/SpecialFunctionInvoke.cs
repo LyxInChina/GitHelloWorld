@@ -18,6 +18,13 @@ namespace HelloWorld.Base
          */
     public class SpecialFunctionInvoke
     {
+        private static void LoadDll()
+        {
+            var domain = AppDomain.CreateDomain("name");
+            var asss = domain.Load("");
+            asss.CreateInstance("");
+
+        }
     }
 
     /// <summary>

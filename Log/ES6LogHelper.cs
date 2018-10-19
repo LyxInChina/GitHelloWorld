@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
 
-namespace LogHelper
+namespace Log
 {
     public class ES6LogHelper : ILog
     {
         public static ILog Log { get; private set; }
-
+        public bool IsErrorLog { get; private set; }
 
         static ES6LogHelper()
         {

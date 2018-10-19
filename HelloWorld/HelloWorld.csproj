@@ -162,9 +162,10 @@
     <Compile Include="MEF\CalImpl.cs" />
     <Compile Include="MEF\ICal.cs" />
     <Compile Include="MEF\MEFClient.cs" />
+    <Compile Include="Serialization\JSON.cs" />
+    <Compile Include="Serialization\XML.cs" />
     <Compile Include="SyncException\SyncException.cs" />
     <Compile Include="HelloWorld.cs" />
-    <Compile Include="Serializable\AbsClass.cs" />
     <Compile Include="Algorithm\SortAlgorithmLib.cs" />
     <Compile Include="ThreadK\AsyncHelper.cs" />
     <Compile Include="ThreadK\Sync.cs" />

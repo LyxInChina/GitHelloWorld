@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{15CDDD93-30C9-4845-AA27-147D4552070D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>LogHelper</RootNamespace>
-    <AssemblyName>LogHelper</AssemblyName>
+    <RootNamespace>Log</RootNamespace>
+    <AssemblyName>Log</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -82,6 +82,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StackInfo.cs" />
+    <Compile Include="WindowsLog.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -115,16 +116,14 @@
     <Content Include="ELogging\Newtonsoft.Json.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="log4net\log4net.dll" />
-    <Content Include="log4net\log4net.Tests.dll" />
-    <Content Include="log4net\log4net.xml" />
-    <Content Include="log4net\nunit.framework.dll" />
-    <Content Include="log4net\nunit.framework.xml" />
-    <Content Include="nlog\NLog.dll" />
-    <Content Include="nlog\NLog.xml" />
+    <Content Include="Log4net\log4net.dll" />
+    <Content Include="Log4net\log4net.Tests.dll" />
+    <Content Include="Log4net\log4net.xml" />
+    <Content Include="Log4net\nunit.framework.dll" />
+    <Content Include="Log4net\nunit.framework.xml" />
+    <Content Include="Nlog\NLog.dll" />
+    <Content Include="Nlog\NLog.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
