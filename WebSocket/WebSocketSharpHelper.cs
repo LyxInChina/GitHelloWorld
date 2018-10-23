@@ -42,7 +42,7 @@ namespace WebSocketTest
         {
             if (OnWSMsg != null)
             {
-                OnWSMsg.Invoke(sender, new WSMsgEventArgs(e.Data, Url) { IsBinary = e.IsBinary, IsPing = e.IsPing, IsText = e.IsText, RawData = e.RawData, Tag = e });
+                OnWSMsg.Invoke(sender, new WSMsgEventArgs(e.Data, Url) { RawData = e.RawData, Tag = e });
             }
         }
 
