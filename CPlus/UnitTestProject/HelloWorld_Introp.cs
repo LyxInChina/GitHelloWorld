@@ -9,9 +9,15 @@ namespace UnitTestProject
 {
     public class HelloWorld_Introp
     { 
-        const string DLLPath = "HelloWorld.dll";
-        [DllImport(DLLPath, EntryPoint = "TestFunc",CallingConvention = CallingConvention.Cdecl)]
-        public static extern int TestFunc(int a);
+        const string DLLPath = @"x64\HelloWorld.dll";
+        const string x86DLLPath = @"x86\HelloWorld.dll";
+
+        [DllImport(x64DLLPath, EntryPoint = "TestFunc",CallingConvention = CallingConvention.Cdecl)]
+        public static extern int TestFuncX64(int a);
+
+        [DllImport(x86DLLPath, EntryPoint = "TestFunc", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int TestFuncX86(int a);
+
 
         [DllImport(DLLPath, EntryPoint = "Funci",CallingConvention = CallingConvention.Cdecl)]
         public static extern bool Funci(int a,int b);

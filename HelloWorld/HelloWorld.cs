@@ -17,8 +17,23 @@ namespace HelloWorld
         static void Main(string[] args)
         {
             Console.WriteLine("hello world");
-            
+            Console.ReadLine();
+            IsDebugMode();
+
             Console.ReadKey();
+        }
+
+        static void IsDebugMode()
+        {
+            Console.WriteLine("Is Debug Mode?");
+            if (Debugger.IsAttached)
+            {
+                Console.WriteLine("true");
+            }
+            else
+            {
+                Console.WriteLine("false");
+            }
         }
 
         static void ImmStatus()
@@ -38,6 +53,7 @@ namespace HelloWorld
                 Console.WriteLine((a as AssemblyVersionAttribute).Version);
             }
         }
+
         //https://docs.microsoft.com/en-us/windows/desktop/api/Imm/
         [DllImport("imm32.dll")]
         public static extern IntPtr ImmGetContext(IntPtr hWnd); //获取当前正在输入的窗口的输入法句柄

@@ -39,3 +39,4 @@ D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csproj.CoreCompileInputs.cache
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.exe
 D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WService.pdb
+D:\zhanglizhong\Git\GitHelloWorld\Service\WinService\obj\Debug\WinService.csprojAssemblyReference.cache

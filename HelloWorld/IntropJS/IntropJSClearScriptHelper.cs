@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.JScript;
 using System.IO;
 using System.CodeDom.Compiler;
-using Microsoft.ClearScript;
-using Microsoft.ClearScript.V8;
 using System.Reflection;
 
-namespace HelloWorld
+namespace HelloWorld.IntropJS
 {
-    public class IntropJS
-    {        
+    public class IntropJSClearScriptHelper
+    {
         public static JScriptCodeProvider MJScriptCodeProvider;
         public static CompilerParameters parameters = new CompilerParameters();
-
-        static IntropJS()
+        static IntropJSClearScriptHelper()
         {
             MJScriptCodeProvider = new JScriptCodeProvider();
             parameters.GenerateInMemory = true;
@@ -25,7 +22,7 @@ namespace HelloWorld
 
         public static bool ImportJSFile(string file)
         {
-            if(File.Exists(file))
+            if (File.Exists(file))
             {
                 try
                 {
@@ -37,9 +34,8 @@ namespace HelloWorld
                     var result = MJScriptCodeProvider.CompileAssemblyFromSource(parameters, str);
                     var ass = result.CompiledAssembly;
                     var s = ass.GetType();
-                    var obj = s.InvokeMember("Test", BindingFlags.InvokeMethod, null, null, new object[] { "this ok"});
-                    Console.WriteLine("OBJ::"+obj); 
-                    
+                    var obj = s.InvokeMember("Test", BindingFlags.InvokeMethod, null, null, new object[] { "this ok" });
+                    Console.WriteLine("OBJ::" + obj);
                     return true;
                 }
                 catch (Exception)
@@ -59,23 +55,5 @@ namespace HelloWorld
             //Console.WriteLine(res);
             return null;
         }
-
-        public static object RunJS_V8()
-        {
-            using(var engine = new V8ScriptEngine())
-            {
-                var f = "test.js";
-                var code = File.ReadAllText(f);
-                engine.Compile(code);
-                engine.AddHostType("Console", typeof(Console));
-                engine.Execute("Console.WriteLine('{0} is an interesting number.', Math.PI)");
-                engine.AddHostType("Console", typeof(Console));
-                engine.Evaluate("Console.debug('faasfafa')");
-                var res = engine.Evaluate("test(fsfs)");
-                Console.WriteLine(res);
-            }
-            return null;
-        }
-
     }
 }

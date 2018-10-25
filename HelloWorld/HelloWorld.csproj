@@ -61,7 +61,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>HelloWorld.Base.BaseKnowledge</StartupObject>
+    <StartupObject>HelloWorld.HelloWorld</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -164,7 +164,7 @@
     <Compile Include="DesignPattern\CreatePattern.cs" />
     <Compile Include="DesignPattern\SpecialPattern.cs" />
     <Compile Include="DesignPattern\StructPattern.cs" />
-    <Compile Include="Introp\IntropHelper.cs" />
+    <Compile Include="IntropJS\IntropJSV8Helper.cs" />
     <Compile Include="IPC\RenciSshNetHelper.cs" />
     <Compile Include="IPC\ThriftHelper.cs" />
     <Compile Include="MEF\CalImpl.cs" />
@@ -186,7 +186,7 @@
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="DesignPattern\DesignPattern.cs" />
     <Compile Include="Web\GetPost.cs" />
-    <Compile Include="IntropJS\IntropJS.cs" />
+    <Compile Include="IntropJS\IntropJSClearScriptHelper.cs" />
     <Compile Include="InvokeHelper.cs" />
     <Compile Include="MEF\MEFProgram.cs" />
     <Compile Include="MyResources.Designer.cs">
@@ -267,6 +267,7 @@
   <ItemGroup>
     <Content Include="IntropJS\ClearScript.dll" />
     <Content Include="IntropJS\ClearScript.XML" />
+    <Content Include="IntropJS\test.js" />
     <Content Include="IntropJS\x64\ClearScriptV8-64.dll" />
     <Content Include="IntropJS\x64\v8-base-x64.dll" />
     <Content Include="IntropJS\x64\v8-x64.dll" />

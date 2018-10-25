@@ -275,7 +275,7 @@ namespace HelloWorld.IPC.MQTest
 
             public static void ReceiveOnece(ZSocket socket)
             {
-                ZError error=null;
+                ZError error = null;
                 using (var frame = socket.ReceiveFrame(out error))
                 {
                     if (error != null)
@@ -285,7 +285,7 @@ namespace HelloWorld.IPC.MQTest
                     Console.WriteLine("Server::Get-request::{0}", frame.ReadString());
                     Thread.Sleep(new Random().Next(100, 300));
                     var msg = new Random().Next(1000, 9999).ToString();
-                    socket.SendFrame(new ZFrame("NONO::" +msg));
+                    socket.SendFrame(new ZFrame("NONO::" + msg));
                 }
             }
 
@@ -304,14 +304,14 @@ namespace HelloWorld.IPC.MQTest
                 }
             }
 
-            public static void SendMsg(ZSocket socket,string msg)
+            public static void SendMsg(ZSocket socket, string msg)
             {
                 ZError error = null;
-                socket.SendFrame(new ZFrame("OOOO:" + msg), ZSocketFlags.DontWait,out error);
-                using (var reply = socket.ReceiveFrame(ZSocketFlags.DontWait,out error))
+                socket.SendFrame(new ZFrame("OOOO:" + msg), ZSocketFlags.DontWait, out error);
+                using (var reply = socket.ReceiveFrame(ZSocketFlags.DontWait, out error))
                 {
                     Console.WriteLine("Client::get reply:" + reply?.ReadString());
-                    Thread.Sleep(new Random().Next(500,900));
+                    Thread.Sleep(new Random().Next(500, 900));
                 }
             }
 

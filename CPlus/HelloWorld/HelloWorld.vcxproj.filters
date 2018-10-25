@@ -3,8 +3,10 @@
   <ItemGroup>
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="BeautyofProgramming.cpp" />
     <ClCompile Include="IntroCrypt.cpp" />
+    <ClCompile Include="TestClassA.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -14,7 +16,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="BeautyofProgramming.h" />
     <ClInclude Include="IntroCrypt.h" />
+    <ClInclude Include="TestClassA.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Test">
+      <UniqueIdentifier>{b81ed32b-1d26-4e52-aaf3-cab5b50c6595}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

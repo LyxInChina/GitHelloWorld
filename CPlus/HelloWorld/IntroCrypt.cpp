@@ -1,4 +1,3 @@
-
 #include "stdafx.h"
 #include "IntroCrypt.h"
 #include "stdio.h"

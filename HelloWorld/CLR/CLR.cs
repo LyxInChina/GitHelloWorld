@@ -254,7 +254,7 @@ Mark：使用非托管程序加载托管程序集，Windows会自动加载并初
         安装程序集（只能安装强名称）到GAC - GACUtil.exe
         */
 
-    /*Chapter 4 类型基础
+/*Chapter 4 类型基础
         20.CLR查找引用类型：
             a.同一文件 - 早期绑定；
             b.不同文件，同一程序集；
@@ -499,7 +499,7 @@ Mark：使用非托管程序加载托管程序集，Windows会自动加载并初
             不用语言使用不同的运行时绑定器，c#再microsoft.csharp.dll（同样加载System.dll、System.Core.dll）中
  */
  
-    /*Chapter 6 类型和成员            
+/*Chapter 6 类型和成员            
 
         30.同步索引块-SyncBlockIndex
             a.线程同步 --- 用lock以及Monitor不能锁定值类型对象，无同步块索引
@@ -617,6 +617,7 @@ Mark：使用非托管程序加载托管程序集，Windows会自动加载并初
      * 
 
      */
+
 /*
     线程基础
     线程对CPU进行虚拟化

@@ -9,6 +9,8 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Reflection;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace HelloWorld.IPC
 {   
@@ -18,9 +20,94 @@ namespace HelloWorld.IPC
     /// </summary>
     public class IPC_C
     {
+
+        public abstract class ArgData : IArgSerialiable
+        {
+            public void DeSerialize(string jsonStr)
+            {
+                throw new NotImplementedException();
+            }
+
+            public string Serialize()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public interface IArgSerialiable
+        {
+            string Serialize();
+            void DeSerialize(string jsonStr);
+        }
+
+
+        public interface IPC : IDisposable
+        {
+            void SendMsg(byte[] msg);
+            string ReceiveMsg();
+        }
+
+
+        public interface IResponse
+        {
+            string Data { get; set; }
+            Exception Exp { get; set; }
+        }
+
+        public interface ClintInfo
+        {
+            string FileName { get; set; }
+            string WorkingDir { get; set; }
+        }
+
+        public interface IClientMgr
+        {
+            IClientStub Start(ClintInfo info);
+            void Stop(IClientStub client);
+        }
+
+        public interface IClientStub
+        {
+            int PID { get; set; }
+            IResponse Invoke(string cmdKey, ArgData args);
+            Task<IResponse> InvokeAsync(string cmdKey, ArgData args);
+        }
+
+        public interface IClient
+        {
+            void StartListen(string serverID);
+            void StopListen(string serverID);
+            void Register(string key, Func<ArgData, string> e);
+            void UnRegister(string key);
+        }
+
+
+
+        //public class A: ISubProcess
+        //{
+
+        //    public string Invoke(string cmdKey, object pas)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public Task<string> InvokeAsync(string cmdKey, object pas)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
+
+
         public static void Main(string[] args)
         {
             var nps =  IPCC.Build(eIPC.Client, typeof(NamedPipe));
+
+            var p = new ProcessStartInfo();
+            p.WorkingDirectory = "D:/";
+            p.FileName = "1.ex3 e";
+            p.Arguments = "ServerID";
+            
+            
 
         }
         public interface IPC: IDisposable

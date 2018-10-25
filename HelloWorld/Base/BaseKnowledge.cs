@@ -65,9 +65,6 @@ namespace HelloWorld.Base
             var v2 = Assembly.GetExecutingAssembly().GetCustomAttributesData();
             //Run(); 
             //RunRegex();
-            IntropJS.RunJS_V8();
-            IntropJS.RunJS_MS("");
-            RunJS();
             Console.ReadLine();
         }
 
@@ -87,15 +84,6 @@ namespace HelloWorld.Base
         {
             //throw new NotImplementedException();
             var ass = args.LoadedAssembly;
-        }
-
-        public static void RunJS()
-        {
-            var file = @"test.js";
-            if (IntropJS.ImportJSFile(file))
-            {
-
-            }
         }
 
         public static void RunRegex()
