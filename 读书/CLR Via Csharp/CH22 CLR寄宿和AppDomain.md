@@ -33,4 +33,25 @@
 
 ## 2.AppDomain
 
-- 
+- AppDomain功能：
+  - 1.不能直接访问其他AppDomain中的代码，按引用封送，按值封送；
+  - 2.AppDomain可以卸载；
+  - 3.AppDomain可以单独保护，可以设置最大权限集；
+  - 4.AppDomain可以单独实施配置：加载程序集的方式；
+- 为什么不支持卸载程序集？
+> [参考文档](https://blogs.msdn.microsoft.com/jasonz/2004/05/31/why-isnt-there-an-assembly-unload-method/)
+>> 1.可能正在应用程序域中运行该程序集内的代码，在程序集级别跟踪代码引用太昂贵
+>> 2.即使已经跟踪了所有的代码引用，但是释放程序集也只能释放原数据和IL，JIT中的代码还在保留在AppDomain的Loader Heap内，JIT申请的代码在调用buffer内是连续的；
+>> 3.
+
+- 每个AppDomain都有自己的Loader堆，每个Loader堆记录自AppDomain创建后已访问过的类型。Loader堆中每个类型对象都有一个方法表，方法表中的每个记录项指向JIT编译的本地代码（方法至少执行过一次）
+- 多个AppDomain中加载同一个DLL，使用该DLL中同一个类型时
+  - 不共享类型对象，每个AppDomain都会为同一个类型分配类型对象
+  - 不共享本地代码，调用同一个类型的方法时，由IL代码经过JIT编译后生产的本地代码（native code）与每个AppDomain相关联
+  - 不共享类型静态字段，由多个AppDomain使用的类型在每个AppDomain中都有一组静态字段
+- AppDomain中立，特例：MSCorLib.dll，该DLL提供CLR基础类型库，所有AppDomain共享该程序集中的类型，以AppDomain中立方式进行加载，该AppDomain维护一个特殊的Loader堆，代价：永远不能被卸载，除非终止进程
+- 跨AppDomain边界访问对象
+  - 按引用封送
+  - 按值封送
+  - 完全不能封送
+
