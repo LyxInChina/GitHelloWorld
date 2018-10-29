@@ -3,10 +3,7 @@
   <ItemGroup>
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="IntroCrypt.cpp" />
-    <ClCompile Include="TestClassA.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
+    <ClCompile Include="A.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -16,10 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="IntroCrypt.h" />
-    <ClInclude Include="TestClassA.h">
-      <Filter>Test</Filter>
-    </ClInclude>
+    <ClInclude Include="A.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Test">
