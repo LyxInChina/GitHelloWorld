@@ -38,7 +38,7 @@ namespace HelloWorld.CLR
         public static void Func()
         {
             //
-            var fileInfo = FileVersionInfo.GetVersionInfo(AppDomain.CurrentDomain.BaseDirectory + "//" + AppDomain.CurrentDomain.FriendlyName);
+            var fileInfo = FileVersionInfo.GetVersionInfo(AppDomainHelper.CurrentDomain.BaseDirectory + "//" + AppDomainHelper.CurrentDomain.FriendlyName);
             int s = 889;
             object o = s;
             int y = (int)s;

@@ -133,8 +133,6 @@ namespace UnitTestProject
 
         public static void Main()
         {
-            //var a1 = TestFunc(99);
-            //Console.WriteLine("a1:" + a1);
             var a2 = Funci(7, 8);
             Console.WriteLine("a2:" + a2);
             var a3 = Funci2("abcd");
@@ -143,16 +141,6 @@ namespace UnitTestProject
             Console.WriteLine("a4:" + a4);
             var a5 = Funcc2();
             Console.WriteLine("a5:" + a5);
-            //Call_Get();
-            //Call_Set();
-            //System.Threading.Thread.Sleep(1);
-            //for (int j = 0; j < int.MaxValue; j++)
-            //{
-            //    for (int i = 0; i < 1024 * 1000; i++)
-            //    {
-
-            //    }
-            //}           
         }
     }
 
@@ -177,33 +165,4 @@ namespace UnitTestProject
         public bool A;
         public bool BB;
     }
-
-    /*
-     URL:
-    https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.shell.interop.ivsmonitorselection.getcurrentselection?view=visualstudiosdk-2017#Microsoft_VisualStudio_Shell_Interop_IVsMonitorSelection_GetCurrentSelection_System_IntPtr__System_UInt32__Microsoft_VisualStudio_Shell_Interop_IVsMultiItemSelect__System_IntPtr__
-     
-                proj = null;
-            var monitor = OperationCenter.GetService<IVsMonitorSelection>() as IVsMonitorSelection;
-            if (monitor != null)
-            {
-                IVsHierarchy hierarchy = null;
-                IntPtr ppHier, ppSC;
-                uint pitemid;
-                IVsMultiItemSelect ppMIS;
-                var res = monitor.GetCurrentSelection(out ppHier, out pitemid, out ppMIS, out ppSC);
-                if (res == VSConstants.S_OK)
-                {
-                    if (ppHier != null)
-                    {
-                        hierarchy = (IVsHierarchy)Marshal.GetUniqueObjectForIUnknown(ppHier);
-                        var proj2 = GetProjFromIVsHierarchy(hierarchy);
-                        proj = proj2;
-                    }
-                    //if (pitemid == Microsoft.VisualStudio.VSConstants.VSITEMID_SELECTION)
-                    //{
-                    //    //Get mutiple ites by ppMIS
-                    //}
-                }
-            }
-     */
 }

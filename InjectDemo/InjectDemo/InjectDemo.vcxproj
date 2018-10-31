@@ -14,7 +14,7 @@
     <ProjectGuid>{78332936-90C5-4509-A94B-97E4F1625DA3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>InjectDemo</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

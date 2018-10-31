@@ -160,6 +160,7 @@
     <Compile Include="Base\CallInfo.cs" />
     <Compile Include="Base\Program_Base.cs" />
     <Compile Include="Base\SpecialFunctionInvoke.cs" />
+    <Compile Include="CLR\AppDomainHelper.cs" />
     <Compile Include="DesignPattern\ActionPattern.cs" />
     <Compile Include="DesignPattern\CreatePattern.cs" />
     <Compile Include="DesignPattern\SpecialPattern.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="MEF\CalImpl.cs" />
     <Compile Include="MEF\ICal.cs" />
     <Compile Include="MEF\MEFClient.cs" />
+    <Compile Include="SecurityAndPermission\SecurityAndPermissionHelp.cs" />
     <Compile Include="Serialization\JSON.cs" />
     <Compile Include="Serialization\XML.cs" />
     <Compile Include="SyncException\SyncException.cs" />
@@ -245,6 +247,7 @@
     <None Include="Redis\Server\Redis-x64-3.2.100\Windows Service Documentation.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SecurityAndPermission\Windows权限相关.md" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

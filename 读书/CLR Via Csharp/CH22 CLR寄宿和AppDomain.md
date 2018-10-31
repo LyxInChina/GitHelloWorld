@@ -44,6 +44,8 @@
 >> 2.即使已经跟踪了所有的代码引用，但是释放程序集也只能释放原数据和IL，JIT中的代码还在保留在AppDomain的Loader Heap内，JIT申请的代码在调用buffer内是连续的；
 >> 3.
 
+  ![ch22.2.1.png](ch22.2.1.png)
+
 - 每个AppDomain都有自己的Loader堆，每个Loader堆记录自AppDomain创建后已访问过的类型。Loader堆中每个类型对象都有一个方法表，方法表中的每个记录项指向JIT编译的本地代码（方法至少执行过一次）
 - 多个AppDomain中加载同一个DLL，使用该DLL中同一个类型时
   - 不共享类型对象，每个AppDomain都会为同一个类型分配类型对象
@@ -51,7 +53,80 @@
   - 不共享类型静态字段，由多个AppDomain使用的类型在每个AppDomain中都有一组静态字段
 - AppDomain中立，特例：MSCorLib.dll，该DLL提供CLR基础类型库，所有AppDomain共享该程序集中的类型，以AppDomain中立方式进行加载，该AppDomain维护一个特殊的Loader堆，代价：永远不能被卸载，除非终止进程
 - 跨AppDomain边界访问对象
-  - 按引用封送
-  - 按值封送
+  - 按引用封送 Marshal-by-Reference ,跨边界的类需继承自MarshalByRefObject
+  - 按值封送 Marshal-by-Value,跨边界的类或者结构体需可序列化 即添加Serializable特性
   - 完全不能封送
+- 线程与AppDomain无关
+  
+***
 
+- 使用引用封送跨AppDomain进行通信
+  - System.Security.Policy.Evidence:CLR用来计算AppDomain权限集的证据
+  - System.Security.PermissionSet:权限集合对象
+  - System.AppDomainSetup:CLR为AppDomain使用的配置设置，
+  - 按引用将一个对象从一个AppDomain封送到另一个AppDomain：
+    - 源AppDomain向目标AppDomain发送或者返回一个对象引用时，
+    - 1.CLR在目标AppDomain的Loader堆中定义一个代理类型，该类型用原始类型的元数据定义，即与原始类型完全一样；
+    - 2.在代理类型中定义了几个自己的实例字段，该字段指出哪个AppDomain拥有真实对象，以及如何在拥有的AppDomain中找到真实对象，内部使用GCHandle实例引用真实对象
+    - 3.定义好代理类型后，CreateInstanceAndUnwarp会创建该代理类型的一个实例，初始化时标识源AppDomain和真实对象
+    - 4.将代理对象的引用返回目标AppDomain，该代理对象并非真实对象而是一个透明的代理（判断System.Runtime.Remoting.RemotingServices.IsTransparentproxy(object)），但是CLR的GetType会返回真实对象的类型；
+    - 5.引用程序使用代理调用代理类内定义的方法，代理实现中将AppDomain切换到新AppDomain；
+    - 6.线程使用代理对象的GCHandle在新AppDomain中查找真实对象，使用真实对象调用该方法；（调用堆栈中显示跨AppDomain边界）；
+    - 7.真实对象方法执行完返回后，返回到代理方法中，代理类将线程切换到调用方的AppDomain；
+    - [x] 注意：
+      - a.跨AppDomain边界的方法调用是同步执行的；
+      - b.线程在那个AppDomain内执行代码会用该AppDomain的安全和配置设置来执行代码；
+    - 卸载AppDomain后，再调用代理对象的方法会抛出AppDomainUnloadedException异常
+    - 代理对象的实例字段：
+      - 1.这些实例字段不会成文代理类型的一部分，也不会包含在代理对象中；
+      - 2.对这些实例字段进行读写时，JIT自动生成代码，调用System.Object.FieldGetter或者FieldSetter方法使用代理对象，即使用反射的方式获取或设置字段的值；
+      - 3.即使在默认AppDomain中，同样具有性能损失(即对于普通对象和继承自MarshalRefObject的对象)；
+      - 4.避免在MarshalByRefObject派生类中定义任何静态成员：静态成员总是在调用AppDomain的上下文中访问，静态成员没有代理类；
+    - 租约管理器 - lease manager 如何管理代理对象引用的原始对象
+      - 1.原始对象创建好后，CLR保持对象存活固定时间(5 minutes)；
+      - 2.若固定时间内没有代理发出调用，对象失效，下次被GC释放；
+      - 3.每发出一次对原始对象的调用，租约管理器就会续订对象的租期（2 minutes）；
+      - 4.租约过期后，该对象被调用就会抛出System.Runtime.Remoting.RemotingException异常；
+      - 5.租期时间，可以在MarshalByRefObject的虚方法InitializeLifetimeServices的重写中进行修改；
+
+```C#
+/// <summary>
+/// 修改对象的租期时间
+/// </summary>
+/// <returns></returns>
+[SecurityPermission(SecurityAction.Demand,Flags = SecurityPermissionFlag.Infrastructure)]
+public override object InitializeLifetimeService()
+{
+    ILease lease = (ILease)base.InitializeLifetimeService();
+    if (lease.CurrentState == LeaseState.Initial)
+    {
+        lease.InitialLeaseTime = TimeSpan.FromMinutes(1);
+        lease.SponsorshipTimeout = TimeSpan.FromMinutes(2);
+        lease.RenewOnCallTime = TimeSpan.FromSeconds(2);
+    }
+    return lease;
+}
+```
+
+***
+
+- 使用按值封送跨Appd通信
+- 按值将一个对象从一个AppDomain封送到另一个AppDomain：
+  - 1.CLR将对象的实例字段序列化成一个字节数组；
+  - 2.将字节数组从源AppDomain复制到目标AppDomain；
+  - 3.CLR在目标AppDomain中反序列化字节数组，强制将被反序列化的类型的程序集加载到目标AppDomain中；
+  - 4.CLR创建类型的一个实例，并使用字节数组初始化对象字段；
+  - 5.CreateInstanceAndUnwarp方法返回对这个副本的引用；
+  - 6.返回真实对象,在调用方法时不会跨AppDomain；
+  - 7.因此卸载AppDomain后，对默认
+  - [x] 提示:
+    - 加载程序集时，CLR使用目标AppDomain的策略和配置设置；
+  
+## 卸载AppDomain
+
+- 卸载AppDomain：卸载AppDomain内所有的程序集，是否Loader堆；
+  - 1.CLR挂起进程中所有执行过托管代码的所有线程；
+  - 2.CLR检查所有线程栈，若线程栈上存在准备卸载的AppDomain，就会抛出ThreadAbortException异常，恢复线程执行，导致线程展开-unwind,会执行finally代码；
+    - [x] 提示
+    - 若线程在执行finally，catch，类构造器，临界执行区域，非托管代码中时，CLR不会立即终止该线程，等待执行完毕后，CLR再抛出异常；
+    - 

@@ -2,8 +2,9 @@
 ***
 ## 基本知识：
 * 环境安装
-安装包下载:[地址1](https://golang.org/)
-[个地址2](https://golang.google.cn/)
+安装包下载:
+- [地址1](https://golang.org/)
+- [地址2](https://golang.google.cn/)
 
 ## 语言基础组成
 * 包声明： 

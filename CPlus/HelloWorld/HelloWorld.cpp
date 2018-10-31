@@ -238,19 +238,24 @@ int Add(int a, int b)
 	return a + b;
 }
 
+//IntPtr GetString(int a)
+char a1[10] = "12340678K";
+
 extern "C" __declspec(dllexport)
 char * GetString(int a)
 {
-	char* c = "abcdef";
 #ifdef V1
-	c = "V1abcdefV1";
+	a1[0] = 'V';
+	//c = "V1abcdefV1";
 #endif // V1
 #ifdef V2
-	c = "V2abcdefV2";
+	a1[0] = 'B';
+	//c = "V2abcdefV2";
 #endif // V2
-	return c;
+	return a1;
 }
-
+//Intp
+//int GetStringLen(IntPtr str)
 extern "C" __declspec(dllexport)
 int GetStringLen(char* str)
 {

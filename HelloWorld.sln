@@ -104,7 +104,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{0FC0FFB2-7A3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Go", "Go", "{2A64860B-7FA1-4E4A-9D97-91D1D55C2927}"
 	ProjectSection(SolutionItems) = preProject
-		Go\Gohelp.md = Go\Gohelp.md
+		Go\GoLearn.md = Go\GoLearn.md
 		Go\helloworld.go = Go\helloworld.go
 	EndProjectSection
 EndProject
@@ -121,6 +121,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "读书", "读书", "{2D0E7B83-7BC9-4167-B3CD-C1815CF212E0}"
 	ProjectSection(SolutionItems) = preProject
 		读书\操作系统概念\CH11 文件系统实现.md = 读书\操作系统概念\CH11 文件系统实现.md
+		读书\CLR Via Csharp\CH22 CLR寄宿和AppDomain.md = 读书\CLR Via Csharp\CH22 CLR寄宿和AppDomain.md
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld", "CPlus\HelloWorld\HelloWorld.vcxproj", "{8B33AFB6-0AC5-4F64-9479-5D3BE5A9D317}"
