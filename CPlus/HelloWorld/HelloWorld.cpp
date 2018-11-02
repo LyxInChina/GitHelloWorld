@@ -6,7 +6,7 @@
 #include "stdafx.h"
 #include "A.h"
 
-#define AUDIO32_t 0x7fffffff	
+#define AUDIO32_t 0x7fffffff
 #define Random(x)(rand()%x)
 #define V1
 
@@ -59,7 +59,7 @@ void PointerTest()
 	printf("%d\n", *pInt_a);
 	printf("%d\n", int_b);
 
-	//plus & substract 指针前后位移
+	//+ & - 指针前后位移
 
 	//指针数组
 	int a, b, c;

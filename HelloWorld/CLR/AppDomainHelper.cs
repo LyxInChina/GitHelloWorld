@@ -10,6 +10,7 @@ namespace HelloWorld.CLR
 {
     public class AppDomainHelper
     {
+        [LoaderOptimization(5)]
         public static bool CreateDomain(string name,string dir)
         {
             var applicationIdentity = new ApplicationIdentity("AppFullName");
@@ -59,13 +60,60 @@ namespace HelloWorld.CLR
 
     }
 
-    [Serializable]
-    public class MarshalByValType
+    public class DomainMgr
     {
+        static AppDomainManager mDomainManager;
+
+        public static AppDomainSetup CreateMyAppDomainSetup()
+        {
+            var setup = new AppDomainSetup();
+            setup.AppDomainManagerAssembly = "MyAppDomainAssembly Strong Name string";
+            setup.AppDomainManagerType = "MyAppDomainManager Full Name";
+
+            return setup;
+        }
+
+
+
+    }
+
+    public class MyAppDomainManager : AppDomainManager
+    {
+           
+    }
+
+    #region Marhal 封送类
+
+    public class MarshalByRefType : MarshalByRefObject
+    {
+        /// <summary>
+        /// 修改对象的租期时间
+        /// </summary>
+        /// <returns></returns>
+        [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand, Flags = System.Security.Permissions.SecurityPermissionFlag.Infrastructure)]
+        public override object InitializeLifetimeService()
+        {
+            System.Runtime.Remoting.Lifetime.ILease lease = (System.Runtime.Remoting.Lifetime.ILease)base.InitializeLifetimeService();
+            if (lease.CurrentState == System.Runtime.Remoting.Lifetime.LeaseState.Initial)
+            {
+                lease.InitialLeaseTime = TimeSpan.FromMinutes(1);
+                lease.SponsorshipTimeout = TimeSpan.FromMinutes(2);
+                lease.RenewOnCallTime = TimeSpan.FromSeconds(2);
+            }
+            return lease;
+        }
+
         public string GetDateTimeStr()
         {
             return DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
         }
+
+    }                                                                                              
+
+    [Serializable]
+    public class MarshalByValType
+    {
+
     }
 
     [Serializable]
@@ -85,7 +133,7 @@ namespace HelloWorld.CLR
         }
     }
 
-    public class MarshalByRefType : MarshalByRefObject
+    public class MarshalByRefTypeEx : MarshalByRefObject
     {
         public MarshalByValType GetMarshalByValType()
         {
@@ -103,4 +151,5 @@ namespace HelloWorld.CLR
         }
     }
 
+    #endregion
 }

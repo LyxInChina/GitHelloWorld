@@ -64,11 +64,6 @@ namespace UnitTestProject
                 return IntPtr.Zero;
             }
             return Marshal.StringToHGlobalAnsi(str);
-            byte[] buffer = Encoding.UTF8.GetBytes(str);
-            IntPtr ptr = IntPtr.Zero;
-            ptr = Marshal.AllocHGlobal(buffer.Length);
-            Marshal.Copy(buffer, 0, ptr, buffer.Length);
-            return ptr;
         }
 
         public static int Convert(MyIntroStruct s1,out MyIntroStruct2 s2)

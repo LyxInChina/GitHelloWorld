@@ -4,6 +4,11 @@
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="A.cpp" />
+    <ClCompile Include="ZeroMQ\Server_Rep.cpp" />
+    <ClCompile Include="ZeroMQ\Clinet_Req.cpp" />
+    <ClCompile Include="ZeroMQ\Server_Pub.cpp" />
+    <ClCompile Include="ZeroMQ\Client_Sub.cpp" />
+    <ClCompile Include="ZeroMQ\Task_Ventilator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

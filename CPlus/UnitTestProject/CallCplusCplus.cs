@@ -230,7 +230,6 @@ namespace UnitTestProject
             [DllImport(DllPath, EntryPoint = "GetString", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
             public static extern IntPtr GetStringX86();
 
-
             const string DllPathX64 = @"x64\V1\Helloworld.dll";
 
             [DllImport(DllPathX64, EntryPoint = "GetStringLen", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Auto)]

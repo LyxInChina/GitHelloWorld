@@ -5,12 +5,7 @@ eg
 import os
 import re
 import time
-
-import itchat
-from itchat.content import *
-
 # 程序入口点
-
 if __name__ == '__main__':
     main()
 
@@ -21,7 +16,9 @@ def main():
     print(a)
     print(b)
     print(os.getcwd())
-    # start_itchat()
+	baseKnowledge()
+	ListType()
+	CharType()
 
 # 基础知识
 def baseKnowledge():
@@ -41,23 +38,23 @@ def baseKnowledge():
     # 控制台输入
     x = input('输入X')
     # 判断语句
-    if True:
-        print(True)
-        elif False:
-            print(False)
+    if x==1:
+        print("is 1")
+        elif x==2:
+            print("is 2")
             else:
-                print('ok')
+                print('is{k}'.format(k=x))
     # 循环
-    b = True
-    while b:
-        b = False
-        print('while')
+    b = 3
+    while b>0:
+        b --
+        print('while Circle {k}'.format(k=b))
         # 跳过本次循环
-        continue
+        #continue
         # 结束循环
-        break
-        else:
-            print('while else')
+        #break
+        #else:
+        #    print('while else')
 
     for i in range(10):
         print('rang in'+i)

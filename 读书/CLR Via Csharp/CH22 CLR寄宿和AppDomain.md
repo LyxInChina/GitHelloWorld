@@ -2,6 +2,7 @@
 
 - 寄宿hosting：允许是任务应用程序能利用CLR的功能，允许享有的应用程序部分使用托管代码编写；
 - AppDomain：允许第三方的不受信任的代码在一个现有的进程中允许，CLR保证数据结构 代码 安全上下文不会被滥用或破坏；
+- https://www.cnblogs.com/foman/archive/2009/10/18/1585655.html
 
 ## 1.CLR寄宿
 
@@ -110,7 +111,7 @@ public override object InitializeLifetimeService()
 
 ***
 
-- 使用按值封送跨Appd通信
+- 使用按值封送跨AppDomain通信
 - 按值将一个对象从一个AppDomain封送到另一个AppDomain：
   - 1.CLR将对象的实例字段序列化成一个字节数组；
   - 2.将字节数组从源AppDomain复制到目标AppDomain；
@@ -129,4 +130,56 @@ public override object InitializeLifetimeService()
   - 2.CLR检查所有线程栈，若线程栈上存在准备卸载的AppDomain，就会抛出ThreadAbortException异常，恢复线程执行，导致线程展开-unwind,会执行finally代码；
     - [x] 提示
     - 若线程在执行finally，catch，类构造器，临界执行区域，非托管代码中时，CLR不会立即终止该线程，等待执行完毕后，CLR再抛出异常；
-    - 
+  - 3.所有线程都离开AppDomain后，CLR遍历堆，为所有引用AppDomain对象的代理对象设置失效标识；
+  - 4.CLR强制垃圾回收；
+  - 5.CLR恢复剩余所有线程执行；
+    - [x] 提示
+    - 当一个线程调用AppDomain.Unload时，针对AppDomain中的线程，CLR会提供10S的时间离开，10秒后，若调用AppDomain.Unload的线程没有返回，CLR会抛出CannotUnloadAppDomainException异常
+    - 若调用AppDomain.Unload的线程在要卸载的AppDomain中，CLR会创建另一个线程来卸载AppDomain，第一个线程会强制抛出ThreadAbortException
+
+## 监视AppDomain
+
+- 设置：AppDomain静态属性MonitoringEnable设置为true
+
+## AppDomain异常通知
+
+- 处理异常：
+  - 1.异常首次抛出时，CLR回调抛出异常的AppDomain登记的FirstChanceException回调方法；
+  - 2.CLR查找栈上在同一个AppDomain中的任何Cache块；
+  - 3.若有一个cache能处理异常，则异常处理完成；
+  - 4.若AppDomain没有cache处理异常，则CLR沿着栈向上找到AppDomain，再次抛出异常（经过按值封送）；
+  - 5.AppDomain调用当前FirstChanceException回调方法，一直到栈顶部，若异常仍未处理，CLR将终止进程；
+
+## 宿主使用AppDomain
+
+- 可执行应用程序
+  - 1.Windows使用托管Exe初始化进程；
+  - 2.加载垫片（dim）MSCorEE.dll;
+  - 3.dim检测Exe中的CLR头信息，选择加载的CLR版本；
+  - 4.dim加载CLR（CorClr.dll）；
+  - 5.dim检测CLR头，找到程序入口方法Main;
+  - 6.CLR调用Main方法；
+  - 7.CLR访问类型时，根据类型定位程序集，将程序集加载到AppDomain；
+  - 8.CLR调用Main方法退出后，Windows进程终止（System.Environment.Exit()）；
+- Microsoft Silverlight
+- ASP.Net Web窗体和XML Web服务应用程序
+- Microsoft SQL Server
+
+## 高级宿主控制
+
+- 使用托管代码管理CLR
+  - System.ApppDomainManager:允许宿主使用托管代码覆盖CLR的默认行为
+  - System.ApppDomainManager派生类：重新控制的任何虚方法，允许宿主保存控制权
+    - 告诉CLR使用字节的AppDomainManager派生类：AppDomainSetup实例中初始化AppDomainManagerAssembly和AppDomainManagerType；
+    - 在应用程序XML配置文件中使用，appDomainManagerAssembly和appDomainManagerType元素
+    - 本地宿主查找ICLRControl接口
+- 真对临界区的线程终止问题
+  - 临界区内的线程出现异常，CLR尝试将异常升级为得体的AppDomain卸载，若在规定时间内未卸载，则升级为粗鲁的AppDomain卸载
+- 宿主取回线程
+  - [x] Thread的Abort方法说明
+    - 1.异步方法；
+    - 2.调用后，设置目标线程的AbortRequest标识，并立即返回；
+    - 3.CLR检测目标线程的标识后，尝试将目标线程放（通过线程劫持）到安全点 safe place（非安全点：类构造器，cache块，finally块，CER代码块，非托管代码）；
+    - 4.当线程在安全点后，CLR检测线程标识，后抛出ThreadAbortException，该异常被CLR特殊处理；
+  - 在cach块尾部，CLR自动重新抛出ThreadAbortException
+  - Thread的ResetAbort方法要求被调用者被授予SecurityPermission权限，而且ControlThread标识为true；

@@ -42,6 +42,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{7DBC7458-4FB6-4450-9A48-90A3A695778C}"
 	ProjectSection(SolutionItems) = preProject
 		Python\flower.py = Python\flower.py
+		Python\helloworld.py = Python\helloworld.py
 		Python\itchat.pkl = Python\itchat.pkl
 		Python\rouse.py = Python\rouse.py
 		Python\testnumpy.py = Python\testnumpy.py

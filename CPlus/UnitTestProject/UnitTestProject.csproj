@@ -54,7 +54,6 @@
   <ItemGroup>
     <Compile Include="CallCplusCplus.cs" />
     <Compile Include="HelloWorld_Introp.cs" />
-    <Compile Include="MarshalByRefType.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
