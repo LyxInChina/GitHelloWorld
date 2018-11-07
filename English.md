@@ -53,9 +53,9 @@
 * illustrate   说明
 * caution      警告
 * privilege    特权
-* IPC          inter-process communication 进程间通信
-* LPC          local-process communication 本地过程调用
-* RPC          remote-process communication    远程过程调用
+* IPC          inter-process communication      进程间通信
+* LPC          local-process communication      本地过程调用
+* RPC          remote-process communication     远程过程调用
 * declaration n 宣言、声明
 * navigate n 导航、航行
 * usages n 用法、运用
@@ -124,3 +124,20 @@
 * tutorial 教程
 * fences 栅栏、障碍物、
 * scenarios 脚本
+* Extentions
+* Common
+* Constant
+* Converter
+* Entity
+* Factory
+* Interface
+* Interop
+* Manager
+* MetaData
+* Service
+* Provider
+* Resource
+* UI
+* Utility
+* Model
+* ViewModel

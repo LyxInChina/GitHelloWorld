@@ -2,7 +2,7 @@
 
 - 寄宿hosting：允许是任务应用程序能利用CLR的功能，允许享有的应用程序部分使用托管代码编写；
 - AppDomain：允许第三方的不受信任的代码在一个现有的进程中允许，CLR保证数据结构 代码 安全上下文不会被滥用或破坏；
-- https://www.cnblogs.com/foman/archive/2009/10/18/1585655.html
+- [参考文档](https://www.cnblogs.com/foman/archive/2009/10/18/1585655.html)
 
 ## 1.CLR寄宿
 
