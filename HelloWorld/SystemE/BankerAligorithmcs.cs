@@ -91,6 +91,7 @@ namespace ThreadSync
                 while (BigOrEqual(Available,request))
                 {
                     //Wait
+                    System.Threading.Thread.Sleep(10);
                 }
                 for (int j = 0; j < Available.Length; j++)
                 {

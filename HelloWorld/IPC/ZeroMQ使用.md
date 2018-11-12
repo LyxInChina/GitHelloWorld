@@ -31,13 +31,4 @@
 
 - 并行管道
 
-
 ## Words
-
-```C#
-/*
-radioactive 放射性的
-insult  辱骂
-neighbours  邻居
-*/
-```

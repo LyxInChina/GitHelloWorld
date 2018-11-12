@@ -1,4 +1,4 @@
-﻿using HelloWorld.WCF.Icl;
+using HelloWorld.WCF.Icl;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -115,7 +115,7 @@ namespace HelloWorld.WCF
 
         //错误契约
 
-        //[FaultContract(detailType:typeof(Msg))]
+        // [FaultContract(detailType:typeof(Msg))]
         [DataContract]
         public class FaultException
         {
@@ -212,7 +212,7 @@ namespace HelloWorld.WCF
 
     }
 
-    /*服务发布*/
+    /*服务发布与使用*/
 
     /// <summary>
     /// 实现宿主
@@ -320,35 +320,35 @@ namespace HelloWorld.WCF
         {
             static void Main(string[] args)
             {
-                //var a = new ServiceReference.ServiceAClient();
-                //a.Open();
-                //if (a.State == System.ServiceModel.CommunicationState.Opened)
-                //{
-                //    var t1 = a.GetDataA(99);
-                //    Console.WriteLine(t1);
-                //    var t2 = a.GetDataUsingDataContractA(new ServiceReference1.CompositeType() { BoolValue = true, StringValue = "testA" });
-                //    Console.WriteLine(t2.BoolValue + "::" + t2.StringValue);
-                //}
-                //var cb = new CallB();
-                //var b = new ServiceReference2.ServiceBClient(new System.ServiceModel.InstanceContext(cb));
-                //b.Open();
-                //if (b.State == System.ServiceModel.CommunicationState.Opened)
-                //{
-                //    var t1 = b.GetDataB(69);
-                //    Console.WriteLine(t1);
-                //    var t2 = b.GetDataUsingDataContractB(new ServiceReference2.CompositeType() { BoolValue = true, StringValue = "testB" });
-                //    Console.WriteLine(t2.BoolValue + "::" + t2.StringValue);
-                //}
-                //var c = new ServiceReference3.ServiceCClient();
-                //c.Open();
-                //if (c.State == System.ServiceModel.CommunicationState.Opened)
-                //{
-                //    c.SetDataC(99);
-                //}
-                //Console.ReadLine();
-                //a.Close();
-                //b.Close();
-                //c.Close();
+                var a = new ServiceReference.ServiceAClient();
+                a.Open();
+                if (a.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                   var t1 = a.GetDataA(99);
+                   Console.WriteLine(t1);
+                   var t2 = a.GetDataUsingDataContractA(new ServiceReference1.CompositeType() { BoolValue = true, StringValue = "testA" });
+                   Console.WriteLine(t2.BoolValue + "::" + t2.StringValue);
+                }
+                var cb = new CallB();
+                var b = new ServiceReference2.ServiceBClient(new System.ServiceModel.InstanceContext(cb));
+                b.Open();
+                if (b.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                   var t1 = b.GetDataB(69);
+                   Console.WriteLine(t1);
+                   var t2 = b.GetDataUsingDataContractB(new ServiceReference2.CompositeType() { BoolValue = true, StringValue = "testB" });
+                   Console.WriteLine(t2.BoolValue + "::" + t2.StringValue);
+                }
+                var c = new ServiceReference3.ServiceCClient();
+                c.Open();
+                if (c.State == System.ServiceModel.CommunicationState.Opened)
+                {
+                   c.SetDataC(99);
+                }
+                Console.ReadLine();
+                a.Close();
+                b.Close();
+                c.Close();
             }
 
             /// <summary>
@@ -405,7 +405,7 @@ namespace HelloWorld.WCF
     
     SOAP 协议
     Sample Object Access Protocol
-    可发送XML架构定义消息	
+    可发送XML架构定义消息
     包含信封：标题、正文
     
     WSDL 协议
@@ -427,7 +427,7 @@ namespace HelloWorld.WCF
     		Protocol Binding Element :指定安全性 可靠性 上下文流设置
     
     消息交换模式
-    	One-Way Calls 
+    	One-Way Calls
     	Request/Reply
     	Duplex
     
@@ -443,8 +443,6 @@ namespace HelloWorld.WCF
     		FaultContract
     	d.消息协定：自定义消息结构
     		指定消息头、消息体、是否对内容进行加密或签名；
-    
-    
     
     1.服务创建
     

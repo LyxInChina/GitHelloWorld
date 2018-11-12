@@ -16,7 +16,7 @@
 - DLL:EnvDTE.dll
 - NP:EnvDTE
 - VS顶级自动化对象模型
-- 获取：GetService<typeof(DTE)>
+- 获取对象实例：GetService<typeof(DTE)>
   
 ### 接口IVsSolutionEvents
 
@@ -25,7 +25,7 @@
 - 监听解决方案通知的接口，用于追踪解决方案或者解决方案的工程的打开，关闭，加载，卸载事件
 - 解决方案和项的，打开，关闭，加载，卸载有本质的不同
 - 使用 查询SVsSolution对象为IVsSolution接口，调用AdviseSolutionEvents方法，返回一个指向IVsSolutionEvents的指针；
-- 使用
+
 ```C#
     //服务提供者
     IServiceProvider provider;// = Instance of Implement to Package(一般为一个package示例)

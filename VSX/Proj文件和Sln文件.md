@@ -302,7 +302,6 @@ public static bool IsExists(BuildDependency build, string uniqueName)
 > GUID：{5EFC7975-14BC-11CF-9B2B-00AA00573819}，ID：773；
 
 - 2.使用Microsoft.Build.BuildEngine.SolutionWrapperProject解析SLN文件，找出所有的Project，然后添加Project，需要从原SLN中获取工程的GUID;
-> 
 - 3.使用内部类Microsoft.Build.Construction.SolutionParser解析SLN文件，找到管理的所有的Project，然后使用Env.DTE.Solution的AddFromFile方法加载工程；
 
 > 首先定义内部类使用方法

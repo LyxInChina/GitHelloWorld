@@ -558,7 +558,8 @@ namespace HelloWorld.IPC
         }
 
         #endregion
+        #region Remoting
 
-
+        #endregion
     }
 }
