@@ -78,6 +78,7 @@
     <Compile Include="ES6LogHelper.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="Log4NetHelper.cs" />
+    <Compile Include="LogTraceHelper.cs" />
     <Compile Include="NLogHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

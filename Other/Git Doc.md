@@ -5,12 +5,12 @@
 - git clone url
 - 完全复制远程仓库到本地
 - 若远程仓库工程量较大一次难以复制，可以使用
-- git clone --depth 1 url
+- git clone --depth 1 [url]
 - 仅包含最新1次改动
 
 ## 从远程仓库更新代码
 
-- git  pull
+- git pull
 
 
 ## 推送本地代码到远程仓库

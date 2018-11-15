@@ -318,38 +318,38 @@ namespace HelloWorld.WCF
     {
         class Program
         {
-            static void Main(string[] args)
-            {
-                var a = new ServiceReference.ServiceAClient();
-                a.Open();
-                if (a.State == System.ServiceModel.CommunicationState.Opened)
-                {
-                   var t1 = a.GetDataA(99);
-                   Console.WriteLine(t1);
-                   var t2 = a.GetDataUsingDataContractA(new ServiceReference1.CompositeType() { BoolValue = true, StringValue = "testA" });
-                   Console.WriteLine(t2.BoolValue + "::" + t2.StringValue);
-                }
-                var cb = new CallB();
-                var b = new ServiceReference2.ServiceBClient(new System.ServiceModel.InstanceContext(cb));
-                b.Open();
-                if (b.State == System.ServiceModel.CommunicationState.Opened)
-                {
-                   var t1 = b.GetDataB(69);
-                   Console.WriteLine(t1);
-                   var t2 = b.GetDataUsingDataContractB(new ServiceReference2.CompositeType() { BoolValue = true, StringValue = "testB" });
-                   Console.WriteLine(t2.BoolValue + "::" + t2.StringValue);
-                }
-                var c = new ServiceReference3.ServiceCClient();
-                c.Open();
-                if (c.State == System.ServiceModel.CommunicationState.Opened)
-                {
-                   c.SetDataC(99);
-                }
-                Console.ReadLine();
-                a.Close();
-                b.Close();
-                c.Close();
-            }
+            //static void Main(string[] args)
+            //{
+            //    var a = new ServiceReference.ServiceAClient();
+            //    a.Open();
+            //    if (a.State == System.ServiceModel.CommunicationState.Opened)
+            //    {
+            //       var t1 = a.GetDataA(99);
+            //       Console.WriteLine(t1);
+            //       var t2 = a.GetDataUsingDataContractA(new ServiceReference1.CompositeType() { BoolValue = true, StringValue = "testA" });
+            //       Console.WriteLine(t2.BoolValue + "::" + t2.StringValue);
+            //    }
+            //    var cb = new CallB();
+            //    var b = new ServiceReference2.ServiceBClient(new System.ServiceModel.InstanceContext(cb));
+            //    b.Open();
+            //    if (b.State == System.ServiceModel.CommunicationState.Opened)
+            //    {
+            //       var t1 = b.GetDataB(69);
+            //       Console.WriteLine(t1);
+            //       var t2 = b.GetDataUsingDataContractB(new ServiceReference2.CompositeType() { BoolValue = true, StringValue = "testB" });
+            //       Console.WriteLine(t2.BoolValue + "::" + t2.StringValue);
+            //    }
+            //    var c = new ServiceReference3.ServiceCClient();
+            //    c.Open();
+            //    if (c.State == System.ServiceModel.CommunicationState.Opened)
+            //    {
+            //       c.SetDataC(99);
+            //    }
+            //    Console.ReadLine();
+            //    a.Close();
+            //    b.Close();
+            //    c.Close();
+            //}
 
             /// <summary>
             /// 构建一般服务连接

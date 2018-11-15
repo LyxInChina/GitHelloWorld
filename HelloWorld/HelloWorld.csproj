@@ -65,20 +65,19 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>DBFB3CBABBD75465C35F8D3FAF7CC34DEB237C5A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>8F1BCC8110DF43F4923B529F3E402C60A694C8CE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>HelloWorld_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MyPorfile.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>HelloWorld_psw_123456.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
@@ -221,12 +220,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="CLR\IL.md" />
-    <None Include="exportpfx.pfx" />
     <None Include="HelloWorld.exe.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="HelloWorld_psw_123456.pfx" />
     <None Include="HelloWorld_TemporaryKey.pfx" />
-    <None Include="MyPorfile.snk" />
     <None Include="Properties\app.manifest" />
     <None Include="Redis\Server\ReadMe.md" />
     <None Include="Redis\Server\Redis-x64-3.2.100\dump.rdb">

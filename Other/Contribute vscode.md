@@ -5,7 +5,7 @@
 ## 获取源代码
 
 ```git
-git clone https://github.com/Microsoft/vscode.git
+    git clone https://github.com/Microsoft/vscode.git
 ```
 
 ## 搭建环境

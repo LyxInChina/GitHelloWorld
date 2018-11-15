@@ -46,12 +46,12 @@ namespace HelloWorld.CLR
             Console.WriteLine("Is TransparentProxy:{0}", RemotingServices.IsTransparentProxy(mbrt));
 
             //得到按引用封送的结构对象
-            var mbvst = mbrt.GetMarshalByValStructType();
+            //var mbvst = mbrt.GetMarshalByValStructType();
             //得到按值封送的类对象
-            var mbvt = mbrt.GetMarshalByValType();
+            //var mbvt = mbrt.GetMarshalByValType();
 
             //无法得到不可封送类型
-            var nmt = mbrt.GetNonMarshalType();
+            //var nmt = mbrt.GetNonMarshalType();
 
 
             AppDomainManager mgr = new AppDomainManager();
