@@ -1,6 +1,7 @@
 /*
 AJAX Asynchronous JavaScript and Xml
-异步的JS和XML-无需重新加载整个网页的情况下，能够更新部分网页的技术
+异步的JS和XML
+无需重新加载整个网页的情况下，能够更新部分网页的技术
 */
 function AjaxRequest() {
     //创建XMLHttpRequest对象

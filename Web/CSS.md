@@ -68,5 +68,4 @@
 
 - 内部样式表 Internal Style sheet
   > 单个文档内定义css时，使用内部样式表
-  > 
 - 内联样式表 Inline style

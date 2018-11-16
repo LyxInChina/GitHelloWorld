@@ -6,6 +6,28 @@
 -->
 <html lang="en" manifest="" xmlns="" dir="auto">
 
+<style>
+    @keyframes donut-spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .donut {
+        display: inline-block;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #7983ff;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: donut-spin 1.2s linear infinite;
+    }
+</style>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,20 +36,21 @@
     <script src="javascript.js"></script>
     <script src="jquery-3.3.1.min.js"></script>
     <script>
-        $(function() {
+        $(function () {
             console.debug("debug");
         })
     </script>
 </head>
 
 <body>
+    <div class="donut"></div>
     <h1 style="background-color: red">this is h1</h1>
     <p>this is a pargraph</p>
     <!-- 水平线 -->
-    <hr/>
+    <hr />
     <a href="https://www.baidu.com/">this is link to baidu </a>
     <!-- 换行 -->
-    <br/>
+    <br />
     <img src="../leaf.png" width="20px" height="20px" alt="no image"></img>
     <div>this is div</div>
 </body>
