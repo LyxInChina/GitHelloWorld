@@ -1,5 +1,8 @@
 # UnitTest
 
+- 参考资料：
+- http://www.cnblogs.com/yubaolee/p/DotNetCoreUnitTest.html 
+
 ## 使用MSTest.TestFramework
 
 - 安装使用MSTest.TestFramework
@@ -18,9 +21,15 @@ public class TestMain
     }
 }
 ```
+
 - 测试方法内：使用Assert断言验证测试方法结果
 
 ### 使用Moq模拟测试
+
+- 参考资料：
+- https://www.cnblogs.com/haogj/archive/2011/07/22/2113496.html
+- https://github.com/moq/moq4
+- https://www.cnblogs.com/cgzl/p/9294431.html
 
 - 1.添加Moq引用；
 - 2.初始化要模拟的接口对象：

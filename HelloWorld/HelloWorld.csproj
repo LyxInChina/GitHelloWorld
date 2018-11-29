@@ -65,7 +65,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>8F1BCC8110DF43F4923B529F3E402C60A694C8CE</ManifestCertificateThumbprint>
@@ -74,7 +74,7 @@
     <ManifestKeyFile>HelloWorld_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>HelloWorld_psw_123456.pfx</AssemblyOriginatorKeyFile>
@@ -196,7 +196,7 @@
       <DependentUpon>MyResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Base\MemoryLayout.cs" />
-    <Compile Include="NofityIcon.cs" />
+    <Compile Include="Tray\NofityIcon.cs" />
     <Compile Include="Base\HackersDelight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Redis\RedisHelper.cs" />
@@ -293,6 +293,9 @@
     <Content Include="IPC\Thrift\Thrift45.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Tray\msg.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Redis\Server\Redis-x64-3.2.100\EventLog.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
