@@ -1,132 +1,6 @@
-# CSProj文件和Sln文件
+# sln文件
 
-## CSProj文件
-
-```XML
-<?xml version="1.0" encoding="utf-16"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{31AC3873-B1D5-4825-BA9D-282A8FAB0E90}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LibN</RootNamespace>
-    <AssemblyName>LibN</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="EntityFramework">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\repo\EntityFramework.6.0.0\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\repo\EntityFramework.6.0.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App.config.transform" />
-    <Content Include="Web.config.transform" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <Import Condition="Exists('..\..\..\..\..\repo\Fody.1.28.3\build\Fody.targets')" Project="..\..\..\..\..\repo\Fody.1.28.3\build\Fody.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-  </Target>
-</Project>
-```
-
-### MSBuild与csproj文件
-
-- MSBuild（Microsoft Build Engine）是Miscrosoft和Visual Studio的构建应用程序的平台，提供XML架构的的工程文件来控制如何构建平台过程和构建软件，VS使用MSBuild但是MSBuild不依赖VS的安装。通过在工程文件或者sln文件中调用MSBuild，可以在不安装VS时进行编排和构建工程。主要包含三部分内容：执行引擎、构造工程、任务；
-- 执行引擎：定义构造工程的规范、解释构造工程、执行构造动作-引擎；
-- 构造工程：描述构造任务，这里可以指未csproj文件（C#工程的项目内容管理和生成行为管理文件）-脚本；
-- 任务：执行引擎的执行的动作定义-扩展能力；    
-- [参考资料](https://www.cnblogs.com/shanyou/p/3452938.html)
-- csproj文件，为一个xml形式的文件
-
-### 构造工程 - 脚本文件
-
-### 编辑工程的调试项属性
-
-- 1.找到接口VSLangProj.ProjectConfigurationProperties；
-- 2.使用工程的EnvDTE.Project.ConfigurationManager.ActiveConfiguration.Properties
-- 3.[参考文件](https://msdn.microsoft.com/en-us/6323383a-43ee-4a60-be4e-9d7f0b53b168)
-
-```C#
-public static void SetProjectDebugProp(EnvDTE.Project proj, string startProgrm,Enum.StartActionType startActiconType = Enum.StartActionType.Program, string startArgs = null, string startWorkingDirectory = null)
-{
-    if (proj != null && proj.Object is VSLangProj.VSProject)
-    {
-        var log = OperationCenter.MLogger;
-        EnvDTE.Configuration activeConf = proj.ConfigurationManager.ActiveConfiguration;
-        EnvDTE.Property startProp = activeConf.Properties.Item("StartProgram");
-        EnvDTE.Property startActionProp = activeConf.ConfigurationManager.ActiveConfiguration.Item("StartAction");
-        EnvDTE.Property startArguments = activeConf.Properties.Item("StartArguments");
-        EnvDTE.Property startWorkingDirProp = activeConf.Properties.Item("StartWorkingDirectory");
-        log.Info("开始设置工程:[{0}]调试配置项", proj.Name);
-        string oldValue = startProp.Value;
-        startProp.Value = startProgrm;
-        log.Info("[{0}]:OldValue:[{1}],NewValue:[{2}]",startProp.Name, oldValue, startProp.Value.ToString());
-        int oldValue2 = startActionProp.Value;
-        startActionProp.Value = (int)startActiconType;
-        log.Info("[{0}]:OldValue:[{1}],NewValue:[{2}]",startActionProp.Name, oldValue2.ToString(), startActionProp.Value.ToString());
-        if (startArgs != null)
-        {
-            oldValue = startArguments.Value;
-            startArguments.Value = startArgs;
-            log.Info("[{0}]:OldValue:[{1}],NewValue:[{2}]", startArguments.Name,oldValue, startArguments.Value.ToString());
-        }
-        if (startWorkingDirectory != null)
-        {
-            oldValue = startArguments.Value;
-            startWorkingDirProp.Value = startWorkingDirectory;
-            log.Info("[{0}]:OldValue:[{1}],NewValue:[{2}]", startWorkingDirProp.Name, oldValue, startWorkingDirProp.Value.ToString());
-        }
-        proj.Save();
-        log.Info("设置工程:[{0}]调试配置项完成.", proj.Name);
-    }
-}
-```
-
-## sln文件
+## sln文件结构
 
 ```TXT
 Microsoft Visual Studio Solution File, Format Version 11.00
@@ -196,8 +70,15 @@ Global
 EndGlobal
 ```
 
-### 编辑解决方案中工程间的生成依赖
+### SLN文件结构介绍
 
+## 通过编程方式操作SLN文件
+
+### 编辑解决方案中工程之间的生成依赖顺序问题
+
+- 介绍：
+  - 若在某些情况下，在同一个解决方案内的工程之间的引用方式是通过工程生成的DLL进行引用而不是工程之间引用，这样若多个工程修改后，需要最先编译引用链的第一个工程，然后才能编译后续的工程，
+  - 此时需要调整解决方案的生成依赖顺序，即工程编译顺序；
 - 1.使用接口BuildDependency
 - 2.在解决方案中找到接口对象BuildDependency
 
@@ -292,7 +173,7 @@ public static bool IsExists(BuildDependency build, string uniqueName)
 
 - 5.此时查看解决方案的依赖项顺序 就会按照之前写入的工程依赖项，自动生成；
 
-### 向已有解决方案中添加解决方案
+### 通过编程方式向已有解决方案中添加其他解决方案
 
 > 在已打开的解决方案中添加现有的其他SLN到当前的解决方案；
 
@@ -316,12 +197,10 @@ internal sealed class Solution
     //internal class SolutionParser
     //Name: Microsoft.Build.Construction.SolutionParser
     //Assembly: Microsoft.Build, Version=4.0.0.0
-
     static readonly Type s_SolutionParser;
     static readonly PropertyInfo s_SolutionParser_solutionReader;
     static readonly MethodInfo s_SolutionParser_parseSolution;
     static readonly PropertyInfo s_SolutionParser_projects;
-
     static Solution()
     {
         s_SolutionParser = Type.GetType("Microsoft.Build.Construction.SolutionParser, Microsoft.Build, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", false, false);
@@ -332,9 +211,7 @@ internal sealed class Solution
             s_SolutionParser_parseSolution = s_SolutionParser.GetMethod("ParseSolution", BindingFlags.NonPublic | BindingFlags.Instance);
         }
     }
-
     public List<SolutionProject> Projects { get; private set; }
-
     public Solution(string solutionFileName)
     {
         if (s_SolutionParser == null)
@@ -369,7 +246,6 @@ internal sealed class SolutionProject
     static readonly PropertyInfo s_ProjectInSolution_ProjectGuid;
     static readonly PropertyInfo s_ProjectInSolution_ProjectType;
     static readonly PropertyInfo s_ProjectInSolution_Dependencies;
-
     static SolutionProject()
     {
         s_ProjectInSolution = Type.GetType("Microsoft.Build.Construction.ProjectInSolution, Microsoft.Build, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", false, false);
@@ -382,13 +258,11 @@ internal sealed class SolutionProject
             s_ProjectInSolution_Dependencies = s_ProjectInSolution.GetProperty("Dependencies", BindingFlags.NonPublic | BindingFlags.Instance);
         }
     }
-
     public string ProjectName { get; private set; }
     public string RelativePath { get; private set; }
     public string ProjectGuid { get; private set; }
     public string ProjectType { get; private set; }
     public ArrayList Dependencies { get; set; }
-
     public SolutionProject(object solutionProject)
     {
         this.ProjectName = s_ProjectInSolution_ProjectName.GetValue(solutionProject, null) as string;
@@ -423,70 +297,5 @@ public static bool LoadProj(Microsoft.Build.Evaluation.Project proj)
         }
     }
     return false;
-}
-```
-
-### 设置输出面板
-
-- 添加输出源
-
-```C#
-public static void AddLoggerOutputSource(string name)
-{
-    if (MDTE == null)
-        return;
-    var dte = MDTE;
-    EnvDTE.OutputWindow ow = (dte as EnvDTE80.DTE2).ToolWindows.OutputWindow;
-    try
-    {
-        ow.Parent.AutoHides = false;
-        ow.Parent.Activate();
-        bool hasSameName = false;
-        foreach (EnvDTE.OutputWindowPane item in ow.OutputWindowPanes)
-        {
-            if (item.Name.ToLower().Contains(name))
-            {
-                hasSameName = true;
-                break;
-            }
-        }
-        if (!hasSameName)
-        {
-            ow.OutputWindowPanes.Add(name);
-        }
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Trace.TraceError(ex.Message);
-    }
-}
-```
-
-- 设置输出源显示
-
-```C#
-public static void ShowLoggerPane()
-{
-    if (MDTE == null)
-        return;
-    var dte = MDTE;
-    EnvDTE.OutputWindow ow = (dte as EnvDTE80.DTE2).ToolWindows.OutputWindow;
-    try
-    {
-        ow.Parent.AutoHides = false;
-        ow.Parent.Activate();
-        foreach (EnvDTE.OutputWindowPane item in ow.OutputWindowPanes)
-        {
-            if (item.Name.ToLower().Contains("name"))
-            {
-                item.Activate();
-                break;
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Trace.TraceError(ex.Message);
-    }
 }
 ```

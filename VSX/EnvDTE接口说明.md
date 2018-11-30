@@ -1,6 +1,6 @@
 # MS VSX doc
 
-* VS2017 SDK
+- VS2017 SDK
 
 ## 参考资料
 

@@ -211,3 +211,70 @@ public static void GetCurrentSelectProj(out EnvDTE.Project proj)
 #### 加载Package
 
 - 参考资料：[查看](https://docs.microsoft.com/zh-cn/visualstudio/extensibility/loading-vspackages?view=vs-2017)
+
+## 编程指南
+
+### 新增设置输出面板
+
+- 添加输出源
+
+```C#
+public static void AddLoggerOutputSource(string name)
+{
+    if (MDTE == null)
+        return;
+    var dte = MDTE;
+    EnvDTE.OutputWindow ow = (dte as EnvDTE80.DTE2).ToolWindows.OutputWindow;
+    try
+    {
+        ow.Parent.AutoHides = false;
+        ow.Parent.Activate();
+        bool hasSameName = false;
+        foreach (EnvDTE.OutputWindowPane item in ow.OutputWindowPanes)
+        {
+            if (item.Name.ToLower().Contains(name))
+            {
+                hasSameName = true;
+                break;
+            }
+        }
+        if (!hasSameName)
+        {
+            ow.OutputWindowPanes.Add(name);
+        }
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Trace.TraceError(ex.Message);
+    }
+}
+```
+
+- 设置输出源显示
+
+```C#
+public static void ShowLoggerPane()
+{
+    if (MDTE == null)
+        return;
+    var dte = MDTE;
+    EnvDTE.OutputWindow ow = (dte as EnvDTE80.DTE2).ToolWindows.OutputWindow;
+    try
+    {
+        ow.Parent.AutoHides = false;
+        ow.Parent.Activate();
+        foreach (EnvDTE.OutputWindowPane item in ow.OutputWindowPanes)
+        {
+            if (item.Name.ToLower().Contains("name"))
+            {
+                item.Activate();
+                break;
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Trace.TraceError(ex.Message);
+    }
+}
+```

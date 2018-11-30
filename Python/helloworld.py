@@ -37,16 +37,12 @@ import os
 def baseKnowledge():
     # 单行注释
     '''
-    多
-    行
-    注
-    释
+    多    行    
+    注    释
     '''
     """
-    多
-    行
-    注
-    释
+    多    行
+    注    释
     """
     # 控制台输出
     print('{_name},okok,{_you}'.format(_name='Alice', _you='who?'))
@@ -102,9 +98,9 @@ def Variable():
 
 def ListType():
 # 列表
-    lis = [1, 2, 3, 4, 5]
+    lis = [1, 2, 3, 4, 5,6,7,8,9]
     # 切片 顾头不顾尾
-    print(lis[2:2])
+    print(lis[2:4])
     print(lis[-2])
     print(lis[-2:])
     # add
@@ -272,10 +268,15 @@ def testOs():
 
 def main():
     print("hello world")
-    print(os.getcwd())
-    baseKnowledge()
+    # print(os.getcwd())
+    # baseKnowledge()
     ListType()
     CharType()
+    DictionaryType()
+    SetType()
+    fileOperation()
+    testOs()
+
 
 # 程序入口点
 if __name__ == '__main__':
