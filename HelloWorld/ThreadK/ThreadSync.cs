@@ -535,6 +535,14 @@ namespace  HelloWorld.ThreadK
             double d_new =1.1d;
             double d_old;
             d_old = Interlocked.Exchange(ref d_org, d_new);
+            var spinL = new SpinLock();
+            bool r=true;
+            spinL.Enter(ref r);
+            spinL.Exit();
+
+            var spin = new SpinWait();
+            spin.SpinOnce();
+            
         }
     }
 

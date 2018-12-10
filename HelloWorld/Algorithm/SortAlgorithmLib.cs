@@ -56,6 +56,7 @@ namespace HelloWorld.Algorithm
                 }
             }
         }
+
         /// <summary>
         /// 直接插入排序
         /// </summary>
@@ -151,6 +152,42 @@ namespace HelloWorld.Algorithm
                 }
             }
             
+        }
+
+        public static void BubbleSort(int[] collection)
+        {
+            if (collection == null)
+                return;
+            for (int i = 0; i < collection.Length; i++)
+            {
+                var k = false;
+                for (int j = 0; j < collection.Length - 1 - i; j++)
+                {
+                    if (collection[j] > collection[j + 1])
+                    {
+                        k = true;
+                        var temp = collection[j];
+                        collection[j] = collection[j + 1];
+                        collection[j + 1] = collection[j];
+                        //or 不适用第三个变量 交换两个变量的值 但有数值超出风险
+                        collection[j] = collection[j] + collection[j + 1];
+                        collection[j + 1] = collection[j] - collection[j + 1];
+                        collection[j] = collection[j] - collection[j + 1];
+                        //or 
+                        collection[i] = collection[j] - collection[j + 1];
+                        collection[j + 1] = collection[j] + collection[j + 1];
+                        collection[j] = collection[j + 1] - collection[j];
+                        //or 
+                        collection[j] = collection[j] & collection[j + 1];
+                        collection[j + 1] = collection[j] & (~collection[j + 1]);
+                        collection[j] = collection[j] & (~collection[j + 1]);
+                    }
+                }
+                if (!k)
+                {
+                    break;
+                }
+            }
         }
 
         /// <summary>

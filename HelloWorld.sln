@@ -110,8 +110,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{B5E7C254-B569-48CC-96D7-8F25EC9CB2FD}"
 	ProjectSection(SolutionItems) = preProject
 		Other\Contribute vscode.md = Other\Contribute vscode.md
+		Other\Dos.md = Other\Dos.md
 		Other\Git Doc.md = Other\Git Doc.md
-		UnitTest.md = UnitTest.md
+		Other\ProcessExplorer.md = Other\ProcessExplorer.md
+		Other\UnitTest.md = Other\UnitTest.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log", "Log", "{E9843B8B-B87A-4ADA-92AB-0FA2EFCAA225}"

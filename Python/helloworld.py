@@ -77,8 +77,6 @@ def baseKnowledge():
     #print('while else')
     for i in range(10):
         print(i)
-    
-
 
 def Variable():
 # 变量类型

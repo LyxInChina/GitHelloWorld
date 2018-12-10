@@ -70,9 +70,11 @@ Mark:
 			//类型转化
 			var src = (NDIlib_source_t)Marshal.PtrToStructure(res, typeof(NDIlib_source_t))
 
-	8.C++使用库方式：
-		1.引用该库的静态库（static）-Static；
-		2.引用库的动态库（dll）-DLL-ONLY；
-		3.同时使用静态库和动态库-DLL-Import,此时工程运行库引入（MT/MTD）；
+	8.C++使用第三方库的方式：
+	静态库(.a,.lib)与动态库(.so,.dll)区别：
+	区别依据：
+	a.引用该库的静态库（static）-Static；
+	b.引用库的动态库（dll）-DLL-ONLY；
+	c.同时使用静态库和动态库-DLL-Import,此时工程运行库引入（MT/MTD）；
 
 
