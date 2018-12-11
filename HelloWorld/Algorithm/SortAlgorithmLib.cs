@@ -154,7 +154,33 @@ namespace HelloWorld.Algorithm
             
         }
 
-        public static void BubbleSort(int[] collection)
+        /// <summary>
+        /// 变量交换算法
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        public static void Swap(int a,int b)
+        {
+            //最常见的形式也是最广泛的形式 采用第三个中间变量缓存引用或者值
+            var t = a;
+            a = b;
+            b = t;
+            //or 不适用第三个变量 交换两个变量的值 但有数值超出风险
+            a = a + b;
+            a = a - b;
+            a = a - b;
+            //or 仅适用于数值类型
+            a = a ^ b;
+            b = a ^ b;
+            a = a ^ b;
+        }
+
+        /// <summary>
+        /// 冒泡排序算法
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
+        public static void Bubble_Sort(int[] collection)
         {
             if (collection == null)
                 return;
@@ -166,21 +192,9 @@ namespace HelloWorld.Algorithm
                     if (collection[j] > collection[j + 1])
                     {
                         k = true;
-                        var temp = collection[j];
-                        collection[j] = collection[j + 1];
-                        collection[j + 1] = collection[j];
-                        //or 不适用第三个变量 交换两个变量的值 但有数值超出风险
-                        collection[j] = collection[j] + collection[j + 1];
-                        collection[j + 1] = collection[j] - collection[j + 1];
-                        collection[j] = collection[j] - collection[j + 1];
-                        //or 
-                        collection[i] = collection[j] - collection[j + 1];
-                        collection[j + 1] = collection[j] + collection[j + 1];
-                        collection[j] = collection[j + 1] - collection[j];
-                        //or 
-                        collection[j] = collection[j] & collection[j + 1];
-                        collection[j + 1] = collection[j] & (~collection[j + 1]);
-                        collection[j] = collection[j] & (~collection[j + 1]);
+                        collection[j]       = collection[j] ^ collection[j + 1];
+                        collection[j + 1]   = collection[j] ^ collection[j + 1];
+                        collection[j]       = collection[j] ^ collection[j + 1];
                     }
                 }
                 if (!k)

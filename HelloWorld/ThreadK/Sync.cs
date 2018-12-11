@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections.Concurrent;
 using static HelloWorld.ThreadK.SystemInfo;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 /*  进程和线程
  * 进程---执行中的代码，活动实体
@@ -104,11 +105,11 @@ using static HelloWorld.ThreadK.SystemInfo;
 
 namespace HelloWorld.ThreadK
 {
+    [TestClass]
     public class WinProcess
     {
-        Process proc;
-
-        public static void Main(string[] args)
+        [TestMethod]
+        public void Main()
         {
             Console.WriteLine("Processor:{0}",ProcessorInfo.GetCPUProcessorNumber());
             for (int i = 0; i < 9; i++)
@@ -119,6 +120,24 @@ namespace HelloWorld.ThreadK
                 PrintThreadInfo("main after");
             }
             Console.ReadKey();
+        }
+
+        [TestMethod]
+        public void TestMethod()
+        {
+            var s = GetString();
+            s.Wait();
+            Console.WriteLine("res:{0}", s.Result);
+            Console.ReadLine();
+        }
+
+        public static async Task<string> GetString()
+        {
+            return await new Task<string>(s =>
+            {
+                Thread.Sleep(600);
+                return "ok";
+            },null);
         }
 
         public static void TestProcess()
