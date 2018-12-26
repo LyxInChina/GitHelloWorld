@@ -9,7 +9,6 @@ namespace Crawler
 {
     public class AnalyzeHtml
     {
-        [Url("http://www.bxwx3.org/txt/48595/169891/htm", CrawlerMode.OnePage)]
         public static void GetUrlAndData(string html, out string nextUrl, out string data)
         {
             nextUrl = null;
@@ -49,12 +48,11 @@ namespace Crawler
         }
 
         /// <summary>
-        /// 笔趣阁 - 雪中悍刀行
+        /// 
         /// </summary>
         /// <param name="html"></param>
         /// <param name="nextUrl"></param>
         /// <param name="data"></param>
-        [Url("http://www.biquge.info/2_2309/1157033.html", CrawlerMode.OnePage)]
         public static void GetUrlAndData_biquge(string html, out string nextUrl, out string data)
         {
             nextUrl = null;
@@ -94,7 +92,6 @@ namespace Crawler
             }
         }
 
-        [Url("http://www.biquge.info/2_2309/", CrawlerMode.AllIndex)]
         public static void GetAllUrls(string html, out List<string> urls, out string bookName, out string author, out string summer)
         {
             urls = new List<string>();
@@ -132,6 +129,12 @@ namespace Crawler
             }
         }
 
+        /// <summary>
+        /// 根据节点类名 查找结点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="clsstr"></param>
+        /// <returns></returns>
         public static HtmlNode FindHtmlNodeByClass(HtmlNode node, string clsstr)
         {
             if (node != null)
@@ -159,6 +162,13 @@ namespace Crawler
             }
             return null;
         }
+
+        /// <summary>
+        /// 根据结点名称属性查找结点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static HtmlNode FindHtmlNodeByName(HtmlNode node, string name)
         {
             if (node != null)
@@ -185,6 +195,13 @@ namespace Crawler
             }
             return null;
         }
+
+        /// <summary>
+        /// 根据节点内容查找结点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static HtmlNode FindHtmlNodeByInnerText(HtmlNode node, string text)
         {
             if (node != null)
@@ -211,6 +228,7 @@ namespace Crawler
             }
             return null;
         }
+
         public static HtmlNode FindHtmlNodeByNameAndInnerText(HtmlNode node, string name, string text)
         {
             if (node != null)

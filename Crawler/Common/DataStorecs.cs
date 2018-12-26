@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Crawler
 {
+    /// <summary>
+    /// 数据存储
+    /// </summary>
     public class DataStore
     {
         private static string fn = "temp.txt";
