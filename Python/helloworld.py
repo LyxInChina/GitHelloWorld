@@ -230,9 +230,6 @@ def fileOperation():
     # 打开文件
     file = open('text.txt','r')
     file.close()
-    # with file = open('t.txt','r'):
-        # descriptor = file.fileno()
-        #opearte file
     with open('t.txt','r') as f:
         descriptor = f.fileno()
     with open('t.txt','r') as f,\

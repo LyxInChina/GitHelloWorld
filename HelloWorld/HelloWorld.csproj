@@ -74,7 +74,7 @@
     <ManifestKeyFile>HelloWorld_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>HelloWorld_psw_123456.pfx</AssemblyOriginatorKeyFile>

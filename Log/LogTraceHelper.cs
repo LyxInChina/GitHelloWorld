@@ -13,11 +13,13 @@ namespace Log
         public static void Initialize()
         {
             var name = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+
             var listenerDtl = new System.Diagnostics.DefaultTraceListener
             {
                 LogFileName = "TraceLog_" + name + "_" + DateTime.Now.ToString("yyyMMdd") + ".txt"
             };
             System.Diagnostics.Trace.Listeners.Add(listenerDtl);
+            
             var listenerTwtl = new System.Diagnostics.TextWriterTraceListener();
             listenerTwtl.Writer = Console.Out;
             //listenerTwtl.Writer = new System.IO.StreamWriter(name + ".txt", true, Encoding.UTF8);

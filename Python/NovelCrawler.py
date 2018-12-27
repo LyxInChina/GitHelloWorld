@@ -48,7 +48,8 @@ def getTotalPage(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'}
     req = requests.get(url, headers=headers)
-    req.encoding = 'gb2312'
+    # req.encoding = 'gb2312'
+    req.encoding = 'gbk'
     # req = requests.get(url)
     soup = BeautifulSoup(req.text, 'lxml')
     return soup
@@ -107,8 +108,8 @@ def main():
         if i < 9:
             continue
         k = k+1
-        if k > 5:
-            break
+        # if k > 3:
+        #     break
         # 此处睡眠 1S 防止过频繁的访问被网站禁IP
         time.sleep(0.5)
         url = URL+"/" + l
@@ -116,7 +117,7 @@ def main():
         cc = soup2.find('div', id='content')
         title = soup2.find('h1')
         if not cc is None:
-            c = cc.text.replace('\xa0', '').replace('\ufffd', '').replace('\u30fb', '').replace('\\u', '')
+            c = cc.text.replace('\xa0\xa0\xa0\xa0', '\n').replace('\ufffd', '').replace('\u30fb', '').replace('\\u', '').replace('\xa0','')
             cap = '\n\n第' + str(k)+'章 '+title.text+'\n\n'
             print(cap)
             fp.write(cap)

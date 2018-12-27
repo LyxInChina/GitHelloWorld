@@ -171,7 +171,7 @@ namespace HelloWorld
 
         #endregion
 
-        #region IME
+        #region IME输入法
 
         //https://docs.microsoft.com/en-us/windows/desktop/api/Imm/
         [DllImport("imm32.dll")]

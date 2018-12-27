@@ -36,20 +36,20 @@ namespace HelloWorld
         {
             var factory = new SFactory();
             var p1 = factory.ProduceProduct("product1");
-            p1.Func();
+            p1.Used();
             var p2 = factory.ProduceProduct("product2");
-            p2.Func();
+            p2.Used();
             Console.ReadLine();
         }
         public static void Main_AbsFactory()
         {
             var productAFactory = new ProductAFactory();
             var productA = productAFactory.PorduceProduct();
-            productA.Func();
+            productA.Used();
 
             var productBFactory = new ProductBFactory();
             var productB = productBFactory.PorduceProduct();
-            productB.Func();
+            productB.Used();
 
             Console.ReadLine();
         }
@@ -61,11 +61,11 @@ namespace HelloWorld
             var product2Builder = new Product2Bulder();
 
             director.Construct(product1Builder);
-            var product1 = product1Builder.GetProduct();
+            var product1 = product1Builder.BuildProduct();
             product1.BuidUp();
 
             director.Construct(product2Builder);
-            var product2 = product2Builder.GetProduct();
+            var product2 = product2Builder.BuildProduct();
             product2.BuidUp();
 
             Console.ReadLine();

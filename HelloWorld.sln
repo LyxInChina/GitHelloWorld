@@ -44,6 +44,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{7DBC74
 		Python\itchat.pkl = Python\itchat.pkl
 		Python\rouse.py = Python\rouse.py
 		Python\testnumpy.py = Python\testnumpy.py
+		Python\TxtCrawler.py = Python\TxtCrawler.py
 		Python\WeChat.py = Python\WeChat.py
 	EndProjectSection
 EndProject
