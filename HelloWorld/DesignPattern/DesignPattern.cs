@@ -1,140 +1,52 @@
-﻿using System;
+﻿using HelloWorld.DesignPattern;
+using System;
 using System.Collections.Generic;
+using static HelloWorld.DesignPattern.AbstructFactory;
+using static HelloWorld.DesignPattern.AdapterPattern;
 using static HelloWorld.DesignPattern.BuilderParttern;
-using static HelloWorld.DesignPattern.PrototypePattern;
-using static HelloWorld.DesignPattern.BridgePattern;
-using static HelloWorld.DesignPattern.DecoratorPattern;
+using static HelloWorld.DesignPattern.ChainOfResponsibilityPattern;
+using static HelloWorld.DesignPattern.CommandPattern;
 using static HelloWorld.DesignPattern.CompositePattern;
 using static HelloWorld.DesignPattern.FacadePattern;
 using static HelloWorld.DesignPattern.FlyweightPattern;
-using static HelloWorld.DesignPattern.ProxyPattern;
-using static HelloWorld.DesignPattern.ChainOfResponsibilityPattern;
-using static HelloWorld.DesignPattern.CommandPattern;
 using static HelloWorld.DesignPattern.InterpreterPattern;
-using static HelloWorld.DesignPattern.VisitorPattern;
 using static HelloWorld.DesignPattern.IteratorPattern;
 using static HelloWorld.DesignPattern.MediatorPattern;
 using static HelloWorld.DesignPattern.MementoPattern;
 using static HelloWorld.DesignPattern.ObserverPattern;
+using static HelloWorld.DesignPattern.PrototypePattern;
+using static HelloWorld.DesignPattern.ProxyPattern;
 using static HelloWorld.DesignPattern.StrategyPattern;
 using static HelloWorld.DesignPattern.TemplateMethodPattern;
-using static HelloWorld.DesignPattern.SimpleFactory;
-using static HelloWorld.DesignPattern.AbstructFactory;
-using SFactory = HelloWorld.DesignPattern.SimpleFactory.Factory;
-using static HelloWorld.DesignPattern.AdapterPattern;
-using TAbstraction = HelloWorld.DesignPattern.TemplateMethodPattern.Abstraction;
-using BAbstraction = HelloWorld.DesignPattern.BridgePattern.Abstraction;
+using static HelloWorld.DesignPattern.VisitorPattern;
 using SContext = HelloWorld.DesignPattern.StrategyPattern.Context;
-using HelloWorld.DesignPattern;
+using SFactory = HelloWorld.DesignPattern.SimpleFactory.Factory;
+using TAbstraction = HelloWorld.DesignPattern.TemplateMethodPattern.Abstraction;
 
 namespace HelloWorld
 {
 
     public class PatternTest
     {
-        public static void Main_Factory()
+        public static void Main_Pattern()
         {
-            var factory = new SFactory();
-            var p1 = factory.ProduceProduct("product1");
-            p1.Used();
-            var p2 = factory.ProduceProduct("product2");
-            p2.Used();
-            Console.ReadLine();
+            //创建型
+            HelloWorld.DesignPattern.SingletonPattern.Used();
+            HelloWorld.DesignPattern.SimpleFactory.Used();
+            HelloWorld.DesignPattern.AbstructFactory.Used();
+            HelloWorld.DesignPattern.BuilderParttern.Used();
+            HelloWorld.DesignPattern.PrototypePattern.Used();
+            //结构型
+            HelloWorld.DesignPattern.AdapterPattern.Used();
+            HelloWorld.DesignPattern.BridgePattern.Used();
+            HelloWorld.DesignPattern.DecoratorPattern.Used();
+            HelloWorld.DesignPattern.FlyweightPattern.Used();
+            HelloWorld.DesignPattern.ProxyPattern.Used();
+            //行为型
+
+            //特殊类型
         }
-        public static void Main_AbsFactory()
-        {
-            var productAFactory = new ProductAFactory();
-            var productA = productAFactory.PorduceProduct();
-            productA.Used();
 
-            var productBFactory = new ProductBFactory();
-            var productB = productBFactory.PorduceProduct();
-            productB.Used();
-
-            Console.ReadLine();
-        }
-        public static void Main_Builder()
-        {
-            var director = new Director();
-
-            var product1Builder = new Product1Bulder();
-            var product2Builder = new Product2Bulder();
-
-            director.Construct(product1Builder);
-            var product1 = product1Builder.BuildProduct();
-            product1.BuidUp();
-
-            director.Construct(product2Builder);
-            var product2 = product2Builder.BuildProduct();
-            product2.BuidUp();
-
-            Console.ReadLine();
-        }
-        public static void Main_Prototype()
-        {
-            var concreteProto = new ConcretePrototype1();
-            var proto1 = concreteProto.CloneEx();
-            var proto2 = concreteProto.CloneEx();
-            proto1.Func();
-            proto2.Func();
-
-            var concreteProto2 = new ConcretePrototype2();
-            var proto3 = concreteProto2.CloneEx();
-            var proto4 = concreteProto2.CloneEx();
-            proto3.Func();
-            proto4.Func();
-
-            Console.ReadLine();
-        }
-        public static void Main_ObjectAdapter()
-        {
-            var target = new Object_Adapter();
-            target.Func();
-
-            var tar = new Class_Adapter();
-            tar.Func();
-
-            Console.WriteLine();
-        }
-        public static void Main_Bridge()
-        {
-            Implementor imp1 = new Implementor1();
-            BAbstraction abs1 = new RedefinedAbstraction1(imp1);
-            abs1.Func();
-
-            Implementor imp2 = new Implementor2();
-            BAbstraction abs2 = new RedefinedAbstraction2(imp2);
-            abs2.Func();
-
-            Console.WriteLine();
-        }
-        public static void Main_Decoration()
-        {
-            Component com = new Component1();
-            Decoration deco1 = new Decoration1(com);
-            deco1.Process();
-
-            Decoration decor2 = new Decoration2(com);
-            decor2.Process();
-
-            Console.WriteLine();
-        }
-        public static void Main_Composite()
-        {
-            var root = new Composite();
-            var leaf1 = new Leaf();
-            var leaf2 = new Leaf();
-            var comp = new Composite();
-            root.Add(leaf1);
-            root.Add(leaf2);
-            root.Add(comp);
-            comp.Add(leaf1);
-            root.Func();
-            leaf1.Func();
-            comp.Func();
-
-            Console.ReadLine();
-        }
 
         public static void Main_Fade()
         {
@@ -143,34 +55,7 @@ namespace HelloWorld
 
             Console.ReadLine();
         }
-        /// <summary>
-        /// 享元模式
-        /// </summary>
-        public static void Main_Flyweight()
-        {
-            var list = new List<Flyweight>();
-            var flyWeightFactory = new FlyweightFactory();
 
-            list.Add(flyWeightFactory["0"]);
-            list.Add(flyWeightFactory["0"]);
-            list.Add(flyWeightFactory["0"]);
-            list.Add(flyWeightFactory["1"]);
-            list.Add(flyWeightFactory["1"]);
-
-            list.ForEach(s => s.Func());
-
-            Console.ReadLine();
-        }
-        /// <summary>
-        /// 代理模式
-        /// </summary>
-        public static void Main_Proxy()
-        {
-            var proxy = new SubjectProxy();
-            proxy.Func();
-
-            Console.ReadLine();
-        }
         /// <summary>
         /// 责任链模式
         /// </summary>
@@ -206,6 +91,7 @@ namespace HelloWorld
 
             Console.ReadLine();
         }
+
         public static void Main_Interpreter()
         {
             var context = new InterpreterPattern.Context() { A = 98, B = 13, Input = '%' };
@@ -218,6 +104,7 @@ namespace HelloWorld
 
             Console.ReadLine();
         }
+
         public static void Main_Iterator()
         {
             var agg1 = new ConcreteAggregate1();
@@ -228,6 +115,7 @@ namespace HelloWorld
 
             Console.ReadLine();
         }
+
         public static void Main_Mediator()
         {
             var mediator = new ConcreteMediator1();
@@ -259,6 +147,7 @@ namespace HelloWorld
         public static void Main_Observer()
         {
             var sub1 = new ConcreteSubject();
+
             var ob1 = new ConcreteObserver1();
             var ob2 = new ConcreteObserver1();
 
@@ -276,6 +165,7 @@ namespace HelloWorld
         {
 
         }
+
         public static void Main_Strategy()
         {
             var context = new SContext();

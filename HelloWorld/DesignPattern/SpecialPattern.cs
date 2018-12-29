@@ -313,6 +313,11 @@ namespace HelloWorld.DesignPattern
 
             Console.ReadLine();
         }
+
+        public static void Used()
+        {
+
+        }
     }
 
     #endregion

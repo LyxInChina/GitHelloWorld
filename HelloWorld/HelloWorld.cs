@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace HelloWorld
 {
-    public class HelloWorld
+    public class HelloWorldEntry
     {
         static void Main(string[] args)
         {

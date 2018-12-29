@@ -24,10 +24,16 @@ namespace HelloWorld.DesignPattern
 
             //key-1 类内部 has-a 该类静态未初始化实例 创建使用引用
             private static SingleClass _instance = null;
+            private int timeStamp { get; set; }
             //key-2 私有构造函数 限制使用new创建路径 
             private SingleClass()
             {
+                timeStamp = Environment.TickCount;
+            }
 
+            public int GetCreateTimeStamp()
+            {
+                return timeStamp;
             }
 
             public static SingleClass GetInstance()
@@ -112,7 +118,15 @@ namespace HelloWorld.DesignPattern
 
         public static void Used()
         {
+            //获取单一实例
             SingleClass singleClass = SingleClass.GetInstance();
+            Console.WriteLine("Object Create Time:"+singleClass.GetCreateTimeStamp());
+
+            SingleClass singleClass2 = SingleClass.GetInstance();
+            Console.WriteLine("Object2 Create Time:" + singleClass2.GetCreateTimeStamp());
+
+            SingleClass singleClass3 = SingleClass.GetInstance();
+            Console.WriteLine("Object3 Create Time:" + singleClass3.GetCreateTimeStamp());
         }
     }
 
@@ -443,10 +457,9 @@ namespace HelloWorld.DesignPattern
                 builder.ProductPart();
                 return builder.BuildProduct();
             }
-
         }
 
-        public void Used()
+        public static void Used()
         {
             //创建 指导者
             Director director = new Director();
@@ -459,7 +472,6 @@ namespace HelloWorld.DesignPattern
             //使用产品
             prodA.Used();
             prodB.Used();
-
         }
     }
 
@@ -551,7 +563,13 @@ namespace HelloWorld.DesignPattern
 
         public static void Used()
         {
-
+            var obj1 = new ConcretePrototype1();
+            //需要大量相同对象时 可以使用深复制
+            ConcretePrototype1[] objs = new ConcretePrototype1[100];
+            for (int i = 0; i < objs.Length; i++)
+            {
+                objs[0] = (ConcretePrototype1)obj1.Clone();
+            }
         }
 
     }

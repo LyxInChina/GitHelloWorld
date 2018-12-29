@@ -66,8 +66,7 @@ namespace HelloWorld.Algorithm
       *         k = 0
       * C[n+1] = k
       * end
-      
-         */
+      */
     #endregion
     
     /// <summary>
@@ -123,7 +122,7 @@ namespace HelloWorld.Algorithm
                         collection[j] = collection[j] ^ collection[j + 1];
                     }
                 }
-                //若没有调整排序的 则序列已完全排序好
+                //若没有调整排序的 则说明该序列已完全排序好 直接退出即可
                 if (!k)
                 {
                     break;
