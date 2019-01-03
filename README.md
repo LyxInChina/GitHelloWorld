@@ -48,6 +48,7 @@
 - 应用托盘标识
 - 正则表达式
 - 配置文件（CS、BS）读写
+- 设计模式
 
 ### InjectDemo
 
@@ -56,6 +57,7 @@
 ### LogHelper
 
 - 日志模块研究
+- log4net\NLog\ES6Log\WindowsLog\LogTrace
 
 ### MEF
 
@@ -67,7 +69,7 @@
 
 ### Modbus4
 
-- Modbus协议封装研究和使用
+- Modbus协议简单封装和使用
 
 ### ORM
 
@@ -77,6 +79,9 @@
 
 - Git命令学习
 - 本地编译VS code
+- DOS命令
+- 常用工具总结
+- 单元测试
 
 ### packages
 
@@ -85,6 +90,7 @@
 ### Python
 
 - Python 语言学习；
+- 电子书爬虫程序：TxtCrawler.py
 
 ### Service
 

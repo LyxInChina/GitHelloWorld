@@ -18,83 +18,157 @@ namespace HelloWorld.DesignPattern
     /// </summary>
     public class ChainOfResponsibilityPattern
     {
-
-        public abstract class Handler
+        /// <summary>
+        /// 待处理材料 每种材料都有一个熔点
+        /// 只有机器处理温度大于熔点时 才能处理该材料
+        /// 尽可能使用处理温度较低的机器
+        /// </summary>
+        public abstract class Material
         {
-            public Handler NextHandler { get; set; }
-            public abstract void Process(Request request);
-
-            protected void CallBack(Request request)
+            public float MeltingPoint { get; set; }
+            public Material(float mltingPoint)
             {
-                if (NextHandler != null)
-                {
-                    NextHandler.Process(request);
-                }
+                MeltingPoint = mltingPoint;
             }
         }
 
-        public class Request
+        public class Iron : Material
         {
-            public int Level { get; set; }
+            public Iron():base(1538f)
+            {
+            }
         }
 
-        public class ConcreteHandler1 : Handler
+        public class Glass : Material
         {
-            public override void Process(Request request)
+            public Glass():base(800f)
             {
-                if (request.Level <= 1)
+            }
+        }
+
+        public class UnknownMaterial : Material
+        {
+            public UnknownMaterial(float meltingPoint):base(meltingPoint)
+            { }
+        }
+
+        public abstract class Machine
+        {
+            public float ProcessTemperature { get; set; }
+            public Machine ParentMachine { get; set; }
+
+            public Material Content { get; set; }
+
+            public Machine(float pt)
+            {
+                ProcessTemperature = pt;
+            }
+
+            public abstract bool Process(Material something);
+
+        }
+
+        public class GlassMachine : Machine
+        {
+            public GlassMachine() : base(1000f)
+            {
+            }
+
+            public override bool Process(Material something)
+            {
+                if (something.MeltingPoint < base.ProcessTemperature)
                 {
-                    Console.WriteLine("Porcess Request::ConcreteHandler1");
+                    Content = something;
+                    return true;
                 }
                 else
                 {
-                    CallBack(request);
+                    if (ParentMachine != null)
+                    {
+                        return ParentMachine.Process(something);
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
         }
-        public class ConcreteHandler2 : Handler
+
+        public class IronMachine : Machine
         {
-            public override void Process(Request request)
+            public IronMachine() : base(1200f)
             {
-                if (request.Level == 2)
+            }
+
+            public override bool Process(Material something)
+            {
+                if (something.MeltingPoint < base.ProcessTemperature)
                 {
-                    Console.WriteLine("Porcess Request::ConcreteHandler2");
+
+                    Content = something;
+                    return true;
                 }
                 else
                 {
-                    CallBack(request);
+                    if (ParentMachine != null)
+                    {
+                        return ParentMachine.Process(something);
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
         }
-        public class ConcreteHandler3 : Handler
+
+        public class CopperMachine : Machine
         {
-            public override void Process(Request request)
+            public CopperMachine() : base(1083f)
             {
-                if (request.Level == 3)
+            }
+
+            public override bool Process(Material something)
+            {
+                if (something.MeltingPoint < base.ProcessTemperature)
                 {
-                    Console.WriteLine("Porcess Request::ConcreteHandler3");
+                    Content = something;
+                    return true;
                 }
                 else
                 {
-                    CallBack(request);
+                    if (ParentMachine != null)
+                    {
+                        return ParentMachine.Process(something);
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
         }
 
-        public static void Test_ChainOfResponsibility()
+        public static void Used()
         {
-            var handle1 = new ConcreteHandler1();
-            var handle2 = new ConcreteHandler2();
-            var handle3 = new ConcreteHandler3();
-            handle1.NextHandler = handle2;
-            handle2.NextHandler = handle3;
-
-            handle1.Process(new Request());
-
-
+            //构建 处理机器
+            Machine glassMachine = new GlassMachine();
+            Machine ironMachine = new IronMachine();
+            Machine copperMachine = new CopperMachine();
+            //构建 处理机器链
+            glassMachine.ParentMachine = copperMachine;
+            ironMachine.ParentMachine = ironMachine;
+            copperMachine.ParentMachine = null;
+            //构建 待处理材料
+            Material iron = new Iron();
+            Material glass = new Glass();
+            Material uk = new UnknownMaterial(1234f);
+            //开始 处理材料
+            glassMachine.Process(iron);
+            glassMachine.Process(glass);
+            glassMachine.Process(uk);
         }
-
-
     }
 
     /// <summary>
@@ -104,184 +178,368 @@ namespace HelloWorld.DesignPattern
     /// 解决命令的请求者和命令的实现者之间的耦合
     /// 需要：
     /// 1.抽象命令-cmd
-    /// 2.具体命令-ccmd
-    /// 3.抽象执行者-invoker
-    /// 4.具体执行者-cinvoker 执行具体的命令
-    /// 5.抽象接收者-receiver
-    /// 6.具体接收者-creceiver 接收命令，分派命令到之下者；
+    /// 2.抽象接收者-receiver 接收调用者请求执行操作的目标对象（命令参数主体）
+    /// 3.抽象执行者-invoker 具体执行命令主体
     /// </summary>
     public class CommandPattern
     {
+        public interface ICommand
+        {
+            Receiver Receiver { get; set; }
+            bool Execute();
+            bool Undo();
+        }
+
         /// <summary>
         /// 抽象命令
         /// </summary>
-        public abstract class Command
+        public abstract class CommandBase : ICommand
         {
             public string Cmd { get; set; }
-            protected Command(string str)
-            {
-                Cmd = str;
-            }
-            public abstract void Execute();
-            public abstract void Undo();
+            public Receiver Receiver { get; set; }
+            public abstract bool Execute();
+            public abstract bool Undo();
         }
 
-        public class Select : Command
+        public class Add : CommandBase
         {
-            public Select(string str) : base(str)
+            public Add()
             {
-
+                base.Cmd = "add";
             }
 
-            public override void Execute()
+            public override bool Execute()
             {
-                throw new NotImplementedException();
+                if (Receiver != null)
+                {
+                    Receiver.ShowInfo();
+                }
+                Console.WriteLine("Command Add Execute");
+                return true;
             }
 
-            public override void Undo()
+            public override bool Undo()
             {
-                throw new NotImplementedException();
+                if (Receiver != null)
+                {
+                    Receiver.ShowInfo();
+                }
+                Console.WriteLine("Command Add Undo");
+                return true;
             }
         }
-        public class Update : Command
+
+        public class Del : CommandBase
         {
-            public Update(string str) : base(str)
+            public Del() 
             {
-
+                base.Cmd = "del";
             }
 
-            public override void Execute()
+            public override bool Execute()
             {
-                throw new NotImplementedException();
+                if (Receiver != null)
+                {
+                    Receiver.ShowInfo();
+                }
+                Console.WriteLine("Command Del Execute");
+                return true;
             }
 
-            public override void Undo()
+            public override bool Undo()
             {
-                throw new NotImplementedException();
+                if (Receiver != null)
+                {
+                    Receiver.ShowInfo();
+                }
+                Console.WriteLine("Command Del Execute");
+                return true;
             }
         }
 
         public abstract class Invoker
         {
-            public abstract void Execute(Command cmd);
+            public abstract void AddCmd(CommandBase cmd);
+            public abstract bool Invoke();
+            public abstract bool RollBack();
         }
 
-        public class ConcreteInvoker1 : Invoker
+        public class RealInvoker : Invoker
         {
-            public override void Execute(Command cmd)
+            private List<CommandBase> commands { get; set; }
+
+            public RealInvoker()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + cmd.ToString());
+                commands = new List<CommandBase>();
             }
-        }
 
-        public class ConcreteInvoker2 : Invoker
-        {
-            public override void Execute(Command cmd)
+
+            public override bool Invoke()
             {
-                Console.WriteLine(this.GetType().ToString() + "::" + cmd.ToString());
+                if (commands != null && commands.Count > 0)
+                {
+                    commands.ForEach(c =>
+                    {
+                        c.Execute();
+                    });
+                }
+                return true;
+            }
+
+            public override bool RollBack()
+            {
+                if (commands != null && commands.Count > 0)
+                {
+                    commands.ForEach(c =>
+                    {
+                        c.Undo();
+                    });
+                }
+                return true;
+            }
+
+            public override void AddCmd(CommandBase cmd)
+            {
+                commands.Add(cmd);
             }
         }
 
         public abstract class Receiver
         {
-            private Invoker _invoker;
-            public Receiver(Invoker invoker)
-            {
-                _invoker = invoker;
-            }
-
-            public abstract void ReceiveCmd(Command cmd);
+            public abstract void ShowInfo();
         }
 
-        public class Receiver01 : Receiver
+        public class SqlServerDB : Receiver
         {
-            public Receiver01(Invoker invoker) : base(invoker)
+            public override void ShowInfo()
             {
-
-            }
-            public override void ReceiveCmd(Command cmd)
-            {
+                Console.WriteLine("Receiver: " + this.GetType().FullName);
             }
         }
-
-        public class Receiver02 : Receiver
+        public class OracleDB : Receiver
         {
-            public Receiver02(Invoker invoker) : base(invoker)
+            public override void ShowInfo()
             {
-
-            }
-            public override void ReceiveCmd(Command cmd)
-            {
+                Console.WriteLine("Receiver: " + this.GetType().FullName);
             }
         }
 
-        public static void Test_Command()
+        public static void Used()
         {
-
+            //构建 命令主体
+            var add = new Add();
+            var del = new Del();
+            //设置命令执行参数主体
+            add.Receiver = new SqlServerDB();
+            del.Receiver = new OracleDB();
+            //构建命令执行者
+            var real = new RealInvoker();
+            //将命令添加到执行者
+            real.AddCmd(add);
+            real.AddCmd(del);
+            //执行命令
+            real.Invoke();
+            real.RollBack();
         }
-
     }
 
     /// <summary>
     /// 解释器模式
+    /// 特定问题发生频率很高，可以将问题表述为一个实例
+    /// 1.上下文：context
+    /// 2.客户端：client
+    /// 3.抽象表达式：AbstractExpression
+    /// 4.终结符表达式：TerminalExpression
+    /// 5.非终结符表达式：NonterminalExpression
     /// </summary>
     public class InterpreterPattern
     {
+        /// <summary>
+        /// 抽象表达式
+        /// </summary>
         public abstract class Expression
         {
             public abstract void Interpret(Context context);
         }
 
-        public class TerminalExpression : Expression
+        public abstract class Context
         {
+            public abstract char DeTransfer(string key);
+            public abstract string Transfer(char key);
+            public abstract bool IsOperatorChar(char key);
+            public abstract bool HasValue();
+            public abstract char GetNext();
+            public abstract char GetCurrent();
+        }
+
+        public class MorseContext : Context
+        {
+            //Morse to ASCII
+            private Dictionary<byte,byte> morseToASCII  { get; set; }
+            private Dictionary<string,char> morseToChar { get; set; }
+            private List<char> operatorChar { get; set; }
+            public MorseContext()
+            {
+                morseToChar = new Dictionary<string, char>()
+                {
+                    { ".----",'1'},
+                    { "..---",'2'},
+                    { "...--",'3'},
+                    { "....-",'4'},
+                    { ".....",'5'},
+                    { "-....",'6'},
+                    { "--...",'7'},
+                    { "---..",'8'},
+                    { "----.",'9'},
+                    { "-----",'0'},
+                    { ".-",'A'},
+                    { "-...",'B'},
+                    { "-.-.",'C'},
+                    { "-..",'D'},
+                    { ".",'E'},
+                    { "..-.",'F'},
+                    { "--.",'G'},
+                    { "....",'H'},
+                    { "..",'I'},
+                    { ".---",'J'},
+                    { ".-",'K'},
+                    { ".-..",'L'},
+                    { "--",'M'},
+                    { "-.",'N'},
+                    { "---",'O'},
+                    { "--.",'P'},
+                    { "--.-",'Q'},
+                    { ".-.",'R'},
+                    { "...",'S'},
+                    { "-",'T'},
+                    { "..-",'U'},
+                    { "...-",'V'},
+                    { ".---",'W'},
+                    { "-..-",'X'},
+                    { "-.--",'Y'},
+                    { "--..",'Z'},
+                };
+                operatorChar = new List<char>() { ' ', ',', '.', '?', '!' };
+            }
+            public override char DeTransfer(string key)
+            {
+                if (!string.IsNullOrEmpty(key))
+                {
+                    if (morseToChar.ContainsKey(key))
+                    {
+                        return morseToChar[key];
+                    }
+                }
+                return char.MinValue;
+            }
+
+            public override string Transfer(char key)
+            {
+                key = char.ToUpper(key);
+                if (morseToChar.Values.Contains(key))
+                {
+                    foreach (var kvp in morseToChar)
+                    {
+                        if (kvp.Value == key)
+                        {
+                            return kvp.Key;
+                        }
+                    }
+                }
+                return null;
+            }
+
+            public override bool IsOperatorChar(char key)
+            {
+                key = char.ToUpper(key);
+                return operatorChar.Contains(key);
+            }
+
+            private string Input { get; set; }
+            private Queue<char> InputQueue { get; set; }
+
+            public MorseContext(string input)
+            {
+                Input = input;
+                if (!string.IsNullOrEmpty(input))
+                {
+                    InputQueue = new Queue<char>(Input.Length);
+                    for (int i = 0; i < input.Length; i++)
+                    {
+                        InputQueue.Enqueue(input[i]);
+                    }
+                }
+                else
+                {
+                    InputQueue = new Queue<char>();
+                }
+            }
+
+            public override bool HasValue()
+            {
+                return InputQueue.Count > 0;
+            }
+
+            public override char GetNext()
+            {
+                if (HasValue())
+                {
+                    return InputQueue.Dequeue();
+                }
+                else
+                {
+                    return '\n';
+                }
+            }
+
+            public override char GetCurrent()
+            {
+                if (HasValue())
+                {
+                    return InputQueue.Peek();
+                }
+                else
+                {
+                    return '\n';
+                }
+            }
+
+        }
+
+        public class NonterminalExpression : Expression
+        {
+            public NonterminalExpression()
+            {
+
+            }
+
             public override void Interpret(Context context)
             {
-                var t = context.Operators.ToList().Find(s => s.Key == context.Input);
-                int result = 0;
-                if (t.Value != null)
+                if (context == null)
+                    return;
+                if (!context.HasValue())
+                    return;
+                var key = context.GetNext();
+                if (context.IsOperatorChar(key))
                 {
-                    result = t.Value.Invoke(context.A, context.B);
+
                 }
-                Console.WriteLine("Terminal Expression:" + result);
+                else
+                {
+
+                }
             }
         }
 
-        public class NoneterminalExpression : Expression
+        public abstract class Client
         {
-            public override void Interpret(Context context)
-            {
-                var t = context.Operators.ToList().Find(s => s.Key == context.Input);
-                int result = 0;
-                if (t.Value != null)
-                {
-                    result = t.Value.Invoke(context.A, context.B);
-                }
-                Console.WriteLine("None Terminal Expression:" + result);
-            }
+            public abstract string Transfer(string input);
         }
 
-        public class Context
+        public static void Used()
         {
-            public Dictionary<char, Func<int, int, int>> Operators = new Dictionary<char, Func<int, int, int>>
-            {
-                {'+',(int a,int b)=> {return a+b; } },
-                {'-',(int a,int b)=> {return a-b; } },
-                {'*',(int a,int b)=> {return a*b; } },
-                {'/',(int a,int b)=> {if(b!=0)return a/b;else return 0; } },
-                {'%',(int a,int b)=> {if(b!=0)return a%b;else return 0; } },
-                {'|',(int a,int b)=> {return a|b; } },
-                {'^',(int a,int b)=> {return a^b; } },
-            };
-
-            public int A { get; set; }
-            public int B { get; set; }
-
-            public char Input { get; set; }
 
         }
-
-
-
     }
 
     /// <summary>

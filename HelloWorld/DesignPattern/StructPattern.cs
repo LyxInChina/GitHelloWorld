@@ -354,50 +354,198 @@ namespace HelloWorld.DesignPattern
     {
         public abstract class Tag
         {
-            public string Name { get; set; }
-            public abstract void AddShop(Tag shop);
-            public abstract void DelShop(Tag shop);
-            public abstract void SelaCar();
+            public string ID { get; set; }
+            public abstract void Add(Tag tag);
+            public abstract void Del(Tag tag);
+            public abstract void DoSomething();
+            public Tag(string id)
+            {
+                ID = id;
+            }
         }
 
+        public class LeafTag : Tag
+        {
+            public LeafTag(string id) : base(id)
+            {
 
+            }
+            public override void Add(Tag tag)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void Del(Tag tag)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void DoSomething()
+            {
+                Console.WriteLine(this.GetType().Name + " Do Something.");
+            }
+        }
+
+        public class NormalTag : Tag
+        {
+            private List<Tag> tags { get; set; }
+            public NormalTag(string id) : base(id)
+            {
+                tags = new List<Tag>();
+            }
+
+            public override void Add(Tag tag)
+            {
+                tags.Add(tag);
+            }
+
+            public override void Del(Tag tag)
+            {
+                tags.RemoveAll(t => t.ID == tag.ID);
+            }
+
+            public override void DoSomething()
+            {
+                Console.WriteLine(this.GetType().Name + " Do Something.");
+                if (tags != null && tags.Count > 0)
+                {
+                    for (int i = 0; i < tags.Count; i++)
+                    {
+                        tags[i].DoSomething();
+                    }
+                }
+            }
+        }
+
+        public class TagTree : Tag
+        {
+            private List<Tag> tags { get; set; }
+            public TagTree(string id) : base(id)
+            {
+                tags = new List<Tag>();
+            }
+
+            public override void Add(Tag tag)
+            {
+                tags.Add(tag);
+            }
+
+            public override void Del(Tag tag)
+            {
+                tags.RemoveAll(t => t.ID == tag.ID);
+            }
+
+            public override void DoSomething()
+            {
+                Console.WriteLine(this.GetType().Name + " Do Something.");
+                if (tags != null && tags.Count > 0)
+                {
+                    for (int i = 0; i < tags.Count; i++)
+                    {
+                        tags[i].DoSomething();
+                    }
+                }
+            }
+        }
+
+        public static void Used()
+        {
+            //构建树节点
+            var tagTree = new TagTree("tree01");
+            //添加子节点
+            tagTree.Add(new TagTree("subTree01"));
+            tagTree.Add(new TagTree("subTree02"));
+            tagTree.Add(new TagTree("subTree03"));
+            tagTree.Add(new NormalTag("norTag01"));
+            tagTree.Add(new NormalTag("norTag02"));
+            tagTree.Add(new NormalTag("norTag03"));
+            //调用树节点方法
+            tagTree.DoSomething();
+            //移除子节点
+            tagTree.Del(new TagTree("subTree03"));
+            //调用树节点方法
+            tagTree.DoSomething();
+        }
     }
 
     /// <summary>
     /// 外观模式
+    /// 将复杂的细颗粒度对象服务包装为简易使用的粗颗粒度的功能服务
     /// </summary>
     public class FacadePattern
     {
-        //解耦客户端程序与子系统
-        public class SubSystem1
+        /// <summary>
+        /// 发动机检测子系统
+        /// </summary>
+        public class EngineSystem
         {
-            public void Func1()
+            public bool CheckEngine()
             {
-                Console.WriteLine("SubSystem1::Func1()");
+                Console.WriteLine("Check Engine.");
+                return Environment.TickCount % 2 == 1;
             }
         }
 
-        public class SubSystem2
+        /// <summary>
+        /// 刹车检测子系统
+        /// </summary>
+        public class BrokenSystem
         {
-            public void Func2()
+            public bool CheckBroken()
             {
-                Console.WriteLine("SunSystem2::Func2()");
+                Console.WriteLine("Check Broken.");
+                return Environment.TickCount % 2 == 1;
             }
         }
 
-        public class Facade
+        /// <summary>
+        /// 操控系统检测子系统
+        /// </summary>
+        public class ControlSystem
         {
-            private SubSystem1 sub1 = new SubSystem1();
-            private SubSystem2 sub2 = new SubSystem2();
-
-            public void Func()
+            public bool CheckControl()
             {
-                sub1.Func1();
-                sub2.Func2();
-                Console.WriteLine("Facade::Func()");
+                Console.WriteLine("Check Control.");
+                return Environment.TickCount % 2 == 1;
             }
         }
 
+        /// <summary>
+        /// 汽车检测系统 - 总检测系统
+        /// </summary>
+        public class Facade_CarCheckSystem
+        {
+            private EngineSystem engineSystem = new EngineSystem();
+            private BrokenSystem brokenSystem = new BrokenSystem();
+            private ControlSystem controlSystem = new ControlSystem();
+            public int CheckCarStatus()
+            {
+                var ee = engineSystem.CheckEngine() ? 1 : 0;
+                var be = brokenSystem.CheckBroken() ? 1 : 0;
+                var ce = controlSystem.CheckControl() ? 1 : 0;
+                return ee & (be << 1) & (ce << 2);
+            }
+
+            public bool CheckEngine()
+            {
+                return engineSystem.CheckEngine();
+            }
+            public bool CheckBroken()
+            {
+                return brokenSystem.CheckBroken();
+            }
+            public bool CheckControl()
+            {
+                return controlSystem.CheckControl();
+            }
+        }
+
+        public static void Used()
+        {
+            var car = new Facade_CarCheckSystem();
+            var result = car.CheckCarStatus();
+            Console.WriteLine("Car Check Restult:" + result);
+        }
 
     }
 
@@ -488,43 +636,82 @@ namespace HelloWorld.DesignPattern
 
     /// <summary>
     /// 代理模式
+    /// 通过代理类访问目标对象，实现一层对象访问的隔离
     /// </summary>
     public class ProxyPattern
     {
-        public abstract class Subject
+        public interface IRemotingService
         {
-            public abstract void Func();
+            void RemotingCall();
         }
 
-        public class RealSubject : Subject
+        public class RemotingService : IRemotingService
         {
-            public override void Func()
-            {
-                Console.WriteLine("RealSubject::Func()");
-            }
-        }
-
-        public class SubjectProxy : Subject
-        {
-            private Subject _subject = new RealSubject();
-
-            public SubjectProxy()
+            public RemotingService()
             {
 
             }
-            public override void Func()
+            public void RemotingCall()
             {
-                _subject.Func();
+                Console.WriteLine(this.GetType().Name + " IRemotingSerice Call.");
+            }
+        }
+
+        public class RemotingServiceProxy : IRemotingService
+        {
+            private RemotingService remotingServiceObject;
+
+            public RemotingServiceProxy()
+            {
+                remotingServiceObject = new RemotingService();
+            }
+
+            public void RemotingCall()
+            {
+                Console.WriteLine(this.GetType().Name + " Proxy  IRemotingSerice Call.");
+                remotingServiceObject.RemotingCall();
+            }
+        }
+
+        public abstract class RemotingServiceObjectBase
+        {
+            public abstract void RemotingCall();
+        }
+
+        public class RemotingServiceObject : RemotingServiceObjectBase
+        {
+            public override void RemotingCall()
+            {
+                Console.WriteLine(this.GetType().Name + " RemotingServiceObjectBase Call.");
+            }
+        }
+
+        public class RemotingServiceObjectProxy : RemotingServiceObjectBase
+        {
+            private RemotingServiceObject remotingServiceObject;
+            public RemotingServiceObjectProxy()
+            {
+                remotingServiceObject = new RemotingServiceObject();
+            }
+
+            public override void RemotingCall()
+            {
+                Console.WriteLine(this.GetType().Name + " RemotingServiceObjectBase Call.");
+                remotingServiceObject.RemotingCall();
             }
         }
 
         public static void Used()
         {
-            Subject subject = new SubjectProxy();
-            subject.Func();
+            //接口实现的代理
+            IRemotingService serviceProxy = new RemotingServiceProxy();
+            //调用代理方法
+            serviceProxy.RemotingCall();
+            //抽象类实现的代理
+            RemotingServiceObjectBase objectProxy = new RemotingServiceObjectProxy();
+            //调用代理方法
+            objectProxy.RemotingCall();
         }
-
-
     }
 
     #endregion

@@ -18,6 +18,8 @@ import lxml
 import os
 import re
 import time
+import sys
+
 
 from bs4 import BeautifulSoup
 
@@ -55,14 +57,8 @@ def getTotalPage(url):
     return soup
 
 
-def getNovelName(soup):
-    h1 = soup.find('h1')
-    if not h1 is None:
-        return h1.text
-    return "None"
-
 def getNovelInfo(soup):
-    infoDiv = soup.find('div',id='info')
+    infoDiv = soup.find('div', id='info')
     novelName = 'None'
     novelAuthor = 'Nobody'
     if not infoDiv is None:
@@ -72,9 +68,9 @@ def getNovelInfo(soup):
         for p in infoDiv.find_all('p'):
             if not p.text is None:
                 if p.text.startswith("作\xa0\xa0\xa0\xa0者："):
-                    novelAuthor = p.text.replace('作\xa0\xa0\xa0\xa0者：','')
+                    novelAuthor = p.text.replace('作\xa0\xa0\xa0\xa0者：', '')
                     break
-    return (novelName,novelAuthor)
+    return (novelName, novelAuthor)
 
 
 def getAllIndexes(soup):
@@ -86,13 +82,27 @@ def getAllIndexes(soup):
     return lis
 
 
+def getOnePageData(url):
+    soup = getTotalPage(url)
+    cc = soup2.find('div', id='content')
+    title = soup2.find('h1')
+    if not title is None:
+        cap = '\n\n第' + k + '章 '+title.text+'\n\n'
+    if not cc is None:
+        c = cc.text.replace('\xa0\xa0\xa0\xa0', '\n').replace('\ufffd', '').replace(
+            '\u30fb', '').replace('\\u', '').replace('\xa0', '')
+        text = cc
+    else:
+        return None
+    return (cap, text)
+
+
 def main():
     print("Python Novel Crawler")
     soup = getTotalPage(URL)
     lis = getAllIndexes(soup)
     dir = os.getcwd()
     tc = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
-    # name = getNovelName(soup)
     info = getNovelInfo(soup)
     f = dir+"\\" + info[0] + "_" + tc + ".txt"
     fp = open(f, 'w')
@@ -117,7 +127,8 @@ def main():
         cc = soup2.find('div', id='content')
         title = soup2.find('h1')
         if not cc is None:
-            c = cc.text.replace('\xa0\xa0\xa0\xa0', '\n').replace('\ufffd', '').replace('\u30fb', '').replace('\\u', '').replace('\xa0','')
+            c = cc.text.replace('\xa0\xa0\xa0\xa0', '\n').replace('\ufffd', '').replace(
+                '\u30fb', '').replace('\\u', '').replace('\xa0', '')
             cap = '\n\n第' + str(k)+'章 '+title.text+'\n\n'
             print(cap)
             fp.write(cap)
@@ -127,5 +138,131 @@ def main():
     print("ALL DONE !!!")
 
 
+# 爬虫接口
+
+
+class INovelCrawler:
+    def getWebUrl(): pass
+    # 获取网站网址
+
+    def getNovelInfo(indexPageUrl): pass
+    # 获取导航网址小说信息 小说全名 作者等信息
+
+    def getNovelAllUrls(indexPageUrl): pass
+    # 获取导航网址所有章节 url
+
+    def getSinglePageData(singlePageUrl): pass
+    # 获取单个章节页面数据
+
+
+class DingDianXiaoShuo(INovelCrawler):
+    # mURL = 'https://www.booktxt.net/0_362/'
+    mURL = 'https://www.booktxt.net/2_2219/'
+
+    def getPage(self, url):
+        # 给请求指定一个请求头来模拟chrome浏览器
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'}
+        req = requests.get(url, headers=headers)
+        # req.encoding = 'gb2312'
+        req.encoding = 'gbk'
+        # req = requests.get(url)
+        soup = BeautifulSoup(req.text, 'lxml')
+        return soup
+
+    def getWebUrl(self):
+        return self.mURL
+
+    def getNovelInfo(self, indexPageUrl):
+        try:
+            soup = self.getPage(indexPageUrl)
+            if not soup is None:
+                infoDiv = soup.find('div', id='info')
+                novelName = 'None'
+                novelAuthor = 'Nobody'
+                if not infoDiv is None:
+                    h1 = infoDiv.find('h1')
+                    if not h1 is None:
+                        novelName = h1.text
+                    for p in infoDiv.find_all('p'):
+                        if not p.text is None:
+                            if p.text.startswith("作\xa0\xa0\xa0\xa0者："):
+                                novelAuthor = p.text.replace(
+                                    '作\xa0\xa0\xa0\xa0者：', '')
+                                break
+                return (novelName, novelAuthor)
+            pass
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            pass
+        return None
+
+    def getNovelAllUrls(self, indexPageUrl):
+        try:
+            soup = self.getPage(indexPageUrl)
+            if not soup is None:
+                list_div = soup.find('div', id='list')
+                if not list_div is None:
+                    lis = []
+                    res = list_div.find_all('a')
+                    for dd in res:
+                        lis.append(indexPageUrl+dd.attrs['href'])
+                    return lis
+            pass
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            pass
+
+    def getSinglePageData(self, singlePageUrl):
+        try:
+            soup2 = self.getPage(singlePageUrl)
+            cc = soup2.find('div', id='content')
+            title = soup2.find('h1')
+            if not title is None:
+                cap = '\n\n'+title.text+'\n\n'
+            if not cc is None:
+                c = cc.text.replace('\xa0\xa0\xa0\xa0', '\n').replace('\ufffd', '').replace(
+                    '\u30fb', '').replace('\\u', '').replace('\xa0', '')
+                text = c
+            else:
+                return None
+            return (cap, text)
+            pass
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            pass
+        return None
+
+
+def main2():
+    print("Python Novel Crawler")
+    dingDianXiaoShuo = DingDianXiaoShuo()
+    url = dingDianXiaoShuo.getWebUrl()
+    info = dingDianXiaoShuo.getNovelInfo(url)
+    list_urls = dingDianXiaoShuo.getNovelAllUrls(url)
+    if not list_urls is None:
+        dir = os.getcwd()
+        tc = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
+        f = dir+"\\" + info[0] + "_" + tc + ".txt"
+        fp = open(f, 'w')
+        fp.write(info[0]+'\n')
+        fp.write("\nby : "+info[1]+'\n')
+        k = 5
+        for u in list_urls:
+            time.sleep(0.5)
+            k = k-1
+            if k < 0:
+                break
+            data = dingDianXiaoShuo.getSinglePageData(u)
+            if not data is None:
+                # 输出信息
+                print(data[0])
+                fp.write(data[0])
+                fp.write(data[1])
+                fp.flush()
+        fp.close()
+    print("ALL DONE !!!")
+
+
 if __name__ == '__main__':
-    main()
+    main2()

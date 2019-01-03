@@ -1,26 +1,14 @@
 ﻿using HelloWorld.DesignPattern;
 using System;
-using System.Collections.Generic;
-using static HelloWorld.DesignPattern.AbstructFactory;
-using static HelloWorld.DesignPattern.AdapterPattern;
-using static HelloWorld.DesignPattern.BuilderParttern;
-using static HelloWorld.DesignPattern.ChainOfResponsibilityPattern;
-using static HelloWorld.DesignPattern.CommandPattern;
-using static HelloWorld.DesignPattern.CompositePattern;
-using static HelloWorld.DesignPattern.FacadePattern;
-using static HelloWorld.DesignPattern.FlyweightPattern;
 using static HelloWorld.DesignPattern.InterpreterPattern;
 using static HelloWorld.DesignPattern.IteratorPattern;
 using static HelloWorld.DesignPattern.MediatorPattern;
 using static HelloWorld.DesignPattern.MementoPattern;
 using static HelloWorld.DesignPattern.ObserverPattern;
-using static HelloWorld.DesignPattern.PrototypePattern;
-using static HelloWorld.DesignPattern.ProxyPattern;
 using static HelloWorld.DesignPattern.StrategyPattern;
 using static HelloWorld.DesignPattern.TemplateMethodPattern;
 using static HelloWorld.DesignPattern.VisitorPattern;
 using SContext = HelloWorld.DesignPattern.StrategyPattern.Context;
-using SFactory = HelloWorld.DesignPattern.SimpleFactory.Factory;
 using TAbstraction = HelloWorld.DesignPattern.TemplateMethodPattern.Abstraction;
 
 namespace HelloWorld
@@ -30,80 +18,29 @@ namespace HelloWorld
     {
         public static void Main_Pattern()
         {
-            //创建型
-            HelloWorld.DesignPattern.SingletonPattern.Used();
-            HelloWorld.DesignPattern.SimpleFactory.Used();
-            HelloWorld.DesignPattern.AbstructFactory.Used();
-            HelloWorld.DesignPattern.BuilderParttern.Used();
-            HelloWorld.DesignPattern.PrototypePattern.Used();
-            //结构型
-            HelloWorld.DesignPattern.AdapterPattern.Used();
-            HelloWorld.DesignPattern.BridgePattern.Used();
-            HelloWorld.DesignPattern.DecoratorPattern.Used();
-            HelloWorld.DesignPattern.FlyweightPattern.Used();
-            HelloWorld.DesignPattern.ProxyPattern.Used();
-            //行为型
+            //创建型 5
+            SingletonPattern.Used();
+            SimpleFactory.Used();
+            AbstructFactory.Used();
+            BuilderParttern.Used();
+            PrototypePattern.Used();
 
-            //特殊类型
+            //结构型 7
+            AdapterPattern.Used();
+            BridgePattern.Used();
+            DecoratorPattern.Used();
+            CompositePattern.Used();
+            FlyweightPattern.Used();
+            FacadePattern.Used();
+            ProxyPattern.Used();
+
+            //行为型 11 
+            ChainOfResponsibilityPattern.Used();
+            CommandPattern.Used();
+            //特殊类型 熔断器模式
+
         }
 
-
-        public static void Main_Fade()
-        {
-            var facade = new Facade();
-            facade.Func();
-
-            Console.ReadLine();
-        }
-
-        /// <summary>
-        /// 责任链模式
-        /// </summary>
-        public static void Main_ChainOfResponsibility()
-        {
-            var c1 = new ConcreteHandler1();
-            var c2 = new ConcreteHandler2();
-            var c3 = new ConcreteHandler3();
-            //设置责任链
-            c1.NextHandler = c2;
-            c2.NextHandler = c3;
-            c1.Process(new Request() { Level = 0 });
-            c1.Process(new Request() { Level = 2 });
-            c1.Process(new Request() { Level = 3 });
-
-            Console.ReadLine();
-        }
-        /// <summary>
-        /// 命令模式
-        /// </summary>
-        public static void Main_Command()
-        {
-            //指定命令执行者
-            var invoker1 = new ConcreteInvoker1();
-            //指定命令接受者
-            var receiver1 = new Receiver01(invoker1);
-            //创建命令
-            var cmd1 = new Select("cmd1");
-            var cmd2 = new Update("cmd2");
-            //发给接受者执行
-            receiver1.ReceiveCmd(cmd1);
-            receiver1.ReceiveCmd(cmd2);
-
-            Console.ReadLine();
-        }
-
-        public static void Main_Interpreter()
-        {
-            var context = new InterpreterPattern.Context() { A = 98, B = 13, Input = '%' };
-            var exp1 = new NoneterminalExpression();
-            var exp2 = new NoneterminalExpression();
-            var exp3 = new TerminalExpression();
-            exp1.Interpret(context);
-            exp2.Interpret(context);
-            exp3.Interpret(context);
-
-            Console.ReadLine();
-        }
 
         public static void Main_Iterator()
         {

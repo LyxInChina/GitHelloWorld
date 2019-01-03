@@ -24,7 +24,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4995A42F-ECD5-4175-82EA-21A19C0DE296}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		leaf.png = leaf.png
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -42,9 +41,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{7DBC74
 		Python\flower.py = Python\flower.py
 		Python\helloworld.py = Python\helloworld.py
 		Python\itchat.pkl = Python\itchat.pkl
+		Python\NovelCrawler.py = Python\NovelCrawler.py
 		Python\rouse.py = Python\rouse.py
 		Python\testnumpy.py = Python\testnumpy.py
-		Python\TxtCrawler.py = Python\TxtCrawler.py
 		Python\WeChat.py = Python\WeChat.py
 	EndProjectSection
 EndProject
@@ -110,10 +109,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Go", "Go", "{2A64860B-7FA1-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{B5E7C254-B569-48CC-96D7-8F25EC9CB2FD}"
 	ProjectSection(SolutionItems) = preProject
+		Other\CommonTools.md = Other\CommonTools.md
 		Other\Contribute vscode.md = Other\Contribute vscode.md
 		Other\Dos.md = Other\Dos.md
 		Other\Git Doc.md = Other\Git Doc.md
-		Other\ProcessExplorer.md = Other\ProcessExplorer.md
 		Other\UnitTest.md = Other\UnitTest.md
 	EndProjectSection
 EndProject
