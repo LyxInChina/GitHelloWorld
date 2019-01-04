@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
-namespace InvokeHelper
+namespace HelloWorld
 {
     /// <summary>
     /// A thread-safe control invoker helper class.

@@ -110,8 +110,10 @@ namespace HelloWorld.IPC
 
         public class AnonymousPipe:IPC
         {
+#pragma warning disable CS3026 // 符合 CLS 的字段不能是可变字段
             public volatile AnonymousPipeClientStream MAnClientPipe;
             public volatile AnonymousPipeServerStream MAnServerPipe;
+#pragma warning restore CS3026 // 符合 CLS 的字段不能是可变字段
             private PipeStream apipe = null;
             public void Init(eIPC eIPC)
             {
@@ -339,8 +341,10 @@ namespace HelloWorld.IPC
 
         #region 共享内存
 
+#pragma warning disable CS0657 // 不是此声明的有效特性位置
         [assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]
-        // This class includes several Win32 interop definitions.
+#pragma warning restore CS0657 // 不是此声明的有效特性位置
+                              // This class includes several Win32 interop definitions.
         internal class Win32
         {
             public static readonly IntPtr InvalidHandleValue = new IntPtr(-1);

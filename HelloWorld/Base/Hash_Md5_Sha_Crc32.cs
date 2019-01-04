@@ -1,3 +1,5 @@
+#pragma warning disable CS3003,CS3002,CS3001
+
 using System;
 using System.Text;
 using System.Diagnostics;

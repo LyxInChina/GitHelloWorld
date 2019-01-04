@@ -869,7 +869,9 @@ namespace HelloWorld.DesignPattern
 
         public abstract class Strategy
         {
+#pragma warning disable CS3008 // 标识符不符合 CLS
             protected IList<IComparable> _array;
+#pragma warning restore CS3008 // 标识符不符合 CLS
             public int CalculateDegree()
             {
                 return 0;

@@ -2,7 +2,7 @@
 
 ## Process Explorer
 
-- [下载](www.sysinternals.com)
+- [下载](http://www.sysinternals.com)
 
 ### 常用快捷键
 
@@ -19,7 +19,7 @@
 
 ## Process Monitor
 
-- [下载](www.sysinternals.com)
+- [下载](http://www.sysinternals.com)
 
 ### 介绍
 

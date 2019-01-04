@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable  CS3001,CS3002
+
+using System;
 using ZeroMQ;
 using System.Threading;
 using System.Collections.Generic;

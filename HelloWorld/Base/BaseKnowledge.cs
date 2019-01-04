@@ -86,12 +86,6 @@ namespace HelloWorld.Base
             var ass = args.LoadedAssembly;
         }
 
-        public static void RunRegex()
-        {
-            RegexTest.HasStr();
-            RegexTest.IsHtml();
-        }
-
     }
 }
 

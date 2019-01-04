@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable CS0169
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HelloWorld.ThreadK
+namespace HelloWorld.Async
 {
     /// <summary>
     /// 异步调用完成后的回调委托
@@ -105,7 +107,7 @@ namespace HelloWorld.ThreadK
                 }
                 task.Start();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TODO:
                 //记录runasync 异常
@@ -125,7 +127,7 @@ namespace HelloWorld.ThreadK
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TODO:record log
             }
@@ -144,7 +146,7 @@ namespace HelloWorld.ThreadK
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TODO:record log
             }
@@ -160,7 +162,7 @@ namespace HelloWorld.ThreadK
                     op2.Post((obj) => { callBack(); }, null);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TODO:record log
             }

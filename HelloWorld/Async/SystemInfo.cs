@@ -1,11 +1,13 @@
-﻿using System;
+﻿#pragma warning disable CS3003,CS3002
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HelloWorld.ThreadK
+namespace HelloWorld.Async
 {
     public class SystemInfo
     {    /// <summary>

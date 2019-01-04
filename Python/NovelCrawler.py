@@ -8,7 +8,7 @@ pip install requests
 pip install lxml
 pip install BeautifulSoup4
 https://www.cnblogs.com/Albert-Lee/p/6238866.html
-PhatomJS:http://phantomjs.org/
+PhatomJS 基于webkit的JS API的隐形浏览器:http://phantomjs.org/
 Selenium:pip install selenium
 '''
 
@@ -19,8 +19,6 @@ import os
 import re
 import time
 import sys
-
-
 from bs4 import BeautifulSoup
 
 URL = 'https://www.booktxt.net/0_362/'

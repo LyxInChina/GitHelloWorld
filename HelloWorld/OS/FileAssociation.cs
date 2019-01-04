@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HelloWorld.SystemE
+namespace HelloWorld.OS
 {
     /// <summary>
     /// 设置或者取消文件关联

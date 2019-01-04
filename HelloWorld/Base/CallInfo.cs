@@ -25,15 +25,15 @@ namespace HelloWorld.Base
                 );
         }
 
-        public static string[] GetCallMethodInfo(UInt32 deep=1)
+        public static string[] GetCallMethodInfo(uint udeep =1)
         {
             StackTrace st = new StackTrace(true);
             var frames = st.GetFrames();
-            if (deep>=frames.Length)
+            if (udeep>=frames.Length)
             {
-                deep = (UInt32)frames.Length - 1;
+                udeep = (uint)frames.Length - 1;
             }
-            StackFrame sf = st.GetFrame((int)deep);
+            StackFrame sf = st.GetFrame((int)udeep);
             return new string[]
             {
                 sf.GetMethod().Name,

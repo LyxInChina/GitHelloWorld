@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable CS3026,CS3001
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,9 +10,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ThreadSync;
 
-namespace  HelloWorld.ThreadK
+namespace  HelloWorld.Async
 {
     public static class ResetEvent_Semaphore_SpinLock
     {

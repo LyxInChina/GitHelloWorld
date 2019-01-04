@@ -10,6 +10,7 @@ using System.Security;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace HelloWorld
 {
@@ -17,13 +18,11 @@ namespace HelloWorld
     {
         static void Main(string[] args)
         {
-            TestIcon();
+            //TestIcon();
             Console.WriteLine("hello world...");
             //Console.ReadLine();
-            while (true)
-            {
-                Application.DoEvents();
-            }
+            TaskManagerControl();
+            Console.ReadLine();
             //IsDebugMode();
             //TestUser32Method();
             Console.ReadKey();
@@ -117,6 +116,36 @@ namespace HelloWorld
                 }
                 Console.WriteLine("waiting cmd...");
             }
+        }
+
+        static void TaskManagerControl()
+        {
+            //CPU使用率=运行时间/空闲时间 
+            //空闲时间 线程睡眠时间ms Sleep
+            //运行时间=(1*1000/单个CPU频率)*(代码行数/一个时钟周期)
+            //2.5GHZ * 4
+            //一个时钟周期时间 单位时间/单个CPU频率
+            //
+            //一个时钟周期可以运行的代码数量：2
+            int time = 1000;
+            Action a = new Action(() =>
+            {
+                unchecked
+                {
+                    long n = 25 * 100000000 * 2 / 2;
+                    while (true)
+                    {
+                        for (long i = 0; i < n; i++)
+                        {
+
+                        }
+                    }
+                    //Thread.Sleep(500);
+                }
+            });
+            var s = new Thread(new ThreadStart(a));
+            //s.Start();
+            Console.WriteLine("Sleep:" + time);
         }
 
         #region Window user32.dll

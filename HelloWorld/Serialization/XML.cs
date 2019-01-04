@@ -62,13 +62,6 @@ namespace HelloWorld.Serializable
                 My = MyEnum.C,
                 Str1 = "kokoko",
             };
-            // Serializable(a);
-            AbsClass abss;
-            // Deserializable(out abss);
-            A aa;
-            B bb;
-            // Deserializable(out aa);
-            // Deserializable(out bb);
         }
 
         public static bool Serialize<T>(T t, out string xml)

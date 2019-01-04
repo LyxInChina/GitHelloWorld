@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Security.AccessControl;
 
-namespace ThreadSync
+namespace HelloWorld.OS
 {
     public class FileSystem
     {

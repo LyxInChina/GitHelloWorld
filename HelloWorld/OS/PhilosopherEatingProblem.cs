@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ThreadSync
+namespace HelloWorld.OS
 {
     /// <summary>
     /// 哲学家吃饭问题

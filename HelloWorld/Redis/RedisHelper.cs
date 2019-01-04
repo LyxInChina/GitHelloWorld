@@ -1,4 +1,5 @@
-﻿
+﻿#pragma warning disable CS3002,CS3001 // #warning 指令
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
