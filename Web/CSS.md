@@ -43,6 +43,14 @@
     }
 ```
 
+> 指定所有元素CSS性质
+
+```CSS
+[Element]{
+    [Attribute]:[Value];
+}
+```
+
 ## CSS创建
 
 - 外部样式表 External style sheet

@@ -7,24 +7,32 @@
 <html lang="en" manifest="" xmlns="" dir="auto">
 
 <style>
+    /* 环形旋转动画 */
     @keyframes donut-spin {
         0% {
             transform: rotate(0deg);
         }
-
+        50% {
+            transform: rotate(180deg);
+        }
         100% {
             transform: rotate(360deg);
         }
     }
 
     .donut {
+        text-align: center;
+        text-align-last: center;
+        vertical-align: center;
         display: inline-block;
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-left-color: #7983ff;
+        /* 环形带宽度 */
+        border: 8px solid rgba(0, 0, 0, 0.1);
+        border-left-color: red;
         border-radius: 50%;
         width: 30px;
         height: 30px;
-        animation: donut-spin 1.2s linear infinite;
+        animation: donut-spin 1.0s linear infinite;
+        /* animation: donut-spin 2.0s linear 1; */
     }
 </style>
 
@@ -43,16 +51,51 @@
 </head>
 
 <body>
-    <div class="donut"></div>
-    <h1 style="background-color: red">this is h1</h1>
+    <div class="donut">宋</div>
+    <!-- <h1 style="background-color: red">this is h1</h1> -->
     <p>this is a pargraph</p>
     <!-- 水平线 -->
     <hr />
     <a href="https://www.baidu.com/">this is link to baidu </a>
     <!-- 换行 -->
     <br />
-    <img src="../leaf.png" width="20px" height="20px" alt="no image"></img>
+    <div>
+        <img src="svg.svg" alt="no image"></img>
+        <embed src="svg.svg" alt="no embed" pluginspage="url"></embed>
+        <object src="svg.svg" alt="no object" codebase="url" ></object>
+        <iframe src="svg.svg" alt="no object" ></iframe>
+    </div>
     <div>this is div</div>
+    <div>
+        <ul>
+            <li>ok</li>
+        </ul>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Header 1</th>
+                    <th style="text-align: right;">Header 2</th>
+                    <th style="text-align: left;">Header 3</th>
+                    <th>Header 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center;">Cell 1</td>
+                    <td style="text-align: right;">Cell 2</td>
+                    <td style="text-align: left;">Cell 3</td>
+                    <td>Cell 4</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Cell 5</td>
+                    <td style="text-align: right;">Cell 6</td>
+                    <td style="text-align: left;">Cell 7</td>
+                    <td>Cell 8</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
 </body>
 
 </html>

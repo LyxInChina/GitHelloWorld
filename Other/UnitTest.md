@@ -1,7 +1,7 @@
 # UnitTest
 
 - 参考资料：
-- http://www.cnblogs.com/yubaolee/p/DotNetCoreUnitTest.html 
+- [博客园文章](http://www.cnblogs.com/yubaolee/p/DotNetCoreUnitTest.html)
 
 ## 使用MSTest.TestFramework
 
@@ -27,14 +27,19 @@ public class TestMain
 ### 使用Moq模拟测试
 
 - 参考资料：
-- https://www.cnblogs.com/haogj/archive/2011/07/22/2113496.html
-- https://github.com/moq/moq4
-- https://www.cnblogs.com/cgzl/p/9294431.html
+- [moq4 GitHub源代码](https://github.com/moq/moq4)
+- [博客园文章](https://www.cnblogs.com/haogj/archive/2011/07/22/2113496.html)
+- [博客园文章](https://www.cnblogs.com/cgzl/p/9294431.html)
 
 - 1.添加Moq引用；
 - 2.初始化要模拟的接口对象：
   - a.可指定Mock行为：Strict：严格，未指定操作时抛出异常；Loose：宽泛的，未指定操作时返回默认值；Default：默认为Loose
-  - b.可以指定多个接口：mo.As<T2>();
+  - b.可以指定多个接口：
+
+```C#
+mo.As<T2>();
+```
+
 - 3.指定接口参数和返回值；
   - a.可以使用It指定参数规则
   - b.可以定义返回值规则
@@ -54,3 +59,10 @@ va r= mo.Object.SomeMethod([paras]);
 //断言 结果
 Assert。。。
 ```
+
+### 常见问题
+
+- 1.在VS中使用MSTest，在引入MSTest Nuget包后，写完测试方法后，不能正常进行单元测试运行与调试，输出窗口输出：测试项目****未引用任何 .NET NuGet 适配器 的问题
+  - 解决：在测试项目中引入MSTest.TestAdapter,即可。
+  - 原因：英文版 [微软官网说明](https://docs.microsoft.com/zh-cn/visualstudio/test/test-explorer-faq?view=vs-2017)
+- 2.00
