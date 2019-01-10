@@ -150,6 +150,7 @@
     <Compile Include="Algorithm\LRU.cs" />
     <Compile Include="Algorithm\LZW.cs" />
     <Compile Include="Algorithm\RSA.cs" />
+    <Compile Include="Async\SyncException.cs" />
     <Compile Include="Base\CSharp7.0.cs" />
     <Compile Include="Base\Hash_Md5_Sha_Crc32.cs" />
     <Compile Include="Base\CallInfo.cs" />
@@ -170,7 +171,6 @@
     <Compile Include="SecurityAndPermission\SecurityAndPermissionHelp.cs" />
     <Compile Include="Serialization\JSON.cs" />
     <Compile Include="Serialization\XML.cs" />
-    <Compile Include="SyncException\SyncException.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="Algorithm\SortAlgorithmLib.cs" />
     <Compile Include="Async\AsyncHelper.cs" />

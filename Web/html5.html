@@ -22,17 +22,18 @@
 
     .donut {
         text-align: center;
-        text-align-last: center;
-        vertical-align: center;
+        vertical-align: middle;
         display: inline-block;
         /* 环形带宽度 */
         border: 8px solid rgba(0, 0, 0, 0.1);
         border-left-color: red;
+        border-right-color: green;
+        border-top-color: blue;
+        border-bottom-color: yellow;
         border-radius: 50%;
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         animation: donut-spin 1.0s linear infinite;
-        /* animation: donut-spin 2.0s linear 1; */
     }
 </style>
 
@@ -51,7 +52,9 @@
 </head>
 
 <body>
-    <div class="donut">宋</div>
+    <div class="donut">
+        <span>宋</span>
+    </div>
     <!-- <h1 style="background-color: red">this is h1</h1> -->
     <p>this is a pargraph</p>
     <!-- 水平线 -->
@@ -62,7 +65,7 @@
     <div>
         <img src="svg.svg" alt="no image"></img>
         <embed src="svg.svg" alt="no embed" pluginspage="url"></embed>
-        <object src="svg.svg" alt="no object" codebase="url" ></object>
+        <object src="svg.svg" alt="no object" codebase="" ></object>
         <iframe src="svg.svg" alt="no object" ></iframe>
     </div>
     <div>this is div</div>

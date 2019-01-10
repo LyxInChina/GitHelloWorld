@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace HelloWorld.SyncException
+namespace HelloWorld.Async
 {
     public class SyncException
     {

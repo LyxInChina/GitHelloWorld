@@ -23,7 +23,30 @@ using System.Runtime.InteropServices;
 //using strstr = System.String;
 namespace HelloWorld.CLR
 {
-    
+    public class ILTest
+    {
+        public string A()
+        {
+            string str = "a";
+            str += "b";
+            str += "c";
+            return str;
+        }
+        public string B()
+        {
+            string str = "a" + "b" + "c";
+            return str;
+        }
+        public string C()
+        {
+            string a = "a";
+            string b = "b";
+            string c = "c";
+            string str = a + b + c;
+            return str;
+        }
+    }
+
     public class CLR
     {
         public static void Main(string[] args)
