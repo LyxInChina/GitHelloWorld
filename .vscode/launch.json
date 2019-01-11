@@ -21,7 +21,8 @@
             "type": "python",
             "request": "launch",
             // "program": "${workspaceFolder}\\Python\\helloworld.py",
-            "program": "${workspaceFolder}\\Python\\NovelCrawler.py",
+            // "program": "${workspaceFolder}\\Python\\Crawlers\\NovelCrawler.py",
+            "program": "${workspaceFolder}\\Python\\Crawlers\\VideoCrawler.py",
             "console": "integratedTerminal"
         },
         {
