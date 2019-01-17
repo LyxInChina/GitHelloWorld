@@ -37,6 +37,7 @@ namespace HelloWorld
             //行为型 11 
             ChainOfResponsibilityPattern.Used();
             CommandPattern.Used();
+
             //特殊类型 熔断器模式
 
         }

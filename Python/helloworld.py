@@ -148,6 +148,11 @@ def CharType():
     x.ljust(16,'|')
     x.rindex(18,'@')
     x.zfill(20)# 文本居右 用0填充
+    # 文本格式化
+    x ='Name:{}'
+    x = x.format('Alice')
+    x ='Name:{n},Age:{a},Wight:{w}'
+    x = x.format(n='Alice',a='28',w='48Kg')
     # 去掉空格
     y = '  who are you  '
     y.lstrip()
@@ -226,9 +231,23 @@ def SetType():
     res5 = (s1 & s2) == null
     return
 
+# 文件操作
 def fileOperation():
-    # 打开文件
-    file = open('text.txt','r')
+    # 打开文件 文本名 打开模式：r只读，w只写，x创建写入，a追加
+    file = open('text.txt','rw')
+    # 写入文件
+    file.write('Some Text')
+    # 追加文本
+    file.append('Some Text')
+    # 读取文件
+    line = file.readline()
+    lines = file.readlines()
+    # 读取指针位置
+    ptrPosition = file.tell()
+    # 设置指针位置
+    file.seek(pos)
+    file.seekable()
+    # 关闭文件
     file.close()
     with open('t.txt','r') as f:
         descriptor = f.fileno()
