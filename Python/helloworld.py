@@ -97,6 +97,7 @@ def Variable():
 def ListType():
 # 列表
     lis = [1, 2, 3, 4, 5,6,7,8,9]
+    # 
     # 切片 顾头不顾尾
     print(lis[2:4])
     print(lis[-2])
@@ -166,6 +167,7 @@ def CharType():
     res = y.split('o')
     res = y.splitlines()
     # 判断
+    res = y.startswith('u') # 是否以参数结尾
     res = y.endswith('u') # 是否以参数结尾
     res = y.isalnum()# 是否为阿拉伯数字
     res = y.isalpha()# 是否为纯英文

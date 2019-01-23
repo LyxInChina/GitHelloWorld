@@ -253,4 +253,45 @@ namespace HelloWorld.Async
         }
     }
 
+
+    public class APMAPI
+    {
+        delegate string Funcc(out string s);
+        /// <summary>
+        /// Convert EAP Mode to Task
+        /// </summary>
+        public void Test()
+        {
+            Func<string, string> fStr = (s) => {
+                return s + s;
+            };
+            //string ss;
+            var funcc = new Funcc((out string ss) =>
+             {
+                 ss = "OK";
+                 return ss + ss;
+             });
+            Action<IAsyncResult> fResult = (res) =>
+            {
+
+            };
+            System.AsyncCallback callback = (res) =>
+            {
+
+            };
+            Task<string> task1 = Task<string>.Factory
+                .FromAsync(fStr.BeginInvoke("Async", callback, "A Delegate asynchronous call"), fStr.EndInvoke);
+            Task<string> task2 = Task<string>.Factory
+                .FromAsync(fStr.BeginInvoke, fStr.EndInvoke, "", "");
+            string threadOut;
+            var ar = funcc.BeginInvoke(out threadOut, callback, "A Delegate asynchronous call");
+            Task<string> task3 = Task<string>.Factory
+                .FromAsync(ar, _ => funcc.EndInvoke(out threadOut, ar));
+
+
+
+
+        }
+    }
+
 }

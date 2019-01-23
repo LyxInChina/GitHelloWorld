@@ -1,4 +1,4 @@
-# -*- coding:gbk -*-
+# -*- coding:UTF-8 -*-
 
 # 参考资料
 # '''
@@ -29,6 +29,13 @@ URL2 = "http://www.79yy.cn/show/32276.html"
 URL3 = "http://www.79yy.cn/play/32276/0/0.html"
 # 视频真实播放地址
 URLX = "http://api.yyxzpc.cn/mdparse/m3u8.php?id=https://cn2.zuidadianying.com/20181216/IdYeq4aP/index.m3u8"
+# m3u8 视频第一层地址
+URLX2 = "https://cn2.zuidadianying.com/20181216/IdYeq4aP/index.m3u8"
+URLXA = "https://cn2.zuidadianying.com"
+# m3u8 视频第二层地址
+URLX3 = URLXA+"/ppvod/EED4862269EEABC66B2177919345B6B1.m3u8"
+# m3u8 ts文件地址
+URLX4 = URLXA+"/20181216/IdYeq4aP/800kb/hls/1euHM6166000.ts"
 
 
 def getPage(url):
@@ -111,6 +118,69 @@ def findRealPlayUrl(url):
     if not frame is None:
         return frame.attrs['src']
     return None
+
+
+def getDownLoadUrls_m3u8(url):
+    # URLX = "http://api.yyxzpc.cn/mdparse/m3u8.php?id=https://cn2.zuidadianying.com/20181216/IdYeq4aP/index.m3u8"
+    p1 = url.find('?id=')
+    if p1 is -1:
+        return
+    urlx1 = url[-(len(url)-p1-4):]
+    if not (urlx1.startswith('https://') or urlx1.startswith('http://')) and urlx1.endswith('.m3u8'):
+        return
+    soup = getPage(urlx1)
+    if soup is None:
+        return
+    # https://cn2.zuidadianying.com/20181216/IdYeq4aP/index.m3u8
+    print(soup.text)
+    baseUrl = urlx1[0:urlx1.find('.com')+4]
+    textLines = soup.text.split('\n')
+    eUrl = None
+    for line in textLines:
+        if line.upper() is '#EXTM3U':
+            print('Is m3u8 Video')
+        if line.endswith('.m3u8'):
+            eUrl = line
+            break
+    if eUrl is None:
+        return
+    urlx2 = baseUrl+eUrl
+    time.sleep(3.0)
+    soup2 = getPage(urlx2)
+    if soup2 is None:
+        return
+    # print(soup2.text)
+    tsLines = soup2.text.split('\n')
+    eUlrs = []
+    for tsl in tsLines:
+        if tsl.endswith('.ts'):
+            eUlrs.append(baseUrl+tsl)
+            # print(baseUrl+tsl)
+    return eUlrs
+
+
+def downLoadVideo_m3u8_ts(urls, dir):
+    if not os.path.isdir(dir):
+        os.mkdir(dir)
+    index = 0
+    l = "{:0>"+ str(len(str(len(urls)))+1)+"d}"
+    for url in urls:
+        index = index+1
+        try:
+            # soup = getPage(url)
+            soup = requests.get(url)
+            if not soup is None:
+                fn = dir+'\\'+l.format(index)+'.ts'
+                if os.path.isfile(fn):
+                    os.remove(fn)
+                fs = open(fn, 'wb')
+                fs.write(soup.content)
+                fs.flush()
+                fs.close()
+            time.sleep(2.0)
+            print("{:.2%}".format(index/len(urls)))
+        except expression as identifier:
+            pass
 
 
 def main():
@@ -213,7 +283,16 @@ def main2():
         saveHtmlToFile(result, htmlFile)
 
 
+def main3():
+    # 解析
+    urlxs = getDownLoadUrls_m3u8(URLX)
+    downLoadVideo_m3u8_ts(urlxs, 'Python\\Crawlers\\0001')
+    # 合并文件 copy /b *.ts 01.mp4
+    # os.system('dir')
+
+
 if __name__ == '__main__':
     print("Video Crawler Start!")
-    main2()
+    # main2()
+    main3()
     print("Video Crawler Done!")
