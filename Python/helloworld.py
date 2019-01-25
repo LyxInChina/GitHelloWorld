@@ -141,6 +141,15 @@ def CharType():
     xtit = x.title()
     xswa = x.swapcase()
     x.replace('o', '0')
+    # 格式化
+    # 位置参数
+    '{0} vs {1}'.format('Alice',"Mask") 
+    # 填充与对齐 ^，<,>：居中，左对齐，右对齐，:后跟填充字符默认空格
+    '{:K^5}'.format(1) # 若长度不够5则在两侧补0
+    '{:0>5}'.format(1) # 若长度不够5则在左侧补0
+    '{:x<4}'.format(1) # 若长度不够4则在右侧补x
+    '{:.3}'.format(1.1) # 格式化为只有三位小数
+    '{:.2%}'.format(1.1) # 格式化为只有两位小数的百分数
     # 设置替换密文
     tran = x.maketrans('h', '1')
     x.translate(tran)  # 替换加密
