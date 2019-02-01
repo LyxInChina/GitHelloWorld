@@ -452,7 +452,11 @@ namespace  HelloWorld.Async
 
     /*AutoResetEvent与ManualResetEvent的区别
      * 
-     同步机制包括临界区（critical section），信号量（simphore），互斥量（mutex），管程（monitor）
+     同步机制包括
+     临界区（critical section），
+     信号量（simphore），
+     互斥量（mutex），
+     管程（monitor）
     关于AutoResetEvent与ManualResetEvent
     ResetEvent线程通知事件
     可用于多线程同步 线程控制
@@ -502,8 +506,8 @@ namespace  HelloWorld.Async
      * 2.锁：lock，Monitor，SpinLock
      * 3.互斥算法：
      * 4.特殊：Threadlocal
-     * 5.信号量
-     * 6.互斥体
+     * 5.信号量：Simphore,Simphoeresilm
+     * 6.互斥体:Mutex
      * 
      * 原子操作 -   
     线程同步

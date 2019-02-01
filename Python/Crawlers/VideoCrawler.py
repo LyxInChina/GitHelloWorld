@@ -37,6 +37,8 @@ URLX3 = URLXA+"/ppvod/EED4862269EEABC66B2177919345B6B1.m3u8"
 # m3u8 ts文件地址
 URLX4 = URLXA+"/20181216/IdYeq4aP/800kb/hls/1euHM6166000.ts"
 
+# 根据url参数获取请求到的soup结果对象
+
 
 def getPage(url):
     # 给请求指定一个请求头来模拟chrome浏览器
@@ -54,6 +56,8 @@ def getPage(url):
         pass
     return None
 
+# 根据播放的url列表拼接出html显示结果div集合
+
 
 def createHtmls(playUrls):
     if playUrls is None:
@@ -64,26 +68,30 @@ def createHtmls(playUrls):
         result = result+'\n'+hrefTemplate.format(li[1], li[0])
     return result
 
+# 创建html结果
+
 
 def createIndexHtml(urls):
-    divTemplate = '<div style="width:100%;height:100%">\n{}\n</iframe>\n</div>'
-    divStr = divTemplate.format(urls)
     htmlTemplate = '''
     <!DOCTYPE html>
-    <html lang="zh-cn" manifest="" xmlns="" dir="auto">\n<html>\n
+    <html lang="zh-cn" manifest="" xmlns="" dir="auto">
         <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>电影大全</title>
+            <meta charset="UTF-8"\>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"\>
+            <meta http-equiv="X-UA-Compatible" content="ie=edge"\>
+            <title>MOVIES</title>
         </head>
         <body>
-            <h2>电影列表</h2>
-        {}
+            <h3>列表</h3>
+            <div style="width:90%;height:100%;left:5%;text-align: center;position: relative;">
+                {}
+            </div>
         </body>
     </html>
     '''
-    return htmlTemplate.format(divStr)
+    return htmlTemplate.format(urls)
+
+# 保存html文件
 
 
 def saveHtmlToFile(html, fileName):
@@ -94,6 +102,8 @@ def saveHtmlToFile(html, fileName):
         fp.close()
         return 0
     return 1
+
+# 查找播放电影的信息url地址
 
 
 def findPlayUrl(url):
@@ -108,6 +118,8 @@ def findPlayUrl(url):
             return a.attrs['href']
     return None
 
+# 查找播放url的买m3u8地址
+
 
 def findRealPlayUrl(url):
     # <iframe border="0" frameborder="0" height="460" id="player_swf" marginheight="0" marginwidth="0" scrolling="no" allowfullscreen="ture" src="http://api.yyxzpc.cn/mdparse/m3u8.php?id=https://sohu.zuida-163sina.com/20190110/xq7CpZ80/index.m3u8" width="100%"></iframe>
@@ -118,6 +130,8 @@ def findRealPlayUrl(url):
     if not frame is None:
         return frame.attrs['src']
     return None
+
+# 根据m3u8地址解析所有ts文件下载地址
 
 
 def getDownLoadUrls_m3u8(url):
@@ -158,12 +172,14 @@ def getDownLoadUrls_m3u8(url):
             # print(baseUrl+tsl)
     return eUlrs
 
+# 根据ts文件地址下载所有ts文件到指定文件夹中
+
 
 def downLoadVideo_m3u8_ts(urls, dir):
     if not os.path.isdir(dir):
         os.mkdir(dir)
     index = 0
-    l = "{:0>"+ str(len(str(len(urls)))+1)+"d}"
+    l = "{:0>" + str(len(str(len(urls)))+1)+"d}"
     for url in urls:
         index = index+1
         try:
@@ -181,6 +197,8 @@ def downLoadVideo_m3u8_ts(urls, dir):
             print("{:.2%}".format(index/len(urls)))
         except expression as identifier:
             pass
+
+# 下载单个页的视频
 
 
 def main():
@@ -224,6 +242,8 @@ def main():
         if os.path.isfile(htmlFile):
             os.remove(htmlFile)
         saveHtmlToFile(result, htmlFile)
+
+# 下载所有分页的视频
 
 
 def main2():
@@ -284,10 +304,12 @@ def main2():
 
 
 def main3():
-    # 解析
+    # 解析m3u8获取到所有的ts文件下载地址
     urlxs = getDownLoadUrls_m3u8(URLX)
+    # 下载所有的ts文件到本地目录
     downLoadVideo_m3u8_ts(urlxs, 'Python\\Crawlers\\0001')
-    # 合并文件 copy /b *.ts 01.mp4
+
+    # 使用dos命令合并ts文件 copy /b *.ts 01.mp4
     # os.system('dir')
 
 

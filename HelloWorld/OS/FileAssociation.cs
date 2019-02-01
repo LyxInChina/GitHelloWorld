@@ -30,11 +30,9 @@ namespace HelloWorld.OS
                 VKey = RegKey.OpenSubKey(FileTypeName, true);
                 VKey.SetValue("", "Exec");
             }
-
             VKey = RegKey.OpenSubKey("Exec", true);
             if (VKey != null)
                 RegKey.DeleteSubKeyTree("Exec");  //如果不等于空 则删除注册表
-
             RegKey.CreateSubKey("Exec");
             VKey = RegKey.OpenSubKey("Exec", true);
             VKey.CreateSubKey("shell");
@@ -45,8 +43,6 @@ namespace HelloWorld.OS
             VKey = VKey.OpenSubKey("command", true);
             string _PathString = "\"" + Filename + "\" \"%1\"";
             VKey.SetValue("", _PathString); //写入数据 
-
-
         }
 
         /// <summary> 

@@ -188,6 +188,7 @@ def CharType():
 def DictionaryType():
     dic = { '1':'aa','2':'bb','3':'cc'}
     dic['2']='ee'
+    dic.update('x','xx')
     # 删除
     dic.pop('2')
     dic.popitem()

@@ -57,10 +57,22 @@ namespace HelloWorld.DesignPattern
         Critical：执行请求，判断结果；
         Exit：
          */
+        /// <summary>
+        /// 熔断器状态
+        /// </summary>
         public enum State
         {
+            /// <summary>
+            /// 关闭
+            /// </summary>
             Close = 1 << 0,
+            /// <summary>
+            /// 半开
+            /// </summary>
             half_open = 1 << 1,
+            /// <summary>
+            /// 打开
+            /// </summary>
             open = 1 << 2,
         }
 
@@ -69,14 +81,46 @@ namespace HelloWorld.DesignPattern
         /// </summary>
         public class CircuitBreaker
         {
-            public State State = State.Close;
+            /// <summary>
+            /// 熔断器当前状态
+            /// </summary>
+            public State State { get; set; }
+
             //添加状态标识类
-            public CState StateC;
-            public Action Request;
-            public Func<bool> Restore;
+            private CState StateC { get; set; }
+
+            /// <summary>
+            /// 工作函数
+            /// </summary>
+            public Action Request { get; set; }
+
+            /// <summary>
+            /// 恢复函数
+            /// </summary>
+            public Func<bool> Restore { get; set; }
+
+            /// <summary>
+            /// 当前错误数量
+            /// </summary>
+            public int ErrorNum { get; set; }
+
+            /// <summary>
+            /// 关闭状态下 请求失败转换数
+            /// </summary>
+            public int MaxFailNum { get; set; }
+
+            /// <summary>
+            /// 半开状态下 请求成功状态转换数
+            /// </summary>
+            public int MaxSuccessNum { get; set; }
+
+            public int ErrorRestoreTime { get; set; }
 
             public CircuitBreaker(Action act, Func<bool> res)
             {
+                ErrorNum = 0;
+                MaxFailNum = 3;
+                ErrorRestoreTime = 100;
                 Request = act;
                 Restore = res;
                 ConvertState(State.Close);//初始状态为close
@@ -89,6 +133,7 @@ namespace HelloWorld.DesignPattern
             {
                 StateC.Process();
             }
+
             /// <summary>
             /// 切换熔断器状态
             /// </summary>
@@ -118,24 +163,39 @@ namespace HelloWorld.DesignPattern
         /// 熔断器状态抽象类 定义行为方法
         /// has-a circuit break instance 
         /// </summary>
-        public abstract class CState
+        public abstract class CState:IDisposable
         {
             /// <summary>
             /// 引用主要执行实例
             /// </summary>
-            private CircuitBreaker _breaker;
+            private CircuitBreaker _breaker { get; set; }
+
+            private object _lock = new object();
             public CState(CircuitBreaker b)
             {
                 _breaker = b;
             }
+
             ~CState()
             {
                 Exit();
             }
+
+            /// <summary>
+            /// 进入临界区函数
+            /// </summary>
             protected abstract void Entry();
+
+            /// <summary>
+            /// 临界区函数
+            /// </summary>
             protected abstract void Critical();
+
+            /// <summary>
+            /// 退出临界区函数
+            /// </summary>
             protected abstract void Exit();
-            private object _lock = new object();
+
             protected void Request()
             {
                 _breaker.Request?.Invoke();
@@ -156,8 +216,16 @@ namespace HelloWorld.DesignPattern
                 _breaker.ConvertState(state);
                 Monitor.Exit(_lock);
             }
+
+            public void Dispose()
+            {
+                Exit();
+            }
         }
 
+        /// <summary>
+        /// 关闭状态
+        /// </summary>
         public class CloseState : CState
         {
             public int ErrorNum = 0;
@@ -165,7 +233,9 @@ namespace HelloWorld.DesignPattern
             protected Timer timer;
             public CloseState(CircuitBreaker c) : base(c)
             {
-                timer = new Timer(100);
+                ErrorNum = c.ErrorNum;
+                MaxError = c.MaxFailNum;
+                timer = new Timer(c.ErrorRestoreTime);
                 timer.Elapsed += (sender, e) =>
                 {
                     if (ErrorNum > 0)
@@ -203,18 +273,23 @@ namespace HelloWorld.DesignPattern
                 timer.Stop();
             }
 
+            /// <summary>
+            /// 是否需要状态转换
+            /// </summary>
+            /// <returns></returns>
             private bool GoOpen()
             {
                 return ErrorNum > MaxError;
             }
         }
 
+        /// <summary>
+        /// 半开状态
+        /// </summary>
         public class Half_OpenState : CState
         {
-
             public Half_OpenState(CircuitBreaker c) : base(c)
             {
-
                 Entry();
             }
 
@@ -224,6 +299,7 @@ namespace HelloWorld.DesignPattern
             {
                 return true;
             }
+
             protected override void Critical()
             {
                 try
@@ -252,6 +328,9 @@ namespace HelloWorld.DesignPattern
             }
         }
 
+        /// <summary>
+        /// 打开状态
+        /// </summary>
         public class OpenState : CState
         {
             protected Timer timer;
@@ -284,39 +363,39 @@ namespace HelloWorld.DesignPattern
             }
         }
 
-        public static void Main()
+        public static void Used()
         {
-            var cb = new CircuitBreaker(() =>
+            var slim = new SemaphoreSlim(3, 3);
+            Action work = new Action(() =>
             {
-                var r = new Random();
-                var t = r.Next(0, 100);
-                if (t > 30)
+                if (slim.Wait(50))
                 {
-                    throw new Exception() { Source = "Error Int::" + t };
+                    Trace.WriteLine("已请求资源 TS：" + Environment.TickCount);
+                    Thread.Sleep(500);
                 }
                 else
                 {
-                    Trace.WriteLine("Success Int::" + t);
+                    throw new Exception()
+                    {
+                        Source = "没有可用资源",
+                    };
                 }
-            }, () =>
+                slim.Release();
+            });
+            Func<bool> restore = new Func<bool>(() =>
             {
+                slim.Release();
                 Trace.WriteLine("restore::");
                 return true;
-            }
-            );
-
+            });
+            var cb = new CircuitBreaker(work, restore);
             for (int i = 0; i < 10000; i++)
             {
-                Console.WriteLine(i);
+                Console.WriteLine(string.Format("执行第{0}次调用", i));
                 cb.Process();
+                Thread.Sleep(200);
             }
-
             Console.ReadLine();
-        }
-
-        public static void Used()
-        {
-
         }
     }
 

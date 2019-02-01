@@ -55,7 +55,7 @@
 |comprehensive|全面的||
 |noteworthy|值得一提的||
 |flavor|味道||
-|Whtting|挑起||
+|Whetting|挑起||
 |Appetite|食欲||
 |eventually|终于||
 |complicated complicate |复杂的||

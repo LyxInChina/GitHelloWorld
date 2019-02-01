@@ -133,9 +133,10 @@ namespace HelloWorld.Base
 * 约束合并
 * eg：where T:Foo,IFoo1,new()
 * 
-* 协变和抗变
+* 协变和抗变（逆变）
 * 指对参数和返回值的类型转换
-* net中参数类型是协变的 参数不能 父类->子类 但是可以 子类->父类
+* net中参数类型是协变的 
+    参数不能 父类->子类 但是可以 子类->父类
 * 即Func(ClassA ca,ClassB cb) 传值时 Func(ClassAA caa,ClassBB cbb) ClassAA:ClassA ClassBB:ClassB
 * 即可以传递派生自基类的任何对象作为参数
 * 方法的返回值总是抗变的 返回值不能 父类->子类 但是可以 子类->父类
@@ -1758,7 +1759,6 @@ Parallel.Invoke() - 调用多个方法
  *          2.不能给线程池中个线程设置优先级和名称
  *          3.对于COM对象，入池的所有线程都是多线程单元（multi-threaded apartment -MTA），许多COM对象需要都需要单线程单元（single-thread apartment STA）
  *          4.入池的线程只能用于短时间任务，若需要一直运行，则可以使用Thread类或者Task类的LongRunning
- * 
  *      
  *      对象池：
  *      1.初始化对象池

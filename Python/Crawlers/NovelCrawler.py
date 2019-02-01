@@ -8,7 +8,8 @@ pip install requests
 pip install lxml
 pip install BeautifulSoup4
 https://www.cnblogs.com/Albert-Lee/p/6238866.html
-PhatomJS 基于webkit的JS API的隐形浏览器:http://phantomjs.org/
+PhatomJS 基于webkit的JS API的隐形浏览器:
+http://phantomjs.org/
 Selenium:pip install selenium
 '''
 
@@ -152,6 +153,8 @@ class INovelCrawler:
     def getSinglePageData(singlePageUrl): pass
     # 获取单个章节页面数据
 
+# 顶点小说https://www.booktxt.net
+
 
 class DingDianXiaoShuo(INovelCrawler):
     # mURL = 'https://www.booktxt.net/0_362/'
@@ -230,6 +233,25 @@ class DingDianXiaoShuo(INovelCrawler):
             print("Unexpected error:", sys.exc_info()[0])
             pass
         return None
+
+# 顶点小说 https://www.dingdiann.com/
+
+
+class DingDiannXiaoShuo(INovelCrawler):
+    # 获取网站网址
+    def getWebUrl():
+        pass
+
+    # 获取导航网址小说信息 小说全名 作者等信息
+    def getNovelInfo(indexPageUrl):
+        pass
+
+    # 获取导航网址所有章节 url
+    def getNovelAllUrls(indexPageUrl):
+        pass
+
+    def getSinglePageData(singlePageUrl):
+        pass
 
 
 def main2():
