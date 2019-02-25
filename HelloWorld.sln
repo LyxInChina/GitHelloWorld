@@ -13,12 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InjectDemo", "InjectDemo\In
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeDll", "InjectDemo\NativeDll\NativeDll.vcxproj", "{A2705FDD-EE42-499B-80E3-B8ED7B95E046}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMake", "CMake", "{A9FBB511-BAF2-4497-A6BE-D89E5A5972B4}"
-	ProjectSection(SolutionItems) = preProject
-		CMake\CMake.md = CMake\CMake.md
-		CMake\helloworld.c = CMake\helloworld.c
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "CPlus\UnitTestProject\UnitTestProject.csproj", "{33945C49-7CE1-4F4D-AA3E-39A7B68CD971}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4995A42F-ECD5-4175-82EA-21A19C0DE296}"
@@ -35,23 +29,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{790EDF5F-C307-42F7-8227-CF1F3AE72501}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService", "Service\WebService\WebService.csproj", "{EF82B194-60FA-4078-9A84-B986F4D00F56}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Python", "Python", "{7DBC7458-4FB6-4450-9A48-90A3A695778C}"
-	ProjectSection(SolutionItems) = preProject
-		Python\flower.py = Python\flower.py
-		Python\helloworld.py = Python\helloworld.py
-		Python\itchat.pkl = Python\itchat.pkl
-		Python\Crawlers\NovelCrawler.py = Python\Crawlers\NovelCrawler.py
-		Python\rouse.py = Python\rouse.py
-		Python\testnumpy.py = Python\testnumpy.py
-		Python\Crawlers\VideoCrawler.py = Python\Crawlers\VideoCrawler.py
-		Python\WeChat.py = Python\WeChat.py
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroService", "MicroService", "{D8DEE4A4-A4CB-4B97-9CD0-DC17FC3E850C}"
-	ProjectSection(SolutionItems) = preProject
-		MicroService\MicroService.md = MicroService\MicroService.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{0D9DCDA5-4ADD-4A78-A7A2-93960737D159}"
 	ProjectSection(SolutionItems) = preProject
@@ -92,42 +69,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IContract", "MEF\IContract\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implement", "MEF\Implement\Implement.csproj", "{EE2A78E8-E143-477C-AAAC-D88FADDF5FCD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{0FC0FFB2-7A3D-4EF9-9251-73E49E04F81C}"
-	ProjectSection(SolutionItems) = preProject
-		Web\ajax.js = Web\ajax.js
-		Web\CSS.md = Web\CSS.md
-		Web\css3.css = Web\css3.css
-		Web\html5.html = Web\html5.html
-		Web\javascript.js = Web\javascript.js
-		Web\jquery-3.3.1.min.js = Web\jquery-3.3.1.min.js
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Go", "Go", "{2A64860B-7FA1-4E4A-9D97-91D1D55C2927}"
-	ProjectSection(SolutionItems) = preProject
-		Go\GoLearn.md = Go\GoLearn.md
-		Go\helloworld.go = Go\helloworld.go
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{B5E7C254-B569-48CC-96D7-8F25EC9CB2FD}"
-	ProjectSection(SolutionItems) = preProject
-		Other\CommonTools.md = Other\CommonTools.md
-		Other\Contribute vscode.md = Other\Contribute vscode.md
-		Other\Dos.md = Other\Dos.md
-		Other\Git Doc.md = Other\Git Doc.md
-		Other\UnitTest.md = Other\UnitTest.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log", "Log", "{E9843B8B-B87A-4ADA-92AB-0FA2EFCAA225}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{15CDDD93-30C9-4845-AA27-147D4552070D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "读书", "读书", "{2D0E7B83-7BC9-4167-B3CD-C1815CF212E0}"
-	ProjectSection(SolutionItems) = preProject
-		读书\操作系统概念\CH11 文件系统实现.md = 读书\操作系统概念\CH11 文件系统实现.md
-		读书\CLR Via Csharp\CH22 CLR寄宿和AppDomain.md = 读书\CLR Via Csharp\CH22 CLR寄宿和AppDomain.md
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld", "CPlus\HelloWorld\HelloWorld.vcxproj", "{8B33AFB6-0AC5-4F64-9479-5D3BE5A9D317}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CPlusExperiment", "CPlus\CPlusExperiment\CPlusExperiment.vcxproj", "{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceStackExperiment", "Service\ServiceStackExperiment\ServiceStackExperiment.csproj", "{E2D48C25-8679-4DFF-B024-707913D66DDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -365,6 +315,34 @@ Global
 		{8B33AFB6-0AC5-4F64-9479-5D3BE5A9D317}.Release|x64.Build.0 = Release|x64
 		{8B33AFB6-0AC5-4F64-9479-5D3BE5A9D317}.Release|x86.ActiveCfg = Release|Win32
 		{8B33AFB6-0AC5-4F64-9479-5D3BE5A9D317}.Release|x86.Build.0 = Release|Win32
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Debug|ARM.ActiveCfg = Debug|Win32
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Debug|x64.ActiveCfg = Debug|x64
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Debug|x64.Build.0 = Debug|x64
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Debug|x86.ActiveCfg = Debug|Win32
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Debug|x86.Build.0 = Debug|Win32
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Release|Any CPU.ActiveCfg = Release|Win32
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Release|ARM.ActiveCfg = Release|Win32
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Release|x64.ActiveCfg = Release|x64
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Release|x64.Build.0 = Release|x64
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Release|x86.ActiveCfg = Release|Win32
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B}.Release|x86.Build.0 = Release|Win32
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Debug|ARM.Build.0 = Debug|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Debug|x64.Build.0 = Debug|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Debug|x86.Build.0 = Debug|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Release|ARM.Build.0 = Release|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Release|x64.ActiveCfg = Release|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Release|x64.Build.0 = Release|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Release|x86.ActiveCfg = Release|Any CPU
+		{E2D48C25-8679-4DFF-B024-707913D66DDF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -383,6 +361,8 @@ Global
 		{EE2A78E8-E143-477C-AAAC-D88FADDF5FCD} = {172363B6-EC4E-48B0-A8FB-FABF1FCFC6C5}
 		{15CDDD93-30C9-4845-AA27-147D4552070D} = {E9843B8B-B87A-4ADA-92AB-0FA2EFCAA225}
 		{8B33AFB6-0AC5-4F64-9479-5D3BE5A9D317} = {AA273B4F-69F7-4FE7-A068-40B6D2665F8B}
+		{6AAA7F7F-9440-4EFA-A81B-C6166BBD206B} = {AA273B4F-69F7-4FE7-A068-40B6D2665F8B}
+		{E2D48C25-8679-4DFF-B024-707913D66DDF} = {790EDF5F-C307-42F7-8227-CF1F3AE72501}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F255F2E8-C1F7-400B-BE64-60202D36778F}

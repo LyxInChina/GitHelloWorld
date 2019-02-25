@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Threading;
+using System.Net;
 
 namespace HelloWorld
 {
@@ -218,5 +219,30 @@ namespace HelloWorld
         public static extern bool ImmReleaseContext(IntPtr hWnd, IntPtr hIMC);//释放上下文关联
 
         #endregion
+    }
+
+    public class IoC_DI
+    {
+        //IoC inverse of control控制反转 - 控制权的转移
+        //control:针对流程的控制
+
+        public static class SocketHelper
+        {
+            public static Task ListenAsync(IPAddress address)
+            {
+                throw new NotImplementedException();
+            }
+            public static Task<WebRequest> ReceiveAsync(IPAddress address)
+            {
+                throw new NotImplementedException();
+            }
+            public static Task SendAsync(IPAddress address,WebRequest request)
+            {
+                throw new NotImplementedException();
+            }
+
+
+        }
+
     }
 }

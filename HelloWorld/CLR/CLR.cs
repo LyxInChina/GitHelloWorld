@@ -407,20 +407,20 @@ Mark：使用非托管程序加载托管程序集，Windows会自动加载并初
             return false;
         }
 
-
-
         public override int GetHashCode()
         {
             var hc = RuntimeHelpers.GetHashCode(this);
+            var hhc = System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(this);
             return 0;
         }
+
         public override string ToString()
         {
             return base.ToString();
         }
     }
 
-/*Chapter 5 基元类型 引用类型 值类型
+    /*Chapter 5 基元类型 引用类型 值类型
 
         24.什么是基元类型
             编译器直接支持的数据类型，基元类型直接映射FCL中存在的类型
@@ -522,58 +522,57 @@ Mark：使用非托管程序加载托管程序集，Windows会自动加载并初
             不用语言使用不同的运行时绑定器，c#再microsoft.csharp.dll（同样加载System.dll、System.Core.dll）中
  */
  
-/*Chapter 6 类型和成员            
+    /*Chapter 6 类型和成员            
 
-        30.同步索引块-SyncBlockIndex
-            a.线程同步 --- 用lock以及Monitor不能锁定值类型对象，无同步块索引
-            SyncBlock[]
-            SyncTable<*SyncBlock,*object>
+30.同步索引块-SyncBlockIndex
+    a.线程同步 --- 用lock以及Monitor不能锁定值类型对象，无同步块索引
+    SyncBlock[]
+    SyncTable<*SyncBlock,*object>
 
-            SyncBlock结构
-            AwareLock
-            PTR_IntropSyncBlockInfo
-            SLink m_link:
-            ADIndex   
-            DWord m_dwHashCode --存储对象哈希值
+    SyncBlock结构
+    AwareLock
+    PTR_IntropSyncBlockInfo
+    SLink m_link:
+    ADIndex   
+    DWord m_dwHashCode --存储对象哈希值
 
-            CLR初始化时，构建一个SyncBlock数组；
-            当一个线程进行Monitor.Enter(obj)时，或者lock开始，线程检查obj的同步索引块；
-            若索引为空，即无同步块，从SyncBlock数组中选择一个空闲块赋值到该索引；
-            若索引不为空，则等待；
-            Monitor退出时，obj的同步块索引；
-            b.存储特定数据
-            总共32位，高6位为控制为，低26位根据高6位为确定存储值；
-            c.即存储哈希值又作为lock对象；
+    CLR初始化时，构建一个SyncBlock数组；
+    当一个线程进行Monitor.Enter(obj)时，或者lock开始，线程检查obj的同步索引块；
+    若索引为空，即无同步块，从SyncBlock数组中选择一个空闲块赋值到该索引；
+    若索引不为空，则等待；
+    Monitor退出时，obj的同步块索引；
+    b.存储特定数据
+    总共32位，高6位为控制为，低26位根据高6位为确定存储值；
+    c.即存储哈希值又作为lock对象；
 
-        31.重写Equals(object)方法
-            自反：x.Equals(x)==true;
-            对称：x.Equals(y)==y.Equals(x);
-            可传递：
-            一致：
+31.重写Equals(object)方法
+    自反：x.Equals(x)==true;
+    对称：x.Equals(y)==y.Equals(x);
+    可传递：
+    一致：
 
-        32.友元程序集
-            定义为internal的代码可以被指定的程序集访问
-            使用System.Runtime.ComplierServices.InternalsVisibleTo特性定义在程序集上
-            参数指定程序集名称和公钥
+32.友元程序集
+    定义为internal的代码可以被指定的程序集访问
+    使用System.Runtime.ComplierServices.InternalsVisibleTo特性定义在程序集上
+    参数指定程序集名称和公钥
 
-        33.静态类
-            静态类直接从基类System.Object继承；
-            不实现任何接口；
-            只能定义静态成员；
-            不能作为字段、方法参数、局部变量；
-        34.分部类、结构、接口
-            partial
-            完全由C#编译器提供；
-        35.CLR调用虚方法（属性/事件）
-            CLR编译方法时，在方法定义表中写入三个记录项，并用记录项的一组标识指明根据方法的类型：静态方法、实例方法、虚方法；
-            call：可调用静态、实例、虚方法，调用方法时，必须指定所定义的类型或者实例对象；
-            callvirt：只能调用实例、虚方法，会检查变量是否为null，执行比call慢；
-            C#使用callvirt调用所有的实例方法（密封类、基类方法以及值类型特殊）；
-            调用虚方法速度比非虚方法速度慢；
-            JIT没有内嵌虚方法；
-            sealed类
+33.静态类
+    静态类直接从基类System.Object继承；
+    不实现任何接口；
+    只能定义静态成员；
+    不能作为字段、方法参数、局部变量；
+34.分部类、结构、接口
+    partial
+    完全由C#编译器提供；
+35.CLR调用虚方法（属性/事件）
+    CLR编译方法时，在方法定义表中写入三个记录项，并用记录项的一组标识指明根据方法的类型：静态方法、实例方法、虚方法；
+    call：可调用静态、实例、虚方法，调用方法时，必须指定所定义的类型或者实例对象；
+    callvirt：只能调用实例、虚方法，会检查变量是否为null，执行比call慢；
+    C#使用callvirt调用所有的实例方法（密封类、基类方法以及值类型特殊）；
+    调用虚方法速度比非虚方法速度慢；
+    JIT没有内嵌虚方法；
+    sealed类
         36.
-
 
          */
     
@@ -641,7 +640,7 @@ Mark：使用非托管程序加载托管程序集，Windows会自动加载并初
 
      */
 
-/*
+    /*
     线程基础
     线程对CPU进行虚拟化
     线程开销

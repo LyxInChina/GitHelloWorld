@@ -32,11 +32,16 @@ IntroStruct curStruct;
 
 void PointerTest();
 void StructAndPointer();
-void TestStructMemoryAllocation();
+void TestStructMemoryAllocation(); 
+void ParamTest();
+void Swap1(int, int);
+void Swap2(int*, int*);
+void Swap3(int&, int&);
 
 int main(int argc, char* argv[])
 {
-	PointerTest();
+	//PointerTest();
+	ParamTest();
     return 0;
 }
 
@@ -123,13 +128,53 @@ void PointerTest()
 	printf("array+0:%d\n", sizeof(array + 0));
 }
 
-void Sort(int* begin, int* end, bool(*CompareFunction)(int, int)) 
+void Sort(int* begin, int* end, bool(*CompareFunc)(int, int)) 
 {
 	while (begin < end)
 	{
-		Sort(begin, begin + (end - begin) / 2, CompareFunction);
-		Sort(begin + (end - begin) / 2, end, CompareFunction);
+		Sort(begin, begin + (end - begin) / 2, CompareFunc);
+		Sort(begin + (end - begin) / 2, end, CompareFunc);
 	}
+}
+
+#pragma endregion
+
+#pragma region 参数实验
+
+void ParamTest()
+{
+	int a1 = 10, b1 = 20;
+	int a2 = 10, b2 = 20;
+	int a3 = 10, b3 = 20;
+	printf("a1:%d,b1:%d\n", a1, b1);
+	Swap1(a1, b1);
+	printf("a1:%d,b1:%d\n", a1, b1);
+	printf("a2:%d,b2:%d\n", a2, b2);
+	Swap2(&a2, &b2);
+	printf("a2:%d,b2:%d\n", a2, b2);
+	printf("a3:%d,b3:%d\n", a3, b3);
+	Swap3(a3, b3);
+	printf("a3:%d,b3:%d\n", a3, b3);
+}
+
+void Swap1(int a, int b) 
+{
+	a = a ^ b;
+	b = a ^ b;
+	a = a ^ b;
+}
+
+void Swap2(int* a, int* b) 
+{
+	*a = *a ^ *b;
+	*b = *a ^ *b;
+	*a = *a ^ *b;
+}
+void Swap3(int& a, int& b) 
+{
+	a = a ^ b;
+	b = a ^ b;
+	a = a ^ b;
 }
 
 #pragma endregion

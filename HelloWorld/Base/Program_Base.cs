@@ -90,8 +90,6 @@ namespace HelloWorld.Base
             Console.WriteLine("Test amount:{0}",all);
             Console.WriteLine("string total Time:{0},AvgTime:{1}", sc, sc / all);
             Console.WriteLine("long total Time:{0},AvgTime:{1}", ic, ic / all);
-
-            
         }
 
         static long HashAlgorithm(string s)
