@@ -7,10 +7,9 @@
 
 ***
 
-- [x] Git tool learn & test
-- [ ] VS2017
-- [ ] C#语言版本：7.2
-- [ ] .net 4.5.2
+- [x] Visual Studio 2017
+- [x] C# Language Version：7.2
+- [x] .net 4.5.2
 
 ***
 

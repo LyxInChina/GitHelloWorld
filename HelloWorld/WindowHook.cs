@@ -147,7 +147,8 @@ namespace HelloWorld
 
         public static int InstallHook(HookType type,int pid)
         {
-            return SetWindowsHookEx((int)type, lpfn, hInstance, 0);
+            //return SetWindowsHookEx((int)type, lpfn, hInstance, 0);
+            return 0;
         }
 
         public enum HookType
