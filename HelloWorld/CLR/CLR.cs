@@ -141,7 +141,11 @@ namespace HelloWorld.CLR
                 Console.WriteLine("ID1:{0},ID2:{1}", id1, id2);
                 return id1 - id2;
             }
-   
+
+            public DynamicMetaObject GetMetaObject(System.Linq.Expressions.Expression parameter)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         internal sealed class Manager:Employee

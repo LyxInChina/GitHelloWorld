@@ -130,6 +130,7 @@
     <Compile Include="Base\SpecialFunctionInvoke.cs" />
     <Compile Include="Base\TypeConverter_Test.cs" />
     <Compile Include="CLR\AppDomainHelper.cs" />
+    <Compile Include="CLR\GrammerParser.cs" />
     <Compile Include="DesignPattern\ActionPattern.cs" />
     <Compile Include="DesignPattern\CreatePattern.cs" />
     <Compile Include="DesignPattern\SpecialPattern.cs" />

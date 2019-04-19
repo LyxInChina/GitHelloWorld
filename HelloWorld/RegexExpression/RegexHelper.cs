@@ -20,7 +20,7 @@ namespace HelloWorld.RegexExpression
 
         public static void ReplaceStr()
         {
-
+            
         }
 
         public static void PickStr()

@@ -359,17 +359,99 @@ namespace HelloWorld.DesignPattern
         /// </summary>
         public abstract class Expression
         {
-            public abstract void Interpret(Context context);
+            public abstract bool HasValue();
+            public abstract char GetNext();
+            public abstract char GetCurrent();
+
+            public abstract string Interpret(Context context);
+            public abstract string DeInterpret(Context context);
         }
+
+        public class MorseExpression : Expression
+        {
+            private string _input { get; set; }
+            private Queue<char> _inputQueue { get; set; }
+            public MorseExpression(string input)
+            {
+                _input = input;
+                if (!string.IsNullOrEmpty(input))
+                {
+                    _inputQueue = new Queue<char>(_input.Length);
+                    for (int i = 0; i < input.Length; i++)
+                    {
+                        _inputQueue.Enqueue(input[i]);
+                    }
+                }
+                else
+                {
+                    _inputQueue = new Queue<char>();
+                }
+            }
+
+            public override char GetCurrent()
+            {
+                if (HasValue())
+                {
+                    return _inputQueue.Peek();
+                }
+                else
+                {
+                    return '\n';
+                }
+            }
+
+            public override char GetNext()
+            {
+                if (HasValue())
+                {
+                    return _inputQueue.Dequeue();
+                }
+                else
+                {
+                    return '\n';
+                }
+            }
+
+            public override bool HasValue()
+            {
+                return _inputQueue.Count > 0;
+            }
+
+            public override string Interpret(Context context)
+            {
+                if (context == null)
+                    return null;
+                if (!HasValue())
+                    return null;
+                var builder = new StringBuilder();
+                while (HasValue())
+                {
+                    var key = GetNext();
+                    if (context.IsOperatorChar(key))
+                    {
+                        builder.Append(' ');
+                    }
+                    else
+                    {
+
+                        builder.Append(context.Transfer(key)+' ');
+                    }
+                }
+                return builder.ToString();
+            }
+
+            public override string DeInterpret(Context context)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
         public abstract class Context
         {
             public abstract char DeTransfer(string key);
             public abstract string Transfer(char key);
             public abstract bool IsOperatorChar(char key);
-            public abstract bool HasValue();
-            public abstract char GetNext();
-            public abstract char GetCurrent();
         }
 
         public class MorseContext : Context
@@ -392,6 +474,7 @@ namespace HelloWorld.DesignPattern
                     { "---..",'8'},
                     { "----.",'9'},
                     { "-----",'0'},
+
                     { ".-",'A'},
                     { "-...",'B'},
                     { "-.-.",'C'},
@@ -402,19 +485,19 @@ namespace HelloWorld.DesignPattern
                     { "....",'H'},
                     { "..",'I'},
                     { ".---",'J'},
-                    { ".-",'K'},
+                    { "-.-",'K'},
                     { ".-..",'L'},
                     { "--",'M'},
                     { "-.",'N'},
                     { "---",'O'},
-                    { "--.",'P'},
+                    { ".--.",'P'},
                     { "--.-",'Q'},
                     { ".-.",'R'},
                     { "...",'S'},
                     { "-",'T'},
                     { "..-",'U'},
                     { "...-",'V'},
-                    { ".---",'W'},
+                    { ".--",'W'},
                     { "-..-",'X'},
                     { "-.--",'Y'},
                     { "--..",'Z'},
@@ -455,90 +538,40 @@ namespace HelloWorld.DesignPattern
                 return operatorChar.Contains(key);
             }
 
-            private string Input { get; set; }
-            private Queue<char> InputQueue { get; set; }
-
-            public MorseContext(string input)
-            {
-                Input = input;
-                if (!string.IsNullOrEmpty(input))
-                {
-                    InputQueue = new Queue<char>(Input.Length);
-                    for (int i = 0; i < input.Length; i++)
-                    {
-                        InputQueue.Enqueue(input[i]);
-                    }
-                }
-                else
-                {
-                    InputQueue = new Queue<char>();
-                }
-            }
-
-            public override bool HasValue()
-            {
-                return InputQueue.Count > 0;
-            }
-
-            public override char GetNext()
-            {
-                if (HasValue())
-                {
-                    return InputQueue.Dequeue();
-                }
-                else
-                {
-                    return '\n';
-                }
-            }
-
-            public override char GetCurrent()
-            {
-                if (HasValue())
-                {
-                    return InputQueue.Peek();
-                }
-                else
-                {
-                    return '\n';
-                }
-            }
-
         }
 
-        public class NonterminalExpression : Expression
-        {
-            public NonterminalExpression()
-            {
-
-            }
-
-            public override void Interpret(Context context)
-            {
-                if (context == null)
-                    return;
-                if (!context.HasValue())
-                    return;
-                var key = context.GetNext();
-                if (context.IsOperatorChar(key))
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-        }
 
         public abstract class Client
         {
+            protected Context Context { get; set; }
+            public Client(Context context)
+            {
+                Context = context;
+            }
             public abstract string Transfer(string input);
+        }
+
+        public class MorseTransferClient : Client
+        {
+
+            public MorseTransferClient()
+                :base(new MorseContext())
+            {
+            }
+
+            public override string Transfer(string input)
+            {
+                var expression = new MorseExpression(input);
+                return expression.Interpret(base.Context);
+            }
         }
 
         public static void Used()
         {
-
+            string input = "QSCGUK13579";
+            Client client = new MorseTransferClient();
+            string output = client.Transfer(input);
+            System.Diagnostics.Trace.TraceInformation(string.Format("Input:{0};\nOutput:{1}", input, output));
         }
     }
 

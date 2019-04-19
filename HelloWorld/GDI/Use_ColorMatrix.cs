@@ -50,9 +50,9 @@ namespace HelloWorld.GDI
 
             float[][] colorMatrixElements = new float[][]
             {
-                new float[]{0.299f, 0, 0, 0,0},//红色缩放值
-                new float[]{0, 0.587f, 0, 0,0},//绿色色缩放值
-                new float[]{0, 0, 0.114f, 0,0},//蓝色缩放值
+                new float[]{0f, 0, 0, 0,0},//红色缩放值
+                new float[]{0, 1f, 0, 0,0},//绿色色缩放值
+                new float[]{0, 0, 1f, 0,0},//蓝色缩放值
                 new float[]{0, 0, 0, 1,0},//透明度缩放值
                 new float[]{0, 0, 0, 0,1},
             };

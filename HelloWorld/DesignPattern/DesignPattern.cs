@@ -1,4 +1,5 @@
 ﻿using HelloWorld.DesignPattern;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using static HelloWorld.DesignPattern.InterpreterPattern;
 using static HelloWorld.DesignPattern.IteratorPattern;
@@ -13,10 +14,11 @@ using TAbstraction = HelloWorld.DesignPattern.TemplateMethodPattern.Abstraction;
 
 namespace HelloWorld
 {
-
+    [TestClass]
     public class PatternTest
     {
-        public static void Main_Pattern()
+        [TestMethod]
+        public void Main_Pattern()
         {
             //创建型 5
             SingletonPattern.Used();
@@ -37,7 +39,7 @@ namespace HelloWorld
             //行为型 11 
             ChainOfResponsibilityPattern.Used();
             CommandPattern.Used();
-
+            InterpreterPattern.Used();
             //特殊类型 熔断器模式
 
         }
